@@ -1,0 +1,183 @@
+<!--
+  ~ This file is part of EMCOO TEAM PROJECT.
+  ~
+  ~  (c) EMCOO TEAM
+  ~  (c) DevMark <mark@emcoo.com>
+  ~
+  ~  For the full copyright and license information, please view http://emcoo.com/
+  ~
+  ~
+  -->
+
+<section class="content-header">
+    <h1>
+        {{ 'user.users' | translate }}
+    </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-right">
+                <a ui-sref="main.user-create" class="btn btn-primary"><i class="fa fa-plus"></i> {{ 'user.add_a_user'
+                    | translate }}</a>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ 'user.users' | translate }}</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" st-table="listCtrl.rowCollection" st-safe-src="listCtrl.rowCollection"
+                     st-pipe="listCtrl.callServer">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-inline">
+                                <div class="form-group">
+
+                                    <div class="input-group">
+                                        <input id="created_at" datepicker-popup="MM/yyyy" type="text"
+                                               class="form-control"
+                                               ng-model="listCtrl.filter.created_at"
+                                               date-disabled="disabled(date, mode)"
+                                               datepicker-mode="'month'"
+                                               is-open="listCtrl.opened"
+                                               ng-click="listCtrl.open($event)"
+                                               datepicker-options="listCtrl.dateOptions"
+                                               ng-required="true" close-text="Close" readonly/>
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="listCtrl.open($event)"
+                                                    class="btn btn-default"><i
+                                                    class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <ui-select ng-model="listCtrl.filter.role_ids[0]">
+                                        <ui-select-match placeholder="All roles">
+                                            {{ $select.selected.display_name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="role.id as role in listCtrl.roles track by $index"
+                                                refresh="listCtrl.refreshRole($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="role.display_name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="listCtrl.filter.search"
+                                           placeholder="Serach Title"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-default" ng-disabled="listCtrl.tableLoading" st-custom-action
+                                            callback="listCtrl.filterAction()"><i
+                                            class="fa fa-filter"></i> {{
+                                        'button.filter' | translate }}
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-default" ng-disabled="listCtrl.tableLoading" st-custom-action
+                                            callback="listCtrl.resetFilter()"><i
+                                            class="fa fa-refresh"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="btn-group">
+                                <button ng-disabled="listCtrl.countSelectedRows <= 0" class="btn btn-default btn-sm"
+                                        ng-really-message="{{ 'user.delete_before_msg' | translate }}"
+                                        ng-really-click="listCtrl.bulkRemove()"><i
+                                        class="fa fa-trash-o"></i> Delete Selected
+                                </button>
+                            </div>
+                            <!-- /.btn-group -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th width="5%">
+                                    <st-select-all all="listCtrl.rowCollection"
+                                                   count-selected-rows="listCtrl.countSelectedRows"
+                                                   ng-model="isAllSelected"></st-select-all>
+                                </th>
+                                <th>{{ 'global.name' | translate}}</th>
+                                <th width="20%">{{ 'global.created_at' | translate }}</th>
+                                <th width="15%"></th>
+                            </tr>
+                            </thead>
+                            <tbody ng-if="!listCtrl.tableLoading">
+
+                            <tr ng-repeat="row in listCtrl.rowCollection">
+                                <td>
+                                    <input type="checkbox" ng-checked="row.isSelected" st-select-row="row"/>
+                                </td>
+                                <td>{{ row.getFullName() }}
+                                </td>
+                                <td>{{ row.created_at | amCalendar }}</td>
+                                <td>
+                                    <div class="btn-group" dropdown>
+                                        <a href="users/{{ row.id }}/edit" class="btn btn-primary"><i
+                                                class="fa fa-search"></i> {{ 'button.edit' | translate }}
+                                        </a>
+                                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a ng-click="listCtrl.remove(row)" href=""><i class="fa fa-times"></i> {{
+                                                'button.remove' | translate }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tbody ng-if="listCtrl.tableLoading">
+                            <tr>
+                                <td colspan="7" class="text-center"><i class="fa fa-lg fa-spinner fa-spin"></i></td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    <div st-template="app/shared/override/smart-table/pagination.html"
+                                         st-next-prev-pagination=""
+                                         st-items-by-page="itemsByPage"></div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <!-- /.table -->
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- ./col -->
+
+    </div>
+</section>

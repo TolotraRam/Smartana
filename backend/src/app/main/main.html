@@ -1,0 +1,36 @@
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <div ng-include="'app/main/header.html'"></div>
+    <!-- Left side column. contains the logo and sidebar -->
+    <div ng-include="'app/main/sidebar/sidebar.html'"></div>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" style="min-height: 1008px;">
+        <!-- Content Header (Page header) -->
+        <div ng-show="pageViewLoading">
+            <three-bounce-spinner></three-bounce-spinner>
+        </div>
+        <div ng-show="!pageViewLoading" ui-view></div>
+        <!-- /.content -->
+    </div>
+
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            System By DevMark
+        </div>
+        <!-- Default to the left -->
+        <strong>{{ 'panel.footer.copyright' | translate }} &copy; {{ themeCtrl.today | date:'yyyy'}} <a href="#">{{
+            'panel.name' |
+            translate
+            }}</a>.</strong> {{ 'panel.footer.all_rights_reserved' | translate }}.
+    </footer>
+
+    <!-- Right Sidebar -->
+    <div ng-include="'app/main/rightsidebar.html'"></div>
+
+</div><!-- ./wrapper -->

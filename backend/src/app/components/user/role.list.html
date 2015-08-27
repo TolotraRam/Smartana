@@ -1,0 +1,180 @@
+<!--
+  ~ This file is part of EMCOO TEAM PROJECT.
+  ~
+  ~  (c) EMCOO TEAM
+  ~  (c) DevMark <mark@emcoo.com>
+  ~
+  ~  For the full copyright and license information, please view http://emcoo.com/
+  ~
+  ~
+  -->
+
+<section class="content-header">
+    <h1>
+        {{ 'role.roles' | translate }}
+    </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-right">
+                <button ng-click="listCtrl.add()" class="btn btn-primary"><i class="fa fa-plus"></i> {{
+                    'role.add_a_role' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ 'role.roles' | translate }}</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" st-table="listCtrl.rowCollection" st-safe-src="listCtrl.rowCollection"
+                     st-pipe="listCtrl.callServer">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-inline">
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="listCtrl.filter.search"
+                                           placeholder="Serach Title"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-default" ng-disabled="listCtrl.tableLoading" st-custom-action
+                                            callback="listCtrl.filterAction()"><i
+                                            class="fa fa-filter"></i> {{
+                                        'button.filter' | translate }}
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-default" ng-disabled="listCtrl.tableLoading" st-custom-action
+                                            callback="listCtrl.resetFilter()"><i
+                                            class="fa fa-refresh"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="btn-group">
+                                <button ng-disabled="listCtrl.countSelectedRows <= 0" class="btn btn-default btn-sm"
+                                        ng-really-message="{{ 'user.delete_before_msg' | translate }}"
+                                        ng-really-click="listCtrl.bulkRemove()"><i
+                                        class="fa fa-trash-o"></i> Delete Selected
+                                </button>
+                            </div>
+                            <!-- /.btn-group -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th width="5%">
+                                    <st-select-all all="listCtrl.rowCollection"
+                                                   count-selected-rows="listCtrl.countSelectedRows"
+                                                   ng-model="isAllSelected"></st-select-all>
+                                </th>
+                                <th width="25%">{{ 'global.name' | translate}}</th>
+                                <th width="">{{ 'user.permissions' | translate}}</th>
+                                <th width="15%"></th>
+                            </tr>
+                            </thead>
+                            <tbody ng-if="!listCtrl.tableLoading">
+
+                            <tr ng-repeat="row in listCtrl.rowCollection">
+                                <td>
+                                    <input type="checkbox" ng-checked="row.isSelected" st-select-row="row"/>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="name" class="control-label">{{ 'role.name' | translate }}</label>
+                                        <input id="name" type="text" class="form-control"
+                                               placeholder="{{ 'role.name' | translate }}"
+                                               required=""
+                                               ng-model="row.name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="display_name" class="control-label">{{ 'role.display_name' |
+                                            translate }}</label>
+                                        <input id="display_name" type="text" class="form-control"
+                                               placeholder="{{ 'role.display_name' | translate }}"
+                                               required=""
+                                               ng-model="row.display_name">
+                                    </div>
+                                </td>
+                                <td>
+                                    <label class="checkbox-inline" ng-repeat="permission in listCtrl.permissions">
+                                        <input type="checkbox" checklist-model="$parent.row.permissionIds"
+                                               checklist-value="permission.id"> {{
+                                        permission.display_name }}
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="btn-group" dropdown>
+                                        <button ng-click="listCtrl.save(row)" class="btn btn-primary"
+                                                ng-disabled="listCtrl.saveLoading[row.id]">
+                                            <span ng-if="listCtrl.saveLoading[row.id]"><i
+                                                    class="fa fa-spin fa-spinner"></i></span>
+                                            <span ng-if="!listCtrl.saveLoading[row.id]"><i class="fa fa-save"></i> {{
+                                                'button.save' |
+                                                translate }}</span>
+
+                                        </button>
+                                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a ng-click="listCtrl.remove(row)" href=""><i class="fa fa-times"></i>
+                                                {{
+                                                'button.remove' | translate }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tbody ng-if="listCtrl.tableLoading">
+                            <tr>
+                                <td colspan="7" class="text-center"><i class="fa fa-lg fa-spinner fa-spin"></i></td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    <div st-template="app/shared/override/smart-table/pagination.html"
+                                         st-next-prev-pagination=""
+                                         st-items-by-page="itemsByPage"></div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <!-- /.table -->
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- ./col -->
+
+    </div>
+</section>
