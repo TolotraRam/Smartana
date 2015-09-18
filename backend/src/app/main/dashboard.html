@@ -6,23 +6,37 @@
 
 <!-- Main content -->
 <section class="content">
-
-    <div class="box box-solid">
-        <div class="box-header">
-            <h3 class="box-title">Hello, {{ mainCtrl.me.getFullName() }}!</h3>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="ion ion-ios-person-outline"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Users</span>
+                    <span class="info-box-number">90<small>%</small></span>
+                    <a ui-sref="main.user-list">View all users</a>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
         </div>
-        <div class="box-body">
-            <a class="btn btn-app" ui-sref="main.post-list" ng-if="mainCtrl.me.can('post.index')">
-                <i class="fa fa-tag"></i> New Post
-            </a>
-            <a class="btn btn-app" ui-sref="main.user-list" ng-if="mainCtrl.me.can('user.index')">
-                <i class="fa fa-user"></i> New User
-            </a>
-            <a class="btn btn-app" ui-sref="main.media-list" ng-if="mainCtrl.me.can('media.index')">
-                <i class="fa fa fa-file-archive-o"></i> New Media
-            </a>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="ion ion-ios-paper-outline"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Posts</span>
+                    <span class="info-box-number">90<small>%</small></span>
+                    <a ui-sref="main.post-list">View all posts</a>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
         </div>
-        <!-- /.box-body -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="ion ion-ios-camera-outline"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Media</span>
+                    <span class="info-box-number">90<small>%</small></span>
+                    <a ui-sref="main.media-list">View all media</a>
+                </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+        </div>
     </div>
     <!-- /.box -->
 

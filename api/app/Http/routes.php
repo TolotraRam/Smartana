@@ -20,6 +20,27 @@ Route::group(['prefix' => 'api'], function () {
         Route::group(['middleware' => ['auth.user']], function () {
             Route::get('me', 'Api\Backend\UserController@index');
 
+            //Country =================================
+            Route::get('country', ['uses' => 'Api\CountryController@index', 'as' => 'country.index', 'middleware' => 'permission:country.index']);
+            Route::get('country/{id}', ['uses' => 'Api\CountryController@show', 'as' => 'country.show', 'middleware' => 'permission:country.index']);
+            Route::post('country', ['uses' => 'Api\CountryController@store', 'as' => 'country.store', 'middleware' => 'permission:country.store']);
+            Route::put('country/{id}', ['uses' => 'Api\CountryController@update', 'as' => 'country.update', 'middleware' => 'permission:country.update']);
+            Route::delete('country/{id}', ['uses' => 'Api\CountryController@destroy', 'as' => 'country.destroy', 'middleware' => 'permission:country.destroy']);
+
+            //State =================================
+            Route::get('state', ['uses' => 'Api\StateController@index', 'as' => 'state.index', 'middleware' => 'permission:state.index']);
+            Route::get('state/{id}', ['uses' => 'Api\StateController@show', 'as' => 'state.show', 'middleware' => 'permission:state.index']);
+            Route::post('state', ['uses' => 'Api\StateController@store', 'as' => 'state.store', 'middleware' => 'permission:state.store']);
+            Route::put('state/{id}', ['uses' => 'Api\StateController@update', 'as' => 'state.update', 'middleware' => 'permission:state.update']);
+            Route::delete('state/{id}', ['uses' => 'Api\StateController@destroy', 'as' => 'state.destroy', 'middleware' => 'permission:state.destroy']);
+
+            //City =================================
+            Route::get('city', ['uses' => 'Api\CityController@index', 'as' => 'city.index', 'middleware' => 'permission:city.index']);
+            Route::get('city/{id}', ['uses' => 'Api\CityController@show', 'as' => 'city.show', 'middleware' => 'permission:city.index']);
+            Route::post('city', ['uses' => 'Api\CityController@store', 'as' => 'city.store', 'middleware' => 'permission:city.store']);
+            Route::put('city/{id}', ['uses' => 'Api\CityController@update', 'as' => 'city.update', 'middleware' => 'permission:city.update']);
+            Route::delete('city/{id}', ['uses' => 'Api\CityController@destroy', 'as' => 'city.destroy', 'middleware' => 'permission:city.destroy']);
+
             //Media Categories =================================
             Route::get('media/categories', ['uses' => 'Api\MediaCategoryController@index', 'as' => 'media.categories.index', 'middleware' => 'permission:media.categories.index']);
             Route::get('media/categories/{id}', ['uses' => 'Api\MediaCategoryController@show', 'as' => 'media.categories.show', 'middleware' => 'permission:media.categories.index']);

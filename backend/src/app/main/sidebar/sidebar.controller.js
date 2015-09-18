@@ -1,13 +1,4 @@
-/*
- * This file is part of EMCOO TEAM PROJECT.
- *
- *  (c) EMCOO TEAM
- *  (c) DevMark <mark@emcoo.com>
- *
- *  For the full copyright and license information, please view http://emcoo.com/
- *
- *
- */
+
 (function () {
     'use strict';
 
@@ -69,6 +60,28 @@
                         iconClasses: 'fa fa-circle-o',
                         state: 'main.post-category-list',
                         enabled: vm.me.can(['posts.categories.index'])
+                    }
+                ]
+            }, {
+                label: 'Localisation',
+                iconClasses: 'fa fa-globe',
+                enabled: vm.me.can(['country.index', 'state.index', 'city.categories.index']),
+                children: [
+                    {
+                        label: 'Countries',
+                        iconClasses: 'fa fa-circle-o',
+                        state: 'main.country-list',
+                        enabled: vm.me.can(['country.index'])
+                    }, {
+                        label: 'States',
+                        iconClasses: 'fa fa-circle-o',
+                        state: 'main.state-list',
+                        enabled: vm.me.can(['state.index'])
+                    }, {
+                        label: 'City',
+                        iconClasses: 'fa fa-circle-o',
+                        state: 'main.city-list',
+                        enabled: vm.me.can(['city.index'])
                     }
                 ]
             }, {

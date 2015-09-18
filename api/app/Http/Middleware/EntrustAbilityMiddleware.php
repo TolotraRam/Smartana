@@ -17,7 +17,7 @@ class EntrustAbilityMiddleware
      */
     public function handle($request, \Closure $next, $roles, $permissions, $validateAll = false)
     {
-
+        // Decomment
         if (!UserAuth::user()->ability(explode('|', $roles), explode('|', $permissions), ['validate_all' => $validateAll])) {
             throw new UnauthorizedException('You do not have permission to access.');
         }

@@ -1,13 +1,4 @@
-/*
- * This file is part of EMCOO TEAM PROJECT.
- *
- *  (c) EMCOO TEAM
- *  (c) DevMark <mark@emcoo.com>
- *
- *  For the full copyright and license information, please view http://emcoo.com/
- *
- *
- */
+
 
 (function () {
     'use strict';
@@ -20,6 +11,7 @@
         'mediaModule',
         'mediaCategoryModule',
         'postCategoryModule',
+        'localisationModule',
         'settingModule',
         'languageModule',
 
@@ -38,6 +30,7 @@
         'ui.bootstrap.datetimepicker',
         'ui.tree',
         'ui.select',
+        'ui.tinymce',
         'checklist-model',
         'textAngular',
         'toaster', //notification plugin
@@ -111,7 +104,7 @@
                 console.log('start get refresh token');
 
                 $http({
-                    method: 'POST', url: 'http://cms.dev/api/admin/auth/refresh-token', headers: {
+                    method: 'POST', url: 'http://api.dev/api/admin/auth/refresh-token', headers: {
                         'Authorization': authenticationService.getToken()
                     }
                 }).success(function (data, status, headers, config) {
@@ -239,7 +232,7 @@
         // Plugin: Restangular init
         //================================================
         .config(function (RestangularProvider) {
-            RestangularProvider.setBaseUrl('http://cms.dev/api/admin');
+            RestangularProvider.setBaseUrl('http://api.dev/api/admin');
             RestangularProvider.setRestangularFields({
                 ids: "_ids"
             });

@@ -16,6 +16,7 @@ class EntrustRoleMiddleware
      */
     public function handle($request, \Closure $next, $roles)
     {
+        // Decomment
         if (!UserAuth::user()->hasRole(explode('|', $roles))) {
             throw new UnauthorizedException('You do not have permission to access.');
         }

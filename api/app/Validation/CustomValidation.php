@@ -79,12 +79,12 @@ class CustomValidation extends Validator
      * @param  array $parameters
      * @return int
      */
-    protected function getExistCount($table, $column, $value, $parameters)
+    protected function getExistCount($connexion, $table, $column, $value, $parameters)
     {
         $verifier = $this->getPresenceVerifier();
 
         if (substr($table, 0, 7) === 'master_') {
-            $verifier->setConnection('mysql');
+            $verifier->setConnection($connexion);
         }
 
         $extra = $this->getExtraExistConditions($parameters);

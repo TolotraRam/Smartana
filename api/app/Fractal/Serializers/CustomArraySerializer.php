@@ -89,6 +89,7 @@ class CustomArraySerializer extends SerializerAbstract
 
         $pagination = [
             'count'        => (int)$paginator->getCount(),
+            'total'        => (int)$paginator->getTotal(),
             'per_page'     => (int)$paginator->getPerPage(),
             'current_page' => $currentPage,
             'prev_page'    => null,

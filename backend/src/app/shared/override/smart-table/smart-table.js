@@ -1,14 +1,3 @@
-/*
- * This file is part of EMCOO TEAM PROJECT.
- *
- *  (c) EMCOO TEAM
- *  (c) DevMark <mark@emcoo.com>
- *
- *  For the full copyright and license information, please view http://emcoo.com/
- *
- *
- */
-
 (function (ng, undefined) {
     'use strict';
     ng.module('smart-table')
@@ -49,6 +38,11 @@
                             scope.cantPageForward = true;
                         } else {
                             scope.cantPageForward = _.isNull(paginationState.next);
+                        }
+                        if (!_.has(paginationState, 'prev')) {
+                            scope.cantPageBackward = true;
+                        } else {
+                            scope.cantPageBackward = _.isNull(paginationState.prev);
                         }
                     }
 

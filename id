@@ -1,0 +1,40 @@
+id
+name
+contact: {
+  facebook
+  twitter
+  g+
+  phone
+  formattedPhone
+}
+location: {
+  address (street address)
+  city
+  state
+  postalcode
+  country
+  formattedAddress
+  distance (abstract)
+}
+geometry: []
+categories : []
+verified (bool)
+url
+opening_hours: {
+  open_now
+  periods: []
+}
+reviews: {
+  rating (int)
+  text
+  author
+  time
+}
+storedId
+description
+photos: {
+  count
+  group
+}
+
+

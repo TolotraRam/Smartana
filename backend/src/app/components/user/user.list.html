@@ -1,14 +1,3 @@
-<!--
-  ~ This file is part of EMCOO TEAM PROJECT.
-  ~
-  ~  (c) EMCOO TEAM
-  ~  (c) DevMark <mark@emcoo.com>
-  ~
-  ~  For the full copyright and license information, please view http://emcoo.com/
-  ~
-  ~
-  -->
-
 <section class="content-header">
     <h1>
         {{ 'user.users' | translate }}
@@ -62,8 +51,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <ui-select ng-model="listCtrl.filter.role_ids[0]">
-                                        <ui-select-match placeholder="All roles">
+                                    <ui-select ng-model="listCtrl.filter.role_ids[0]" theme="selectize">
+                                        <ui-select-match placeholder="All roles" >
                                             {{ $select.selected.display_name }}
                                         </ui-select-match>
                                         <ui-select-choices
@@ -71,6 +60,7 @@
                                                 refresh="listCtrl.refreshRole($select.search)"
                                                 refresh-delay="0">
                                             <div ng-bind-html="role.display_name | highlight: $select.search"></div>
+                                            <small ng-bind-html="role.name | highlight: $select.search"></small>
                                         </ui-select-choices>
                                     </ui-select>
                                 </div>
@@ -123,6 +113,7 @@
                                                    ng-model="isAllSelected"></st-select-all>
                                 </th>
                                 <th>{{ 'global.name' | translate}}</th>
+                                <th>{{ 'global.last_login' | translate}}</th>
                                 <th width="20%">{{ 'global.created_at' | translate }}</th>
                                 <th width="15%"></th>
                             </tr>
@@ -133,8 +124,8 @@
                                 <td>
                                     <input type="checkbox" ng-checked="row.isSelected" st-select-row="row"/>
                                 </td>
-                                <td>{{ row.getFullName() }}
-                                </td>
+                                <td>{{ row.getFullName() }}</td>
+                                <td am-time-ago="row.last_login"></td>
                                 <td>{{ row.created_at | amCalendar }}</td>
                                 <td>
                                     <div class="btn-group" dropdown>
