@@ -16,7 +16,7 @@ class PostCategory extends \Baum\Node
 
     public function posts()
     {
-        return $this->belongsToMany('App\Models\Post', 'post_post_category');
+        return $this->hasMany('App\Models\Post', 'post_post_category');
     }
 
 }

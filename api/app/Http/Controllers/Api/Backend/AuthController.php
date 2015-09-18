@@ -3,6 +3,7 @@
 use Auth;
 use Input, Response, Validator;
 
+use Carbon\Carbon;
 use UserAuth;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -47,6 +48,8 @@ class AuthController extends ApiController
             if (!UserAuth::user()->can('auth.backend')) {
                 throw new UnauthorizedException('You do not have permission to access.');
             }
+            UserAuth::user()->last_login = Carbon::now();
+            UserAuth::user()->save();
             $payload = app('tymon.jwt.payload.factory')->sub(UserAuth::user()->id)->aud('user')->make();
             $token = JWTAuth::encode($payload);
 

@@ -1,13 +1,4 @@
-/*
- * This file is part of EMCOO TEAM PROJECT.
- *
- *  (c) EMCOO TEAM
- *  (c) DevMark <mark@emcoo.com>
- *
- *  For the full copyright and license information, please view http://emcoo.com/
- *
- *
- */
+
 (function () {
     'use strict';
 
@@ -61,6 +52,17 @@
         vm.form = {
             publishedDate: moment(vm.post.published_at).format('YYYY-MM-DD'),
             publishedTime: vm.post.published_at
+        };
+
+        vm.tinymceOptions = {
+            inline: false,
+            plugins : [
+                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars code fullscreen",
+                "insertdatetime media nonbreaking save table contextmenu directionality",
+                "emoticons template paste textcolor colorpicker textpattern",
+            ],
+            theme : 'modern'
         };
 
         //==========================================

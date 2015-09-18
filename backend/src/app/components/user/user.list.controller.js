@@ -1,19 +1,10 @@
-/*
- * This file is part of EMCOO TEAM PROJECT.
- *
- *  (c) EMCOO TEAM
- *  (c) DevMark <mark@emcoo.com>
- *
- *  For the full copyright and license information, please view http://emcoo.com/
- *
- *
- */
+
 (function () {
     'use strict';
 
     angular.module('userModule').controller('UserListController', UserListController);
 
-    function UserListController(userService, $location, toaster, $translate, $q, angularMomentConfig, roleService) {
+    function UserListController(userService, $scope, $location, toaster, $translate, $q, angularMomentConfig, roleService) {
         var vm = this;
         //==========================================
         // Date & Time picker
@@ -43,7 +34,7 @@
                 });
             }
         };
-
+        vm.refreshRole();
 
         //================================================
         // Table & Filter
@@ -51,7 +42,7 @@
         vm.tableLoading = false;
         vm.paginationAction = '';
         vm.rowCollection = [];
-        vm.itemsByPage = 15;
+        vm.itemsByPage = 4;
 
         vm.filter = {
             limit: vm.itemsByPage,
@@ -64,6 +55,7 @@
 
         vm.resetFilter = function () {
             var deferred = $q.defer();
+            vm.filter.role_ids = [];
             vm.filter.search = null;
             vm.filter.created_at = null;
             vm.filter.created_at_max = null;
@@ -94,9 +86,9 @@
             }
 
             var pagination = tableState.pagination;
-            if (vm.paginationAction === 'next') {
+            if ($scope.paginationAction === 'next') {
                 params.page = pagination.next;
-            } else if (vm.paginationAction === 'prev') {
+            } else if ($scope.paginationAction === 'prev') {
                 params.page = pagination.prev;
             }
 

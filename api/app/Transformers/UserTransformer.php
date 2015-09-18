@@ -20,7 +20,7 @@ class UserTransformer extends TransformerAbstract
             'active'        => (boolean)$item->active,
             'ip'            => $item->ip,
             'timezone'      => $item->timezone,
-            'last_login_at' => $item->last_login_at,
+            'last_login' => $item->last_login,
             'created_at'    => $item->created_at,
             'updated_at'    => $item->updated_at,
         ];

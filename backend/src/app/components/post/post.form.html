@@ -63,8 +63,9 @@
                                    ng-model="formCtrl.post.title">
                         </div>
                         <div class="form-group">
-                            <div text-angular id="content" placeholder="{{ 'global.content' | translate }}"
-                                 ng-model="formCtrl.post.content"></div>
+                            <textarea ui-tinymce="formCtrl.tinymceOptions" placeholder="{{ 'global.content' | translate }}" ng-model="formCtrl.post.content"></textarea>
+                            <!--div text-angular id="content" placeholder="{{ 'global.content' | translate }}"
+                                 ng-model="formCtrl.post.content"></div-->
                         </div>
                     </div>
                     <!-- /.box-body -->

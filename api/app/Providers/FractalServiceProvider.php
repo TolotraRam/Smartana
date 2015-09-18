@@ -16,13 +16,8 @@ class FractalServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $request = $this->app->make('request');
         $fractal = $this->app->make('League\Fractal\Manager');
         $fractal = $fractal->setSerializer(new CustomArraySerializer);
-
-        if ($request->has('include')) {
-            $fractal->parseIncludes($request->get('include'));
-        }
 
         $result = ['status' => true];
 

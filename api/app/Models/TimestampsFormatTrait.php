@@ -27,4 +27,15 @@ trait TimestampsFormatTrait
         $this->attributes['updated_at'] = Carbon::parse($value)->toDateTimeString();
     }
 
+    public function getLastLoginAttribute($value)
+    {
+        return Carbon::parse($value)->toIso8601String();
+    }
+
+    public function setLastLoginAttribute($value)
+    {
+        $this->attributes['last_login'] = Carbon::parse($value)->toDateTimeString();
+    }
+
+
 }

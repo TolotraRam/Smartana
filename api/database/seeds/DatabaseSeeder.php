@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call(PostCategoryTableSeeder::class);
         $this->command->info('PostCategory table seeded!');
 
+        $this->call(CountryStateCityTableSeeder::class);
+        $this->command->info('Country, State, City table seeded!');
+
 //        $this->call(SettingTableSeeder::class);
 //        $this->command->info('Setting table seeded!');
 

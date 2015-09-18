@@ -40,7 +40,7 @@ class UserAuthMiddleware
      */
     public function handle($request, \Closure $next)
     {
-
+        // Decomment
         if (!$token = $this->jwt->setRequest($request)->getToken()) {
             return $this->respond('tymon.jwt.absent', 'token_not_provided', 400);
         }

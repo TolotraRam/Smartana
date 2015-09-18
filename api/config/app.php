@@ -145,14 +145,14 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FractalServiceProvider::class,
         App\Providers\MultiAuthServiceProvider::class,
-        App\Providers\ValidationServiceProvider::class,
+
 
         Barryvdh\Debugbar\ServiceProvider::class,
-        'GrahamCampbell\Throttle\ThrottleServiceProvider',
-        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
-        'Conner\Tagging\TaggingServiceProvider',
-        'Barryvdh\Cors\ServiceProvider',
-        'Zizaco\Entrust\EntrustServiceProvider'
+        GrahamCampbell\Throttle\ThrottleServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Conner\Tagging\TaggingServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
 
     ],
 
@@ -202,13 +202,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Throttle' => 'GrahamCampbell\Throttle\Facades\Throttle',
-        'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
-        'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
-        'Entrust' => 'Zizaco\Entrust\EntrustFacade',
-
+        'Debugbar'  => Barryvdh\Debugbar\Facade::class,
+        'Throttle'  => GrahamCampbell\Throttle\Facades\Throttle::class,
+        'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory'=> Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
         'UserAuth'  => '\App\Facades\UserAuth',
     ],

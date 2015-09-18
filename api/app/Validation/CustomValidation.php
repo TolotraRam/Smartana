@@ -71,6 +71,33 @@ class CustomValidation extends Validator
     }
 
     /**
+     * Get the number of records that exist in storage.
+     *
+     * @param  string $table
+     * @param  string $column
+     * @param  mixed $value
+     * @param  array $parameters
+     * @return int
+     */
+    protected function getExistCount($connexion, $table, $column, $value, $parameters)
+    {
+        $verifier = $this->getPresenceVerifier();
+
+        if (substr($table, 0, 7) === 'master_') {
+            $verifier->setConnection($connexion);
+        }
+
+        $extra = $this->getExtraExistConditions($parameters);
+
+        if (is_array($value)) {
+            return $verifier->getMultiCount($table, $column, $value, $extra);
+        } else {
+            return $verifier->getCount($table, $column, $value, null, null, $extra);
+        }
+    }
+
+
+    /**
      * Validate the uniqueness of an attribute value on a given database table.
      *
      * If a database column is not specified, the attribute will be used.
