@@ -13,20 +13,21 @@ class CreateReviewsTable extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('store_id')->unsigned();
+            $table->integer('store_id');
             $table->integer('score');
             $table->text('message');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id');
             $table->timestamp('published_at');
         });
         Schema::table('reviews', function(Blueprint $table) {
-            $table->foreign('store_id')->references('store_id')->on('venues')
+            /*$table->foreign('store_id')->references('store_id')->on('venues')
                 ->onDelete('restrict')
-                ->onUpdate('restrict');
-            $table->foreign('user_id')->references('id')->on('user')
+                ->onUpdate('restrict');*/
+            /*$table->foreign('user_id')->references('id')->on('user')
                 ->onDelete('restrict')
-                ->onUpdate('restrict');
+                ->onUpdate('restrict');*/
         });
     }
 

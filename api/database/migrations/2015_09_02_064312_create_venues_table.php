@@ -13,6 +13,7 @@ class CreateVenuesTable extends Migration
     public function up()
     {
         Schema::create('venues', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('store_id', 30)->unique()->index();
             $table->string('name');
@@ -26,17 +27,18 @@ class CreateVenuesTable extends Migration
             $table->string('twitter', 150)->nullable();
             $table->string('google_plus', 150)->nullable();
             $table->text('categories')->nullable();
-            $table->integer('opening_id')->nullable();
-            $table->integer('review_id')->nullable()->unsigned();
-            $table->integer('photo_id')->nullable()->unsigned();
+            //$table->integer('photo_id')->nullable()->unsigned();
             $table->string('url', 150);
             $table->boolean('is_verified')->default(0);
-            $table->integer('city_id', 10)->unsigned();
-            $table->integer('state_id', 10)->unsigned();
-            $table->integer('country_id', 10)->unsigned();
             $table->timestamps();
         });
         DB::statement('ALTER TABLE venues ADD location POINT' );
+        /*DB::statement('ALTER TABLE venues ADD review_id INT(10) UNSIGNED' );
+        DB::statement('ALTER TABLE venues ADD photo_id INT(10) UNSIGNED' );*/
+        DB::statement('ALTER TABLE venues ADD city_id INT(10) UNSIGNED' );
+        DB::statement('ALTER TABLE venues ADD country_id INT(10) UNSIGNED' );
+        DB::statement('ALTER TABLE venues ADD state_id INT(10) UNSIGNED' );
+
         Schema::table('venues', function(Blueprint $table) {
             $table->foreign('city_id')->references('id')->on('cities')
                 ->onDelete('restrict')
@@ -47,13 +49,18 @@ class CreateVenuesTable extends Migration
             $table->foreign('country_id')->references('id')->on('countries')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
-            $table->foreign('review_id')->references('id')->on('reviews')
+            /*$table->foreign('review_id')->references('id')->on('reviews')
                 ->onDelete('restrict')
-                ->onUpdate('restrict');
-            $table->foreign('photo_id')->references('id')->on('photos')
+                ->onUpdate('restrict');*/
+            /*$table->foreign('photo_id')->references('id')->on('photos')
                 ->onDelete('restrict')
-                ->onUpdate('restrict');
+                ->onUpdate('restrict');*/
         });
+        /*Schema::table('reviews', function(Blueprint $table) {
+            $table->foreign('store_id')->references('store_id')->on('venues')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+        });*/
     }
 
     /**
@@ -67,8 +74,8 @@ class CreateVenuesTable extends Migration
             $table->dropForeign('venues_city_id_foreign');
             $table->dropForeign('venues_state_id_foreign');
             $table->dropForeign('venues_country_id_foreign');
-            $table->dropForeign('venues_review_id_foreign');
-            $table->dropForeign('venues_photo_id_foreign');
+            //$table->dropForeign('venues_review_id_foreign');
+            /*$table->dropForeign('venues_photo_id_foreign');*/
         });
         Schema::drop('venues');
     }

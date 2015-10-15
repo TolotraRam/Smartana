@@ -13,6 +13,7 @@ class CreateOpeningsTable extends Migration
     public function up()
     {
         Schema::create('openings', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('store_id');
             $table->integer('day');
@@ -20,7 +21,7 @@ class CreateOpeningsTable extends Migration
             $table->timestamp('close_time');
         });
         Schema::table('openings', function(Blueprint $table) {
-            $table->foreign('store_id')->references('id')->on('venues')
+            $table->foreign('store_id')->references('store_id')->on('venues')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
         });
