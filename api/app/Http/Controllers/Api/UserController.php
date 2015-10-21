@@ -99,7 +99,7 @@ class UserController extends ApiController
             'firstname' => 'string|min:1|max:255',
             'active'    => 'boolean',
             'email'     => 'required|email',
-            'password'  => 'required|min:8|max:255',
+            'password'  => 'required|min:6|max:255',
             'roles'     => 'array|integerInArray|existsInArray:role,id',
         ];
 
@@ -133,7 +133,7 @@ class UserController extends ApiController
             'firstname' => 'string|min:1|max:255',
             'active'    => 'boolean',
             'email'     => 'email',
-            'password'  => 'min:8|max:255',
+            'password'  => 'min:6|max:255',
             'roles'     => 'array|integerInArray|existsInArray:role,id',
         ];
 

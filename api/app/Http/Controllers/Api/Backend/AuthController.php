@@ -36,7 +36,7 @@ class AuthController extends ApiController
 
         $validator = Validator::make($credentials, [
             'email'    => 'Required|Between:3,64|Email',
-            'password' => 'Required|Min:8|Max:30|AlphaNum',
+            'password' => 'Required|Min:6|Max:30|AlphaNum',
         ]);
 
         if ($validator->fails()) {

@@ -12,7 +12,6 @@
         //================================================
         vm.files = [];
         $scope.$watch('listCtrl.files', function () {
-            console.log('sd');
             vm.upload(vm.files);
         });
         vm.upload = function (files) {

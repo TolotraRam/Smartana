@@ -31,6 +31,7 @@
         'ui.tree',
         'ui.select',
         'ui.tinymce',
+        'uiSwitch',
         'checklist-model',
         'textAngular',
         'toaster', //notification plugin

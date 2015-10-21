@@ -48,6 +48,9 @@
               });
               return deferred.promise;
             },
+            country: function () {
+              return;
+            },
             meta: function ($rootScope, $translate, $q) {
               var deferred = $q.defer();
               $translate('country.countries').then(function (translation) {

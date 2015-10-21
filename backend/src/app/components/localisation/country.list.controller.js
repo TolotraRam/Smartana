@@ -4,7 +4,7 @@
     angular.module('localisationModule')
     .controller('CountryListController', CountryListController);
 
-    function CountryListController(countryService, $scope, $location, toaster, $translate, $q) {
+    function CountryListController(countryService, country, messageService, $scope, $state, $location, toaster, $translate, Restangular, $q) {
         var vm = this;
 
         //================================================
@@ -95,6 +95,16 @@
                 toaster.pop('success', '', $translate.instant('country.delete_success_msg'));
             }, function () {
                 toaster.pop('error', '', $translate.instant('country.delete_error_msg'));
+            });
+        };
+        //==========================================
+        // save
+        //==========================================
+        vm.save = function (row) {
+            countryService.update(row.id, {'enabled': row.enabled}).then(function (result) {
+                toaster.pop('success', '', $translate.instant('country.update_success_msg'));
+            }, function () {
+                toaster.pop('error', '', $translate.instant('country.update_error_msg'));
             });
         };
 
