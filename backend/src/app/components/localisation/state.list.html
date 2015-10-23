@@ -98,8 +98,10 @@
                                     <input type="checkbox" ng-checked="row.isSelected" st-select-row="row"/>
                                 </td>
                                 <td>{{ row.name }}</td>
-                                <td>{{ row.code }}</td>
-                                <td>{{ row.enabled }}</td>
+                                <td>{{ row.country.name }}</td>
+                                <td>
+                                    <switch id="enabled" name="enabled" ng-model="row.enabled" ng-change="listCtrl.save(row)" class="green"></switch>
+                                </td>
                                 <td>
                                     <div class="btn-group" dropdown>
                                         <a href="state/{{ row.id }}/edit" class="btn btn-primary"><i

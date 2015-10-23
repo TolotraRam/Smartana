@@ -109,6 +109,17 @@
                 toaster.pop('error', '', $translate.instant('state.delete_error_msg'));
             });
         };
+        //==========================================
+        // save
+        //==========================================
+
+        vm.save = function (row) {
+            stateService.update(row.id, {'enabled': row.enabled}).then(function (result) {
+                toaster.pop('success', '', $translate.instant('state.update_success_msg'));
+            }, function () {
+                toaster.pop('error', '', $translate.instant('state.update_error_msg'));
+            });
+        };
 
     }
 
