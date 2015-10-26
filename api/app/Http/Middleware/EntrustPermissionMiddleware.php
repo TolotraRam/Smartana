@@ -17,7 +17,7 @@ class EntrustPermissionMiddleware
      */
     public function handle($request, \Closure $next, $permissions)
     {
-        // Decomment
+
         if (!UserAuth::check() || !UserAuth::user()->can(explode('|', $permissions))) {
             throw new UnauthorizedException('You do not have permission to access.');
         }
