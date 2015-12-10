@@ -51991,7 +51991,9 @@ class CountryStateCityTableSeeder extends Seeder
         'state_id' => $index[2]
       ];
     }
+    DB::connection()->disableQueryLog();
     DB::table('cities')->insert($city);
+    DB::connection()->enableQueryLog();
   }
 
 }

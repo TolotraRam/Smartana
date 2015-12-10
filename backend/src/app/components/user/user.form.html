@@ -1,14 +1,3 @@
-<!--
-  ~ This file is part of EMCOO TEAM PROJECT.
-  ~
-  ~  (c) EMCOO TEAM
-  ~  (c) DevMark <mark@emcoo.com>
-  ~
-  ~  For the full copyright and license information, please view http://emcoo.com/
-  ~
-  ~
-  -->
-
 <section class="content-header">
     <h1>
         <span ng-if="formCtrl.user.id !== ''">{{ 'user.edit_user' | translate }}</span>
@@ -19,8 +8,8 @@
 
 <!-- Main content -->
 <section class="content">
-    <form name="formCtrl.userForm">
 
+    <form name="formCtrl.userForm">
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-right">
@@ -53,18 +42,15 @@
                         <span ng-if="!formCtrl.deleteLoading"><i class="fa fa-save"></i> {{
                             'button.delete' | translate }}</span>
                     </button>
-
                 </div>
-            </div>
-            <!-- /.col -->
+            </div><!-- /.col -->
         </div>
+        <br />
         <!-- /.row -->
-        <br/>
-
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
 
-                <div class="box box-solid">
+                <div class="box box-success">
                     <div class="box-body">
 
                         <div class="row">
@@ -112,7 +98,7 @@
                 </div>
                 <!-- /.box -->
 
-                <div class="box box-solid">
+                <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'user.roles' | translate }} </h3>
 
@@ -121,8 +107,7 @@
                                     class="fa fa-plus"></i> {{ 'button.add' | translate }}
                             </button>
                         </div>
-                    </div>
-                    <!-- /.box-header -->
+                    </div><!-- /.box-header -->
                     <div class="box-body">
 
                         <ui-select multiple ng-model="formCtrl.user.roles">
@@ -136,20 +121,13 @@
                         </ui-select>
 
 
-                    </div>
-                    <!-- /.box-body -->
+                    </div><!-- /.box-body -->
                     <div class="overlay" ng-show="!formCtrl.user.roles">
                         <i class="fa fa-refresh fa-spin"></i>
-                    </div>
-                    <!-- /.overlay -->
-                </div>
-                <!-- /.box -->
+                    </div><!-- /.overlay -->
+                </div><!-- /.box -->
 
-            </div>
-            <!-- /.col -->
-            <div class="col-md-4">
-
-                <div class="box box-solid">
+                <div class="box box-success">
                     <div class="box-body">
 
                         <div class="form-group">
@@ -163,7 +141,7 @@
 
                         </div>
 
-                        <div class="form-group">
+                        <!--div class="form-group">
                             <label class="control-label"
                                    for="created_at">{{ 'global.created_at' | translate }}</label>
 
@@ -171,7 +149,7 @@
                                 {{ formCtrl.user.created_at | amCalendar}}
                             </div>
 
-                        </div>
+                        </div-->
 
 
                     </div>
@@ -179,11 +157,8 @@
                 </div>
                 <!-- /.box -->
 
-            </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-    </form>
-    <!-- /form -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </form><!-- /form -->
 
 </section>

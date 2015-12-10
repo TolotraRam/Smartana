@@ -1,6 +1,6 @@
 {
   "panel": {
-    "name": "EMCOOCMS",
+    "name": "Smartana CMS",
     "dashboard": "Dashboard",
     "404": {
       "not_found": "Not Found",
@@ -26,6 +26,7 @@
     "content": "Content",
     "name": "Name",
     "id": "ID",
+    "last_login": "Last login",
     "created_at": "Created at",
     "photo": "Photo",
     "status": "Status",
@@ -153,6 +154,39 @@
       "delete_error_msg": "Error occurred when trying to delete post category."
     }
   },
+  "country": {
+    "country": "Country",
+    "countries": "Countries",
+    "add_a_country": "Add a country",
+    "edit_country": "Edit country",
+    "remove_countries": "Remove countries",
+    "delete_country": "Delete country",
+    "title": "Title",
+    "enabled": "Enabled",
+    "code": "Country code"
+    },
+    "state": {
+    "state": "State",
+    "states": "States",
+    "add_a_state": "Add a state",
+    "edit_state": "Edit state",
+    "remove_states": "Remove states",
+    "delete_state": "Delete state",
+    "title": "Title",
+    "enabled": "Enabled",
+    "code": "State code"
+    },
+    "city": {
+    "city": "City",
+    "cities": "Cities",
+    "add_a_city": "Add a city",
+    "edit_city": "Edit city",
+    "remove_cities": "Remove cities",
+    "delete_city": "Delete city",
+    "title": "Title",
+    "enabled": "Enabled",
+    "code": "City code"
+    },
   "event": {
     "events": "Events",
     "event": "Event",

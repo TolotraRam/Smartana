@@ -1,0 +1,110 @@
+<section class="content-header">
+    <h1>
+        <span ng-if="formCtrl.country.id !== ''">{{ 'country.edit_country' | translate }}</span>
+        <span ng-if="formCtrl.country.id === ''">{{ 'country.add_a_country' | translate }}</span>
+        <small>{{ formCtrl.country.title }}</small>
+    </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <form name="formCtrl.countryForm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+
+                    <button type="submit"
+                            ng-disabled="formCtrl.countryForm.$invalid || formCtrl.deleteLoading || formCtrl.saveLoading"
+                            ng-click="formCtrl.save()"
+                            class="btn btn-primary">
+                        <span ng-if="formCtrl.saveLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.saveLoading"><i class="fa fa-save"></i> {{
+                            'button.save' | translate }}</span>
+                    </button>
+
+                    <button type="button" class="btn btn-default" ng-click="$location.path('countries')"><i
+                            class="fa fa-reply"></i> {{ 'button.go_back' |
+                        translate }}
+                    </button>
+
+                    <button type="submit" ng-click="formCtrl.saveAndExit()"
+                            ng-disabled="formCtrl.countryForm.$invalid || formCtrl.deleteLoading || formCtrl.saveLoading"
+                            class="btn btn-primary">
+                        <span ng-if="formCtrl.saveLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.saveLoading"><i class="fa fa-save"></i> {{
+                            'button.save_exit' | translate }}</span>
+                    </button>
+                    <button ng-if="formCtrl.country.id !== ''" type="button"
+                            ng-disabled="formCtrl.deleteLoading || formCtrl.saveLoading"
+                            ng-click="formCtrl.delete()" class="btn btn-danger">
+                        <span ng-if="formCtrl.deleteLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.deleteLoading"><i class="fa fa-save"></i> {{
+                            'button.delete' | translate }}</span>
+                    </button>
+                </div>
+            </div><!-- /.col -->
+        </div>
+        <br />
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="box box-success">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="name" class="control-label">{{ 'country.country' | translate }}</label>
+                            <input id="name" type="text" class="form-control"
+                                   placeholder="{{ 'country.country' | translate }}"
+                                   required=""
+                                   ng-model="formCtrl.country.name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="code" class="control-label">{{ 'country.code' | translate }}</label>
+                            <input id="code" type="text" class="form-control"
+                                   placeholder="{{ 'country.code' | translate }}"
+                                   ng-minlength="2" ng-required="formCtrl.country.id === ''"
+                                   ng-model="formCtrl.country.code">
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+                <div class="box box-success">
+                    <div class="box-body">
+
+                        <div class="form-group">
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="formCtrl.country.enabled"> {{ 'global.status' |
+                                    translate }}
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <!--div class="form-group">
+                            <label class="control-label"
+                                   for="created_at">{{ 'global.created_at' | translate }}</label>
+
+                            <div id="created_at" class="input-group">
+                                {{ formCtrl.country.created_at | amCalendar}}
+                            </div>
+
+                        </div-->
+
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </form><!-- /form -->
+
+</section>
