@@ -35,6 +35,9 @@
                                 ng-include="'nodes_renderer.html'"></li>
                         </ol>
                     </div>
+                    <div ui-tree="listCtrl.categoryTree" ng-if="listCtrl.categories.length <= 0">
+                        No category found! try to add one from <a ui-sref="main.post-category-create">here</a>
+                    </div>
 
                 </div>
                 <!-- /.box-body -->

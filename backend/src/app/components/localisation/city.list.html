@@ -41,6 +41,32 @@
                         <div class="col-md-6">
                             <div class="form-inline text-right">
                                 <div class="form-group">
+                                    <ui-select ng-model="listCtrl.filter.country_ids[0]" theme="selectize">
+                                        <ui-select-match placeholder="All countries" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="country.id as country in listCtrl.countries track by $index"
+                                                refresh="listCtrl.refreshCountries($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="form-group">
+                                    <ui-select ng-model="listCtrl.filter.country_ids[0]" theme="selectize">
+                                        <ui-select-match placeholder="All states" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="state.id as state in listCtrl.states track by $index"
+                                                refresh="listCtrl.refreshStates($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="state.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="form-group">
                                     <input type="text" class="form-control" ng-model="listCtrl.filter.search"
                                            placeholder="Search Title"/>
                                 </div>
@@ -64,7 +90,7 @@
                     <!-- /.row -->
 
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover table-striped">
                             <thead>
                             <tr>
                                 <th width="5%">
@@ -73,9 +99,9 @@
                                                    ng-model="isAllSelected"></st-select-all>
                                 </th>
                                 <th>{{ 'city.city' | translate}}</th>
-                                <th>{{ 'city.code' | translate}}</th>
+                                <th>{{ 'state.state' | translate}}/{{ 'country.country' | translate}}</th>
                                 <th>{{ 'city.enabled' | translate}}</th>
-                                <th width="15%"></th>
+                                <th width="15%">{{ 'global.actions' | translate}}</th>
                             </tr>
                             </thead>
                             <tbody ng-if="!listCtrl.tableLoading">
@@ -85,23 +111,20 @@
                                     <input type="checkbox" ng-checked="row.isSelected" st-select-row="row"/>
                                 </td>
                                 <td>{{ row.name }}</td>
-                                <td>{{ row.code }}</td>
-                                <td>{{ row.enabled }}</td>
                                 <td>
-                                    <div class="btn-group" dropdown>
-                                        <a href="city/{{ row.id }}/edit" class="btn btn-primary"><i
-                                                class="fa fa-search"></i> {{ 'button.edit' | translate }}
-                                        </a>
-                                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a ng-click="listCtrl.remove(row)" href=""><i class="fa fa-times"></i> {{
-                                                'button.remove' | translate }}</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <span class="show">{{ row.state.name }}</span>
+                                    <small><b>{{ row.state.country.name }}</b></small>
+                                </td>
+                                <td>
+                                    <switch id="enabled" name="enabled" ng-model="row.enabled" ng-change="listCtrl.save(row)" small class="green"></switch>
+                                </td>
+                                <td>
+                                    <a href="city/{{ row.id }}/edit" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a ng-click="listCtrl.remove(row)" class="btn btn-sm btn-danger" href="">
+                                        <i class="fa fa-times"></i>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>

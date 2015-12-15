@@ -66,7 +66,7 @@
                                 <th>{{ 'country.country' | translate}}</th>
                                 <th>{{ 'country.code' | translate}}</th>
                                 <th>{{ 'country.enabled' | translate}}</th>
-                                <th width="15%"></th>
+                                <th width="15%">{{ 'global.actions' | translate}}</th>
                             </tr>
                             </thead>
                             <tbody ng-if="!listCtrl.tableLoading">
@@ -81,19 +81,13 @@
                                     <switch id="enabled" name="enabled" ng-model="row.enabled" ng-change="listCtrl.save(row)" class="green"></switch>
                                 </td>
                                 <td>
-                                    <div class="btn-group" dropdown>
-                                        <a href="country/{{ row.id }}/edit" class="btn btn-primary"><i
-                                                class="fa fa-search"></i> {{ 'button.edit' | translate }}
+                                    <div class="btn-group">
+                                        <a href="country/{{ row.id }}/edit" class="btn btn-primary">
+                                            <i class="fa fa-pencil"></i>
                                         </a>
-                                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a ng-click="listCtrl.remove(row)" href=""><i class="fa fa-times"></i> {{
-                                                'button.remove' | translate }}</a>
-                                            </li>
-                                        </ul>
+                                        <a ng-click="listCtrl.remove(row)" class="btn btn-danger" href="">
+                                            <i class="fa fa-times"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

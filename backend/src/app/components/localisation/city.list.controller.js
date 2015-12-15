@@ -4,9 +4,30 @@
     angular.module('localisationModule')
     .controller('CityListController', CityListController);
 
-    function CityListController(cityService, $scope, $location, toaster, $translate, $q) {
+    function CityListController(cityService, countryService, stateService, $scope, $location, toaster, $translate, $q) {
         var vm = this;
-
+        
+        //==========================================
+        // Load Data
+        //==========================================
+        vm.countries = [];
+        vm.refreshCountries = function (string) {
+            if (string !== '') {
+                countryService.get({search: string}).then(function (result) {
+                    vm.countries = result;
+                });
+            }
+        };
+        vm.refreshCountries();
+        vm.states = [];
+        vm.refreshStates = function (string) {
+            if (string !== '') {
+                stateService.get({search: string}).then(function (result) {
+                    vm.states = result;
+                });
+            }
+        };
+        vm.refreshStates();
         //================================================
         // Table & Filter
         //================================================
@@ -18,7 +39,8 @@
         vm.filter = {
             limit: vm.itemsByPage,
             page: parseInt($location.page) || 1,
-            search: $location.search().search || ''
+            search: $location.search().search || '',
+            state_ids: []
         };
 
         vm.resetFilter = function () {
