@@ -1,8 +1,10 @@
 {
-  "name": "Sidemenu",
+  "name": "sample",
   "private": "true",
   "devDependencies": {
-    "ionic": "1.0.0",
+    "ionic": "1.1.1",
+    "ionic-material": "0.4.2",
+    "ion-md-input": "1.0.4",
     "satellizer": "^0.11.0"
   }
 }
