@@ -88,7 +88,7 @@
         .directive('stSelectAll', function () {
             return {
                 require: '^stTable',
-                template: '<input type="checkbox" ng-model="isAllSelected"/>',
+                template: '<md-checkbox class="md-primary" ng-model="isAllSelected" aria-label="stTableAll"></md-checkbox>',
                 scope: {
                     rows: '=all',
                     ngModel: '=',

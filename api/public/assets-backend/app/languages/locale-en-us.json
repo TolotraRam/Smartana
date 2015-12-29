@@ -28,6 +28,7 @@
     "id": "ID",
     "last_login": "Last login",
     "created_at": "Created at",
+    "actions": "Actions",
     "photo": "Photo",
     "status": "Status",
     "description": "Description",

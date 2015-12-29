@@ -35,6 +35,7 @@
         'checklist-model',
         'textAngular',
         'toaster', //notification plugin
+        'ngMaterial',
 
         //Plugin
         'angular.filter',
@@ -218,7 +219,7 @@
         // UI select Config
         //================================================
         .config(function (uiSelectConfig) {
-            uiSelectConfig.theme = 'bootstrap';
+            uiSelectConfig.theme = 'selectize';
             uiSelectConfig.resetSearchInput = true;
         })
 
@@ -275,6 +276,7 @@
                 .state('main.index', {
                     url: '',
                     templateUrl: 'app/main/dashboard.html',
+                    controller: 'DashboardController as dashCtrl',
                     resolve: {
                         meta: function ($rootScope, $translate, $q) {
                             var deferred = $q.defer();

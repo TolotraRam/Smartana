@@ -53,23 +53,24 @@
                 <div class="box box-success">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="name" class="control-label">{{ 'country.state' | translate }}</label>
+                            <label for="name" class="control-label">{{ 'state.state' | translate }}</label>
                             <input id="name" type="text" class="form-control"
-                                   placeholder="{{ 'country.state' | translate }}"
+                                   placeholder="{{ 'state.state' | translate }}"
                                    required=""
                                    ng-model="formCtrl.state.name">
                         </div>
-
-                        <ui-select ng-model="formCtrl.state.country">
-                            <ui-select-match placeholder="">{{ $item.name }}</ui-select-match>
-                            <ui-select-choices
-                                    repeat="country in formCtrl.country"
-                                    refresh="formCtrl.refreshCountry($select.search)"
-                                    refresh-delay="0">
-                                <div ng-bind-html="country.name | highlight: $select.search"></div>
-                            </ui-select-choices>
-                        </ui-select>
-
+                        <div class="form-group">
+                            <label for="name" class="control-label">{{ 'country.country' | translate }}</label>
+                            <ui-select ng-model="formCtrl.state.country">
+                                <ui-select-match placeholder="">{{ $item.name }}</ui-select-match>
+                                <ui-select-choices
+                                        repeat="country in formCtrl.country"
+                                        refresh="formCtrl.refreshCountry($select.search)"
+                                        refresh-delay="0">
+                                    <div ng-bind-html="country.name | highlight: $select.search">{{ country.name }}</div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -82,8 +83,7 @@
 
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" ng-model="formCtrl.state.enabled"> {{ 'global.status' |
-                                    translate }}
+                                    <md-checkbox ng-model="formCtrl.state.enabled" class="md-primary" aria-label="{{ 'global.status' | translate }}">{{ 'global.status' | translate }}</md-checkbox>
                                 </label>
                             </div>
 

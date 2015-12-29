@@ -29,6 +29,7 @@ class StateController extends ApiController
             'page'             => 'integer',
             'limit'            => 'integer|min:1|max:10000',
             'search'           => 'max:10000',
+            'country_ids'         => 'array|integerInArray'
         ]);
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());

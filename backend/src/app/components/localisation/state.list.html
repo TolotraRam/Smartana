@@ -41,7 +41,7 @@
                         <div class="col-md-6">
                             <div class="form-inline text-right">
                                 <div class="form-group">
-                                    <ui-select ng-model="listCtrl.filter.country_ids[0]" theme="selectize">
+                                    <ui-select ng-model="listCtrl.filter.country_ids[0]">
                                         <ui-select-match placeholder="All countries" >
                                             {{ $select.selected.name }}
                                         </ui-select-match>
@@ -95,7 +95,7 @@
 
                             <tr ng-repeat="row in listCtrl.rowCollection">
                                 <td>
-                                    <input type="checkbox" ng-checked="row.isSelected" st-select-row="row"/>
+                                    <md-checkbox class="md-primary" ng-checked="row.isSelected" st-select-row="row" aria-label="{{ row.name }}"></md-checkbox>
                                 </td>
                                 <td>{{ row.name }}</td>
                                 <td>{{ row.country.name }}</td>

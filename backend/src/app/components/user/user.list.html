@@ -128,20 +128,12 @@
                                 <td am-time-ago="row.last_login"></td>
                                 <td>{{ row.created_at | amCalendar }}</td>
                                 <td>
-                                    <div class="btn-group" dropdown>
-                                        <a href="users/{{ row.id }}/edit" class="btn btn-primary"><i
-                                                class="fa fa-search"></i> {{ 'button.edit' | translate }}
-                                        </a>
-                                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a ng-click="listCtrl.remove(row)" href=""><i class="fa fa-times"></i> {{
-                                                'button.remove' | translate }}</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <a href="users/{{ row.id }}/edit" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a ng-click="listCtrl.remove(row)" class="btn btn-sm btn-danger" href="">
+                                        <i class="fa fa-times"></i>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>

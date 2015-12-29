@@ -1,28 +1,18 @@
-<section class="content-header">
-    <h1>
-        {{ 'city.cities' | translate }}
+<section class="content-header clearfix">
+    <h1 class="pull-left">
+        {{ 'city.cities' | translate }} 
     </h1>
+    <div class="pull-right">
+        <a ui-sref="main.city-create" class="btn btn-primary"><i class="fa fa-plus"></i> {{ 'city.add_a_city'
+            | translate }}</a>
+    </div>
 </section>
 
 <!-- Main content -->
 <section class="content">
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="pull-right">
-                <a ui-sref="main.city-create" class="btn btn-primary"><i class="fa fa-plus"></i> {{ 'city.add_a_city'
-                    | translate }}</a>
-            </div>
-        </div>
-    </div>
-    <br/>
-
     <div class="row">
         <div class="col-md-12">
             <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ 'city.cities' | translate }}</h3>
-                </div>
                 <!-- /.box-header -->
                 <div class="box-body" st-table="listCtrl.rowCollection" st-safe-src="listCtrl.rowCollection"
                      st-pipe="listCtrl.callServer">
@@ -54,7 +44,7 @@
                                     </ui-select>
                                 </div>
                                 <div class="form-group">
-                                    <ui-select ng-model="listCtrl.filter.country_ids[0]" theme="selectize">
+                                    <ui-select ng-model="listCtrl.filter.state_ids[0]" theme="selectize">
                                         <ui-select-match placeholder="All states" >
                                             {{ $select.selected.name }}
                                         </ui-select-match>
@@ -108,7 +98,7 @@
 
                             <tr ng-repeat="row in listCtrl.rowCollection">
                                 <td>
-                                    <input type="checkbox" ng-checked="row.isSelected" st-select-row="row"/>
+                                    <md-checkbox class="md-primary" ng-checked="row.isSelected" st-select-row="row" aria-label="{{ row.name }}"></md-checkbox>
                                 </td>
                                 <td>{{ row.name }}</td>
                                 <td>
