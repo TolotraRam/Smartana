@@ -23,6 +23,18 @@
                     <span ng-show="listCtrl.uploadLoading"><i class="fa fa-spin fa-spinner"></i> {{ 'upload.uploading' |
                         translate }}</span>
                 </div>
+                <ul ng-show="listCtrl.uploadLoading"> 
+                    <li ng-repeat="f in listCtrl.files">
+                        <img ngf-src="!listCtrl.files[0].$error && listCtrl.files[0]" class="thumb" style="width: 100px; height: 100px;">
+                        {{f.name}} {{f.$errorParam}}
+                        <div class="progress" ng-show="f.progress >= 0">
+                            <!--<div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>-->
+                            <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="f.progress" aria-valuemin="0" aria-valuemax="100" style="width: f.progress + '%'">
+                                <span class="sr-only" ng-bind="f.progress + '%'"></span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
                 <div ngf-no-file-drop>{{ 'upload.unsupported_drop_msg' | translate }}</div>
 
                 <br>
@@ -30,80 +42,7 @@
                 <div class="box-body" st-table="listCtrl.rowCollection" st-safe-src="listCtrl.rowCollection"
                      st-pipe="listCtrl.callServer">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-inline">
-                                <form name="listCtrl.categoryForm">
-                                    <div class="form-group">
-                                        <input type="text" required="" class="form-control"
-                                               ng-model="listCtrl.categoryFormData.name"
-                                               placeholder="New category name"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button class="btn btn-default"
-                                                ng-disabled="listCtrl.categoryForm.$invalid || listCtrl.categorySaveLoading"
-                                                ng-click="listCtrl.addCategory()"><i
-                                                class="fa fa-plus"></i> {{
-                                            'button.add' | translate }}
-                                        </button>
-                                    </div>
-                                </form>
-                                <!-- /form -->
-
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                    <br/>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-inline">
-
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="listCtrl.filter.category_ids[0]"
-                                            ng-options="category.id as category.name for category in listCtrl.categories">
-                                        <option value="">All categories</option>
-                                    </select>
-
-                                </div>
-
-                                <div class="form-group">
-                                    <button ng-show="listCtrl.filter.category_ids[0]" class="btn btn-danger"
-                                            ng-disabled="listCtrl.deleteLoading"
-                                            ng-really-message="{{ 'media.delete_before_msg' | translate }}"
-                                            ng-really-click="listCtrl.removeCategory()"><i
-                                            class="fa fa-trash-o"></i> Delete {{ selectedCategory.name }} category
-                                    </button>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="text" class="form-control" ng-model="listCtrl.filter.search"
-                                           placeholder="Serach Title"/>
-                                </div>
-
-                                <div class="form-group">
-                                    <button class="btn btn-default" ng-disabled="listCtrl.tableLoading" st-custom-action
-                                            callback="listCtrl.filterAction()"><i
-                                            class="fa fa-filter"></i> {{
-                                        'button.filter' | translate }}
-                                    </button>
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-default" ng-disabled="listCtrl.tableLoading" st-custom-action
-                                            callback="listCtrl.resetFilter()"><i
-                                            class="fa fa-refresh"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                    <br/>
-
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
 
                             <div class="form-inline">
 
@@ -135,12 +74,71 @@
 
                             </div>
                             <!-- /.form-inline -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-4">
+                            <div class="form-inline">
+                                <form name="listCtrl.categoryForm">
+                                    <div class="form-group">
+                                        <input type="text" required="" class="form-control"
+                                               ng-model="listCtrl.categoryFormData.name"
+                                               placeholder="New category name"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn bg-maroon"
+                                                ng-disabled="listCtrl.categoryForm.$invalid || listCtrl.categorySaveLoading"
+                                                ng-click="listCtrl.addCategory()"><i
+                                                class="fa fa-plus"></i> {{
+                                            'button.add' | translate }}
+                                        </button>
+                                    </div>
+                                </form>
+                                <!-- /form -->
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-4">
+                            <div class="form-inline">
 
+                                <div class="form-group">
+                                    <select class="form-control" ng-model="listCtrl.filter.category_ids[0]"
+                                            ng-options="category.id as category.name for category in listCtrl.categories">
+                                        <option value="">All categories</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <button ng-show="listCtrl.filter.category_ids[0]" class="btn btn-danger"
+                                            ng-disabled="listCtrl.deleteLoading"
+                                            ng-really-message="{{ 'media.delete_before_msg' | translate }}"
+                                            ng-really-click="listCtrl.removeCategory()"><i
+                                            class="fa fa-trash-o"></i> Delete {{ selectedCategory.name }} category
+                                    </button>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="listCtrl.filter.search"
+                                           placeholder="Serach Title"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-warning" ng-disabled="listCtrl.tableLoading" st-custom-action
+                                            callback="listCtrl.filterAction()"><i
+                                            class="fa fa-filter"></i> {{
+                                        'button.filter' | translate }}
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-danger" ng-disabled="listCtrl.tableLoading" st-custom-action
+                                            callback="listCtrl.resetFilter()"><i
+                                            class="fa fa-refresh"></i></button>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.col -->
                     </div>
                     <!-- /.row -->
-
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -154,14 +152,14 @@
                                 <th width="35%">{{ 'global.name' | translate}}</th>
                                 <th width="10%">{{ 'media.file_size' | translate}}</th>
                                 <th width="15%">{{ 'global.created_at' | translate }}</th>
-                                <th width="15%"></th>
+                                <th width="15%">{{ 'global.actions' | translate}}</th>
                             </tr>
                             </thead>
                             <tbody ng-if="!listCtrl.tableLoading">
 
                             <tr ng-repeat="row in listCtrl.rowCollection">
                                 <td>
-                                    <input type="checkbox" ng-checked="row.isSelected" st-select-row="row"/>
+                                    <md-checkbox class="md-primary" ng-checked="row.isSelected" st-select-row="row" aria-label="{{ row.name }}"></md-checkbox>
                                 </td>
                                 <td>
                                     <span ng-if="row.mime.substr(0, 5) === 'image'">
@@ -171,12 +169,12 @@
                                 <td>
                                     <div class="input-group">
                                         <input type="text" class="form-control" required=""
-                                               ng-model="listCtrl.row.name">
+                                               ng-model="row.name">
 
                                         <div class="input-group-btn">
                                             <button type="button"
                                                     ng-disabled="row.name === '' || listCtrl.saveLoading[row.id]"
-                                                    ng-click="save(row)" class="btn btn-default">
+                                                    ng-click="listCtrl.save(row)" class="btn btn-default">
                                                 <span ng-if="listCtrl.saveLoading[row.id]"><i
                                                         class="fa fa-spin fa-spinner"></i></span>
                                                 <span ng-if="!listCtrl.saveLoading[row.id]"><i
@@ -192,22 +190,12 @@
                                 </td>
                                 <td>{{ row.created_at | amCalendar }}</td>
                                 <td>
-                                    <div class="btn-group" dropdown>
-                                        <a href="{{ row.url }}" target="_blank" class="btn btn-primary"><i
-                                                class="fa fa-search"></i> {{ 'button.preview' | translate }}
-                                        </a>
-                                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a ng-click="listCtrl.remove(row)" href=""><i class="fa fa-times"></i> {{
-                                                'button.remove' |
-                                                translate
-                                                }}</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <a href="{{ row.url }}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                    <a ng-click="listCtrl.remove(row)" class="btn btn-sm btn-danger" href="">
+                                        <i class="fa fa-times"></i>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>

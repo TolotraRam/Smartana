@@ -122,7 +122,7 @@
 
                             <tr ng-repeat="row in listCtrl.rowCollection">
                                 <td>
-                                    <input type="checkbox" ng-checked="row.isSelected" st-select-row="row"/>
+                                    <md-checkbox class="md-primary" ng-model="row.isSelected" st-select-row="row" aria-label="stTable"></md-checkbox>
                                 </td>
                                 <td>{{ row.getFullName() }}</td>
                                 <td am-time-ago="row.last_login"></td>

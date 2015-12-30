@@ -1,33 +1,24 @@
-<section class="content-header">
-    <h1>
+<section class="content-header clearfix">
+    <h1 class="pull-left">
         {{ 'post.category.categories' | translate }}
     </h1>
+    <div class="pull-right">
+        <a ui-sref="main.country-create" class="btn btn-primary"><i class="fa fa-plus"></i> {{ 'post.category.add_a_category' | translate }}</a>
+    </div>
 </section>
 
 <!-- Main content -->
 <section class="content">
-
     <div class="row">
         <div class="col-md-12">
-            <div class="pull-right">
-                <a ui-sref="main.post-category-create" class="btn btn-primary"><i class="fa fa-plus"></i> {{
-                    'post.category.add_a_category'
-                    | translate }}</a>
+            <div class="callout callout-info" ng-if="listCtrl.categories.length <= 0">
+                <h4>Hey</h4>
+                <p>No category found! try to add one from <a ui-sref="main.post-category-create">here</a></p>
             </div>
-        </div>
-    </div>
-    <br/>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ 'post.category.categories' | translate }}</h3>
-                </div>
+            <div class="box box-solid" ng-if="listCtrl.categories.length > 0">
                 <!-- /.box-header -->
                 <div class="box-body">
-
-                    <div ui-tree="listCtrl.categoryTree" ng-if="listCtrl.categories.length > 0">
+                    <div ui-tree="listCtrl.categoryTree">
                         <ol ui-tree-nodes="" ng-model="listCtrl.categories">
                             <li ng-repeat="node in listCtrl.categories"
                                 collapsed="{{ node.lft+1 !== node.rgt  ? 'true' : 'false'}}"
@@ -35,10 +26,6 @@
                                 ng-include="'nodes_renderer.html'"></li>
                         </ol>
                     </div>
-                    <div ui-tree="listCtrl.categoryTree" ng-if="listCtrl.categories.length <= 0">
-                        No category found! try to add one from <a ui-sref="main.post-category-create">here</a>
-                    </div>
-
                 </div>
                 <!-- /.box-body -->
                 <div class="overlay" ng-show="!listCtrl.categories">

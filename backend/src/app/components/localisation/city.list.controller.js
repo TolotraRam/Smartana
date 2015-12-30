@@ -19,15 +19,18 @@
             }
         };
         vm.refreshCountries();
+
+
         vm.states = [];
+        vm.loadState = false;
         vm.refreshStates = function (string) {
             if (string !== '') {
                 stateService.get({search: string}).then(function (result) {
                     vm.states = result;
                 });
             }
+            vm.loadState = true;
         };
-        vm.refreshStates();
         //================================================
         // Table & Filter
         //================================================
@@ -63,6 +66,10 @@
 
         vm.callServer = function callServer(tableCity) {
             var params = angular.copy(vm.filter);
+            if (params.state_ids.length > 0) {
+                params['state_ids[]'] = params.state_ids[0];
+                delete params.state_ids;
+            }
 
             var pagination = tableCity.pagination;
             if ($scope.paginationAction === 'next') {

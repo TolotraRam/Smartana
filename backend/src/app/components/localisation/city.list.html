@@ -16,7 +16,6 @@
                 <!-- /.box-header -->
                 <div class="box-body" st-table="listCtrl.rowCollection" st-safe-src="listCtrl.rowCollection"
                      st-pipe="listCtrl.callServer">
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
@@ -30,48 +29,50 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-inline text-right">
-                                <div class="form-group">
-                                    <ui-select ng-model="listCtrl.filter.country_ids[0]" theme="selectize">
-                                        <ui-select-match placeholder="All countries" >
-                                            {{ $select.selected.name }}
-                                        </ui-select-match>
-                                        <ui-select-choices
-                                                repeat="country.id as country in listCtrl.countries track by $index"
-                                                refresh="listCtrl.refreshCountries($select.search)"
-                                                refresh-delay="0">
-                                            <div ng-bind-html="country.name | highlight: $select.search"></div>
-                                        </ui-select-choices>
-                                    </ui-select>
-                                </div>
-                                <div class="form-group">
-                                    <ui-select ng-model="listCtrl.filter.state_ids[0]" theme="selectize">
-                                        <ui-select-match placeholder="All states" >
-                                            {{ $select.selected.name }}
-                                        </ui-select-match>
-                                        <ui-select-choices
-                                                repeat="state.id as state in listCtrl.states track by $index"
-                                                refresh="listCtrl.refreshStates($select.search)"
-                                                refresh-delay="0">
-                                            <div ng-bind-html="state.name | highlight: $select.search"></div>
-                                        </ui-select-choices>
-                                    </ui-select>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" ng-model="listCtrl.filter.search"
-                                           placeholder="Search Title"/>
-                                </div>
-
-                                <div class="form-group">
-                                    <button class="btn btn-default" ng-disabled="listCtrl.tableLoading" st-custom-action
-                                            callback="listCtrl.filterAction()"><i
-                                            class="fa fa-filter"></i> {{
-                                        'button.filter' | translate }}
-                                    </button>
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-default" ng-disabled="listCtrl.tableLoading" st-custom-action
-                                            callback="listCtrl.resetFilter()"><i
-                                            class="fa fa-refresh"></i></button>
+                                <div class="text-left" style="display: inline-block;">
+                                    <div class="form-group">
+                                        <ui-select ng-model="listCtrl.filter.country_ids[0]" on-select="listCtrl.refreshStates()" theme="selectize">
+                                            <ui-select-match placeholder="All countries" >
+                                                {{ $select.selected.name }}
+                                            </ui-select-match>
+                                            <ui-select-choices
+                                                    repeat="country.id as country in listCtrl.countries track by $index"
+                                                    refresh="listCtrl.refreshCountries($select.search)"
+                                                    refresh-delay="0">
+                                                <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="form-group" ng-if="listCtrl.loadState">
+                                        <ui-select ng-model="listCtrl.filter.state_ids[0]" theme="selectize">
+                                            <ui-select-match placeholder="All states" >
+                                                {{ $select.selected.name }}
+                                            </ui-select-match>
+                                            <ui-select-choices
+                                                    repeat="state.id as state in listCtrl.states track by $index"
+                                                    refresh="listCtrl.refreshStates($select.search)"
+                                                    refresh-delay="0">
+                                                <div ng-bind-html="state.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="listCtrl.filter.search"
+                                               placeholder="Search Title"/>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <button class="btn btn-default" ng-disabled="listCtrl.tableLoading" st-custom-action
+                                                callback="listCtrl.filterAction()"><i
+                                                class="fa fa-filter"></i> {{
+                                            'button.filter' | translate }}
+                                        </button>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-default" ng-disabled="listCtrl.tableLoading" st-custom-action
+                                                callback="listCtrl.resetFilter()"><i
+                                                class="fa fa-refresh"></i></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

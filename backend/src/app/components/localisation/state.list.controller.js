@@ -53,6 +53,10 @@
 
         vm.callServer = function callServer(tableState) {
             var params = angular.copy(vm.filter);
+            if (params.country_ids.length > 0) {
+                params['country_ids[]'] = params.country_ids[0];
+                delete params.country_ids;
+            }
 
             var pagination = tableState.pagination;
             if ($scope.paginationAction === 'next') {

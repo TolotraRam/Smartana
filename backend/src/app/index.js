@@ -99,7 +99,7 @@
             amMoment.changeTimezone(settingService.find('timezone'));
 
         })
-        .run(function ($location, authenticationService, localStorageService, $timeout, Restangular, $http, $q, $state) {
+        .run(function ($location, authenticationService, localStorageService, $timeout, Restangular, $http, $q, $state, toaster, $translate) {
 
             var refreshAccessToken = function () {
                 var deferred = $q.defer();
@@ -139,6 +139,11 @@
                     });
                     return false;
                 }
+
+                if (response.status === 400) {
+                    toaster.pop('error', '', $translate.instant('golbal.oops'));
+                    return false;
+                }
                 console.log('error not handled');
                 return true; // error not handled
             });
@@ -160,7 +165,6 @@
             //    }
             //    return true; // error not handled
             //});
-
 
             Restangular.addFullRequestInterceptor(function (element, operation, route, url, headers, params, httpConfig) {
                 //================================================
@@ -219,7 +223,7 @@
         // UI select Config
         //================================================
         .config(function (uiSelectConfig) {
-            uiSelectConfig.theme = 'selectize';
+            uiSelectConfig.theme = 'bootstrap';
             uiSelectConfig.resetSearchInput = true;
         })
 

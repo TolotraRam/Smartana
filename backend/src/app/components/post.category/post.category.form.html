@@ -48,6 +48,7 @@
                             <label class="control-label" for="title">{{ 'global.name' | translate }}</label>
                             <input id="title" type="text" class="form-control"
                                    required=""
+                                   ng-change="formCtrl.generateSlug()"
                                    ng-model="formCtrl.category.name">
                         </div>
 
@@ -73,10 +74,8 @@
 
                         <div class="form-group">
                             <label for="slug" class="control-label">{{ 'global.slug' | translate }}</label>
-
-
                             <div class="input-group">
-                                <input id="slug" type="text" class="form-control"
+                                <input id="slug" type="text" class="form-control" required=""
                                        ng-model="formCtrl.category.slug">
 
                                 <div class="input-group-btn">
