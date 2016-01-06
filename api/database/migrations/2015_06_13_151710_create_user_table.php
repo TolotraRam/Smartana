@@ -22,9 +22,10 @@ class CreateUserTable extends Migration
             $table->string('password', 60);
             $table->boolean('active')->default(1);
             $table->rememberToken();
-            $table->dateTime('last_login');
+            $table->dateTime('last_login')->nullable();
             $table->timestamps();
         });
+        
     }
 
 

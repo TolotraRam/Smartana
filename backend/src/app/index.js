@@ -123,6 +123,12 @@
             };
 
             Restangular.setErrorInterceptor(function (response, deferred, responseHandler) {
+                console.log(response);
+                if (response.status === -1) {
+                    $state.go('main.not-found');
+                    return false;
+                }
+                
                 if (response.data.message === 'token_invalid') {
                     localStorageService.remove('token');
                     $state.go('fullscreen.login');
@@ -144,6 +150,7 @@
                     toaster.pop('error', '', $translate.instant('golbal.oops'));
                     return false;
                 }
+
                 console.log('error not handled');
                 return true; // error not handled
             });

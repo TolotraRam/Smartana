@@ -38,7 +38,7 @@
   </div>
   <!-- /.box -->
   <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <!-- USERS LIST -->
         <div class="box box-danger">
           <div class="box-header with-border">
@@ -53,7 +53,10 @@
             </div>
           </div>
           <!-- /.box-header -->
-          <div class="box-body no-padding" style="display: block;">
+          <div class="box-body no-padding text-center" ng-if="!dashCtrl.loadState">
+            <i class="fa fa-lg fa-spinner fa-spin"></i>
+          </div>
+          <div class="box-body no-padding" ng-if="dashCtrl.loadState">
             <ul class="users-list clearfix">
               <li ng-repeat="row in dashCtrl.rowCollection | orderBy:'-created_at'">
                 <img src="assets/img/user5-128x128.jpg" alt="User Image">

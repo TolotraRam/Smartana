@@ -89,17 +89,17 @@ class UserAndRoleTableSeeder extends Seeder
         $administratorRole->perms()->sync($allPermissions);
         $redactorRole->perms()->sync($redactorPermission);
 
-        $owner = User::create(['firstname' => 'Mark', 'email' => 'admin@emcoo.com', 'password' => 'adminmark', 'last_login' => date('Y-m-d H:i:s')]);
+        $owner = User::create(['firstname' => 'Mark', 'email' => 'admin@emcoo.com', 'password' => 'adminmark', 'last_login' => date('Y-m-d H:i:s'), 'city_id' => 1]);
         $owner->attachRole($ownerRole);
-        $administrator = User::create(['firstname' => 'Tolotra', 'lastname' => 'Ram', 'email' => 'admin@smartana.com', 'password' => '123456', 'last_login' => date('Y-m-d H:i:s')]);
+        $administrator = User::create(['firstname' => 'Tolotra', 'lastname' => 'Ram', 'email' => 'admin@smartana.com', 'password' => '123456', 'last_login' => date('Y-m-d H:i:s'), 'city_id' => 1]);
         $administrator->attachRole($administratorRole);
-        $redactor = User::create(['firstname' => 'Redactor', 'lastname' => 'Red', 'email' => 'redactor@smartana.com', 'password' => '123456', 'last_login' => date('Y-m-d H:i:s')]);
+        $redactor = User::create(['firstname' => 'Redactor', 'lastname' => 'Red', 'email' => 'redactor@smartana.com', 'password' => '123456', 'last_login' => date('Y-m-d H:i:s'), 'city_id' => 1]);
         $redactor->attachRole($redactorRole);
-        $client1 = User::create(['firstname' => 'John', 'lastname' => 'Lennon', 'email' => 'john@gmail.com', 'password' => '123456', 'last_login' => date('Y-m-d H:i:s')]);
+        $client1 = User::create(['firstname' => 'John', 'lastname' => 'Lennon', 'email' => 'john@gmail.com', 'password' => '123456', 'last_login' => date('Y-m-d H:i:s'), 'city_id' => 1]);
         $client1->attachRole($clientRole);
-        $client2 = User::create(['firstname' => 'Martha', 'lastname' => 'Smith', 'email' => 'martha@gmail.com', 'password' => '123456', 'last_login' => date('Y-m-d H:i:s')]);
+        $client2 = User::create(['firstname' => 'Martha', 'lastname' => 'Smith', 'email' => 'martha@gmail.com', 'password' => '123456', 'last_login' => date('Y-m-d H:i:s'), 'city_id' => 1]);
         $client2->attachRole($clientRole);
-        $client3 = User::create(['firstname' => 'Martin', 'lastname' => 'Solveig', 'email' => 'martin@gmail.com', 'password' => '123456', 'last_login' => date('Y-m-d H:i:s')]);
+        $client3 = User::create(['firstname' => 'Martin', 'lastname' => 'Solveig', 'email' => 'martin@gmail.com', 'password' => '123456', 'last_login' => date('Y-m-d H:i:s'), 'city_id' => 1]);
         $client3->attachRole($clientRole);
 
     }

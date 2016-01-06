@@ -100,7 +100,15 @@ class UserController extends ApiController
             'active'    => 'boolean',
             'email'     => 'required|email',
             'password'  => 'required|min:6|max:255',
+            'avatar' => 'string|min:1|max:255',
+            'facebook' => 'string|min:1|max:255',
+            'twitter' => 'string|min:1|max:255',
+            'google' => 'string|min:1|max:255',
+            'phone' => 'string|min:1|max:255',
+            'address' => 'string|min:1|max:255',
+            'biography' => 'string|min:1|max:255',
             'roles'     => 'array|integerInArray|existsInArray:role,id',
+            'cities'     => 'array|integerInArray|existsInArray:city,id',
         ];
 
         $validator = Validator::make(Input::only(array_keys($rules)), $rules);
@@ -109,12 +117,13 @@ class UserController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
         $user = new User;
-        $this->fillFieldFromInput($user, ['active', 'email', 'password']);
-        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname']);
+        $this->fillFieldFromInput($user, ['email', 'password']);
+        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'avatar', 'facebook', 'twitter', 'google', 'phone', 'address', 'biography']);
 
         $user->save();
 
         $user->roles()->sync(Input::get('roles', []));
+        $user->cities()->sync(Input::get('cities', []));
 
         return $this->show($user->id);
     }

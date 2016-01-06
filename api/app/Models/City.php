@@ -13,8 +13,19 @@ class City extends Model
 
   public $timestamps = false;
 
-  public function state() {
+  public function state() 
+  {
     return $this->belongsTo('App\Models\State');
+  }
+
+  public function user()
+	{
+    return $this->belongsTo('App\Models\User');
+	}
+
+  public function user() 
+  {
+    return $this->hasOne('App\Models\User');
   }
 
 }

@@ -15,11 +15,12 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     use Authenticatable, CanResetPassword;
 
     protected $table = 'user';
-    protected $fillable = ['lastname', 'firstname', 'email', 'password', 'active'];
+    protected $fillable = ['lastname', 'firstname', 'email', 'password', 'active','avatar', 'facebook', 'twitter', 'google', 'phone', 'address', 'city_id', 'biography'];
     protected $hidden = ['password', 'remember_token'];
     public $timestamps = true;
 
     public function setPasswordAttribute($pass){
         $this->attributes['password'] = Hash::make($pass);
     }
+
 }
