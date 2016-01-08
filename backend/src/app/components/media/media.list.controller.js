@@ -13,6 +13,7 @@
         vm.files = [];
         $scope.$watch('listCtrl.files', function () {
             vm.upload(vm.files);
+            console.log(vm.files)
         });
         vm.upload = function (files) {
             if (files && files.length) {

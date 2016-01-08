@@ -123,7 +123,7 @@ class UserController extends ApiController
         $user->save();
 
         $user->roles()->sync(Input::get('roles', []));
-        $user->cities()->sync(Input::get('cities', []));
+        //$user->cities()->sync(Input::get('cities', []));
 
         return $this->show($user->id);
     }

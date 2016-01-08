@@ -2,9 +2,10 @@
 (function () {
     'use strict';
 
-    angular.module('userModule').controller('UserFormController', UserFormController);
+    angular.module('userModule')
+    .controller('UserFormController', UserFormController);
 
-    function UserFormController($scope, userService, messageService, toaster, $translate, user, $location, $q, roleService, $state) {
+    function UserFormController($scope, Upload, $timeout, userService, messageService, toaster, $translate, user, $location, $q, roleService, $state) {
         var vm = this;
 
         //==========================================
@@ -24,6 +25,11 @@
                 });
             }
         };
+
+        //==========================================
+        // Profile image
+        //==========================================
+        
 
         //==========================================
         // save

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class City extends Model
+class City extends BaseModel
 {
 
   protected $table = 'cities';
@@ -18,14 +18,9 @@ class City extends Model
     return $this->belongsTo('App\Models\State');
   }
 
-  public function user()
-	{
-    return $this->belongsTo('App\Models\User');
-	}
-
-  public function user() 
+  public function users() 
   {
-    return $this->hasOne('App\Models\User');
+    return $this->hasMany('App\Models\User');
   }
 
 }

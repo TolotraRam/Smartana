@@ -2,7 +2,6 @@
 
 use League\Fractal\TransformerAbstract;
 use App\Models\City;
-//use App\Models\State;
 
 class CityTransformer extends TransformerAbstract
 {
@@ -15,7 +14,7 @@ class CityTransformer extends TransformerAbstract
         return [
             'id'         => (int)$item->id,
             'name'       => $item->name,
-            'enabled'       => (boolean)$item->enabled,
+            'enabled'    => (boolean)$item->enabled,
         ];
 
     }

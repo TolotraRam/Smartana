@@ -44,6 +44,7 @@
         'restangular',
         'LocalStorageModule', // local storage module
         'tmh.dynamicLocale',
+        'ngImageInputWithPreview',
 
         'ngAnimate',
         'ngCookies',

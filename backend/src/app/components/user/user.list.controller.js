@@ -96,7 +96,7 @@
             userService.get(params, {cache: false}).then(function (result) {
                 tableState.pagination.next = result.meta.pagination.next_page || null;
                 tableState.pagination.prev = result.meta.pagination.prev_page || null;
-                //update products list
+                //update users list
                 vm.rowCollection = result;
                 vm.tableLoading = false;
             });

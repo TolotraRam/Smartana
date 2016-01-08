@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('userModule', ['ui.router'])
+    .module('userModule', ['ui.router', 'ngFileUpload'])
     .run(function (Restangular) {
       //================================================
       // Restangular init

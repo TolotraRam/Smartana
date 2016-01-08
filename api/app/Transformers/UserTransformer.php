@@ -2,35 +2,32 @@
 
 use League\Fractal\TransformerAbstract;
 use App\Models\User;
-use Log;
 
 class UserTransformer extends TransformerAbstract
 {
     protected $defaultIncludes = [
-        'roles',
         'city',
+        'roles'
     ];
 
     public function transform(User $item)
     {
         return [
-            'id'            => (int)$item->id,
-            'email'         => $item->email,
-            'lastname'      => $item->lastname,
-            'firstname'     => $item->firstname,
-            'phone'         => $item->phone,
-            'active'        => (boolean)$item->active,
-            'avatar'        => $item->avatar,
-            'facebook'      => $item->facebook,
-            'twitter'       => $item->twitter,
-            'google'        => $item->google,
-            'phone'         => $item->phone,
-            'address'       => $item->address,
-            'biography'     => $item->biography,
-            'last_login'    => $item->last_login,
-            'city_id'       => $item->city_id,
-            'created_at'    => $item->created_at,
-            'updated_at'    => $item->updated_at,
+            'id'                => (int)$item->id,
+            'email'             => $item->email,
+            'lastname'          => $item->lastname,
+            'firstname'         => $item->firstname,
+            'active'            => (boolean)$item->active,
+            'avatar'            => $item->avatar,
+            'facebook'          => $item->facebook,
+            'twitter'           => $item->twitter,
+            'google'            => $item->google,
+            'biography'         => $item->biography,
+            'last_login'        => $item->last_login,
+            'phone'             => $item->phone,
+            'formattedAddress'  => $item->address . ', ' . $item->city->name . ', ' . $item->postal_code . ' ' . $item->city->state->name . ', ' . strtoupper($item->city->state->country->name),
+            'created_at'        => $item->created_at,
+            'updated_at'        => $item->updated_at,
         ];
     }
 
@@ -44,9 +41,8 @@ class UserTransformer extends TransformerAbstract
     public function includeCity(User $item)
     {
         $city = $item->city;
-        return $city;
-        //return $this->collection($city, new CityTransformer, null);
         
+        return $this->item($city, new CityTransformer, null);
     }
 }
 

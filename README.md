@@ -1,4 +1,4 @@
-# dailyfind
+# Smartana
 
 # api-dev branch
 
