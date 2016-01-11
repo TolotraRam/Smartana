@@ -118,7 +118,7 @@ class UserController extends ApiController
         }
         $user = new User;
         $this->fillFieldFromInput($user, ['email', 'password']);
-        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'avatar', 'facebook', 'twitter', 'google', 'phone', 'address', 'biography']);
+        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'avatar', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography']);
 
         $user->save();
 
@@ -155,7 +155,7 @@ class UserController extends ApiController
         $this->checkExist($user);
 
         $this->fillFieldFromInput($user, ['active', 'email', 'password']);
-        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname']);
+        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'avatar', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography']);
 
         $user->save();
 

@@ -17,8 +17,8 @@
                 <div class="box-body" st-table="listCtrl.rowCollection" st-safe-src="listCtrl.rowCollection"
                      st-pipe="listCtrl.callServer">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="btn-group">
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <button ng-disabled="listCtrl.countSelectedRows <= 0" class="btn btn-default btn-sm"
                                         ng-really-message="{{ 'city.delete_before_msg' | translate }}"
                                         ng-really-click="listCtrl.bulkRemove()"><i
@@ -27,7 +27,7 @@
                             </div>
                             <!-- /.btn-group -->
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <div class="form-inline text-right">
                                 <div class="text-left" style="display: inline-block;">
                                     <div class="form-group">

@@ -25,7 +25,8 @@ class UserTransformer extends TransformerAbstract
             'biography'         => $item->biography,
             'last_login'        => $item->last_login,
             'phone'             => $item->phone,
-            'formattedAddress'  => $item->address . ', ' . $item->city->name . ', ' . $item->postal_code . ' ' . $item->city->state->name . ', ' . strtoupper($item->city->state->country->name),
+            'postal_code'       => $item->postal_code,
+            'address'           => $item->address,
             'created_at'        => $item->created_at,
             'updated_at'        => $item->updated_at,
         ];

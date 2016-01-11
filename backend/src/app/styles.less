@@ -22,10 +22,30 @@
   border-radius: 2px;
   padding: 7px 8px;
 }
+.ui-select-multiple.ui-select-bootstrap input.ui-select-search {
+	width: auto !important;
+}
 
 md-checkbox {
 	margin-bottom: 0 !important;
 }
 .table > tbody > tr > td {
 	vertical-align: middle;
+}
+.file-wrap {
+	position: relative;
+	height: 100px;
+	line-height: 100px;
+	input {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 1;
+	}
+	label {
+		position: relative;
+		z-index: 2;
+	}
 }

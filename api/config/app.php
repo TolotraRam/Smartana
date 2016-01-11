@@ -151,7 +151,6 @@ return [
         GrahamCampbell\Throttle\ThrottleServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Conner\Tagging\TaggingServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
 
     ],

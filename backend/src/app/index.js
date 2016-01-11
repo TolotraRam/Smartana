@@ -108,7 +108,7 @@
 
                 $http({
                     method: 'POST', url: 'http://api.dev/api/admin/auth/refresh-token', headers: {
-                        'Authorization': authenticationService.getToken()
+                        'Authorization': "Bearer" + authenticationService.getToken()
                     }
                 }).success(function (data, status, headers, config) {
                     console.log('set token');
@@ -126,7 +126,7 @@
             Restangular.setErrorInterceptor(function (response, deferred, responseHandler) {
                 console.log(response);
                 if (response.status === -1) {
-                    $state.go('main.not-found');
+                    //$state.go('main.not-found');
                     return false;
                 }
                 
@@ -138,7 +138,7 @@
 
                 if (response.data.message === 'token_expired') {
                     return refreshAccessToken().then(function () {
-                        response.config.headers.Authorization = authenticationService.getToken();
+                        response.config.headers.Authorization = "Bearer" + authenticationService.getToken();
                         // Repeat the request and then call the handlers the usual way.
                         $http(response.config).then(responseHandler, deferred.reject);
                         return false;
@@ -178,7 +178,7 @@
                 //================================================
                 // Token setup when load each request
                 //================================================
-                headers.Authorization = authenticationService.getToken();
+                headers.Authorization = "Bearer" + authenticationService.getToken();
 
                 return {
                     element: element,

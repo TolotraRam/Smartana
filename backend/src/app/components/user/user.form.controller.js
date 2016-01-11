@@ -5,7 +5,7 @@
     angular.module('userModule')
     .controller('UserFormController', UserFormController);
 
-    function UserFormController($scope, Upload, $timeout, userService, messageService, toaster, $translate, user, $location, $q, roleService, $state) {
+    function UserFormController($scope, Upload, $timeout, userService, cityService, countryService, stateService, messageService, toaster, $translate, user, $location, $q, roleService, $state) {
         var vm = this;
 
         //==========================================
@@ -24,6 +24,51 @@
                     vm.roles = result;
                 });
             }
+        };
+
+        vm.filter = {
+            page: parseInt($location.page) || 1,
+            search: $location.search().search || '',
+            state_ids: []
+        };
+        //==========================================
+        // Load Data
+        //==========================================
+        vm.countries = [];
+        vm.refreshCountries = function (string) {
+            if (string !== '') {
+                countryService.get({search: string}).then(function (result) {
+                    vm.countries = result;
+                });
+            }
+        };
+        vm.refreshCountries();
+
+
+        vm.states = [];
+        vm.loadState = false;
+        vm.refreshStates = function (string) {
+            if (string !== '') {
+                stateService.get({search: string}).then(function (result) {
+                    vm.states = result;
+                });
+            }
+            vm.loadState = true;
+        };
+        vm.cities = [];
+        vm.loadCity = false;
+        vm.refreshCities = function (string) {
+            if (string !== '') {
+                var params = angular.copy(vm.filter);
+                if (params.state_ids.length > 0) {
+                    params['state_ids[]'] = params.state_ids[0];
+                    delete params.state_ids;
+                }
+                cityService.get(params, {cache: false}).then(function (result) {
+                    vm.cities = result;
+                });
+            }
+            vm.loadCity = true;
         };
 
         //==========================================
