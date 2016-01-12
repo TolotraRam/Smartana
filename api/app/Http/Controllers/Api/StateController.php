@@ -29,7 +29,8 @@ class StateController extends ApiController
             'page'             => 'integer',
             'limit'            => 'integer|min:1|max:10000',
             'search'           => 'max:10000',
-            'country_ids'         => 'array|integerInArray'
+            'country_ids'      => 'array|integerInArray',
+            'c_id'       => 'integer'
         ]);
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
@@ -40,6 +41,11 @@ class StateController extends ApiController
         if (Input::has('country_ids')) {
             $state = $state->whereHas('country', function ($q) {
                 $q->whereIn('id', Input::get('country_ids'));
+            });
+        }
+        if (Input::has('country_id')) {
+            $state = $state->whereHas('country', function ($q) {
+                $q->where('id', '=', Input::get('country_id'));
             });
         }
         if (Input::has('search')) {

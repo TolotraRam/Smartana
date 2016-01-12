@@ -29,7 +29,8 @@ class CityController extends ApiController
             'page'             => 'integer',
             'limit'            => 'integer|min:1|max:10000',
             'search'           => 'max:10000',
-            'state_ids'        => 'array|integerInArray'
+            'state_ids'        => 'array|integerInArray',
+            's_id'             => 'integer'
         ]);
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
@@ -40,6 +41,11 @@ class CityController extends ApiController
         if (Input::has('state_ids')) {
             $city = $city->whereHas('state', function ($q) {
                 $q->whereIn('id', Input::get('state_ids'));
+            });
+        }
+        if (Input::has('state_id')) {
+            $city = $city->whereHas('state', function ($q) {
+                $q->where('id', '=', Input::get('state_id'));
             });
         }
         if (Input::has('search')) {

@@ -108,7 +108,7 @@
 
                 $http({
                     method: 'POST', url: 'http://api.dev/api/admin/auth/refresh-token', headers: {
-                        'Authorization': "Bearer" + authenticationService.getToken()
+                        'Authorization': authenticationService.getToken()
                     }
                 }).success(function (data, status, headers, config) {
                     console.log('set token');
@@ -138,7 +138,7 @@
 
                 if (response.data.message === 'token_expired') {
                     return refreshAccessToken().then(function () {
-                        response.config.headers.Authorization = "Bearer" + authenticationService.getToken();
+                        response.config.headers.Authorization = authenticationService.getToken();
                         // Repeat the request and then call the handlers the usual way.
                         $http(response.config).then(responseHandler, deferred.reject);
                         return false;
@@ -178,7 +178,7 @@
                 //================================================
                 // Token setup when load each request
                 //================================================
-                headers.Authorization = "Bearer" + authenticationService.getToken();
+                headers.Authorization = authenticationService.getToken();
 
                 return {
                     element: element,

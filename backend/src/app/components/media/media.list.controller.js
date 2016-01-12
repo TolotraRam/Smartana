@@ -13,7 +13,6 @@
         vm.files = [];
         $scope.$watch('listCtrl.files', function () {
             vm.upload(vm.files);
-            console.log(vm.files)
         });
         vm.upload = function (files) {
             if (files && files.length) {
@@ -21,6 +20,7 @@
                 var uploadPromises = [];
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
+                    console.log(file);
                     var formData = new FormData();
                     formData.append('name', file.name);
                     if (vm.filter.category_ids[0] > 0) {

@@ -88,6 +88,8 @@ Route::group(['prefix' => 'api'], function () {
             Route::get('permissions', ['uses' => 'Api\PermissionController@index', 'as' => 'permissions.index']);
             Route::get('permissions/{id}', ['uses' => 'Api\PermissionController@show', 'as' => 'permissions.show']);
 
+            //Upload =================================
+            Route::put('upload/{id}', ['uses' => 'Api\AvatarController@update', 'as' => 'avatar.update']);
 
         });
     });

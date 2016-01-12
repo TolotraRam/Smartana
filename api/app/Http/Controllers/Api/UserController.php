@@ -1,10 +1,6 @@
 <?php namespace App\Http\Controllers\Api;
 
-use Input;
-use Cache;
-use Response;
-use Validator;
-use Config;
+use Input, Validator, DB, Storage, File, Response;
 
 use App\Models\User;
 use App\Transformers\UserTransformer;
@@ -108,7 +104,7 @@ class UserController extends ApiController
             'address' => 'string|min:1|max:255',
             'biography' => 'string|min:1|max:255',
             'roles'     => 'array|integerInArray|existsInArray:role,id',
-            'cities'     => 'array|integerInArray|existsInArray:city,id',
+            'city'     => 'array|integerInArray|existsInArray:city,id',
         ];
 
         $validator = Validator::make(Input::only(array_keys($rules)), $rules);
@@ -116,14 +112,16 @@ class UserController extends ApiController
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
+
         $user = new User;
+
+
         $this->fillFieldFromInput($user, ['email', 'password']);
-        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'avatar', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography']);
+        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography', 'city_id']);
 
         $user->save();
 
         $user->roles()->sync(Input::get('roles', []));
-        //$user->cities()->sync(Input::get('cities', []));
 
         return $this->show($user->id);
     }
@@ -151,11 +149,14 @@ class UserController extends ApiController
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
+
+        $user = new User;
         $user = User::find($id);
+
         $this->checkExist($user);
 
-        $this->fillFieldFromInput($user, ['active', 'email', 'password']);
-        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'avatar', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography']);
+        $this->fillFieldFromInput($user, ['email', 'password']);
+        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography', 'city_id']);
 
         $user->save();
 
@@ -164,8 +165,50 @@ class UserController extends ApiController
         }
 
         return $this->show($user->id);
+        
     }
 
+    /**
+     * Update avatar.
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function updateAvatar($id)
+    {
+        /*die('tay');
+        $rules = [
+            'attachment'        => 'required|mimes:jpeg,png,pdf,docx,xlsx,pptx,txt,zip,rar|max:10000',
+        ];
+
+        DB::beginTransaction();
+        try {
+            $user = new User;
+            $user = User::find($id);
+
+            $this->checkExist($user);
+
+            $user->avatar = Input::get('name', '');
+            $file = Input::file('attachment');
+
+            //upload file
+            Storage::put('uploads/avatar/' . Input::get('name', ''), File::get($file));
+            $user->save();
+
+            DB::commit();
+
+            return $this->show($user->id);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new ResourceException('Invalid request parameters');
+        }*/
+        $user = User::find($id);
+        $this->checkExist($user);
+
+        return response()->item($user, new UserTransformer);
+    }
     /**
      * Remove the specified resource from storage.
      *

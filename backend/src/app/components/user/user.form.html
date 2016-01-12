@@ -47,10 +47,9 @@
         <!-- /.row -->
         <div class="row">
             <div class="col-md-8">
-
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Informations</h3>
+                        <h3 class="box-title">{{ 'global.informations' | translate }}</h3>
                     </div>
                     <div class="box-body">
 
@@ -105,11 +104,62 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" ng-if="!formCtrl.user.id">
                             <div class="col-sm-4">
                                 <label for="country" class="control-label">{{ 'country.country' | translate }}</label>
                                 <div class="form-group">
-                                    <ui-select id="country" ng-model="formCtrl.user.city.state.country" on-select="formCtrl.refreshStates()" theme="selectize">
+                                    <ui-select id="country" ng-model="formCtrl.country" on-select="formCtrl.refreshStates($select.selected.id)" theme="selectize">
+                                        <ui-select-match placeholder="All countries" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="country.id as country in formCtrl.countries track by $index"
+                                                refresh="formCtrl.refreshCountries($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" ng-if="formCtrl.loadState">
+                                <label for="state" class="control-label">{{ 'country.state' | translate }}</label>
+                                <div class="form-group">
+                                    <ui-select id="state" ng-model="formCtrl.state" on-select="formCtrl.refreshCities($select.selected.id)" theme="selectize">
+                                        <ui-select-match placeholder="All states" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="state.id as state in formCtrl.states track by $index"
+                                                refresh="formCtrl.refreshStates($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="state.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" ng-if="formCtrl.loadCity">
+                                <label for="city" class="control-label">{{ 'user.city' | translate }}</label>
+                                <div class="form-group">
+                                    <ui-select id="city" ng-model="formCtrl.city" theme="selectize">
+                                        <ui-select-match placeholder="All cities" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="city.id as city in formCtrl.cities track by $index"
+                                                refresh="formCtrl.refreshCities($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="city.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-if="formCtrl.user.id">
+                            <div class="col-sm-4">
+                                <label for="country" class="control-label">{{ 'country.country' | translate }}</label>
+                                <div class="form-group">
+                                    <ui-select id="country" ng-model="formCtrl.country" on-select="formCtrl.refreshStates($select.selected.id)" theme="selectize">
                                         <ui-select-match placeholder="All countries" >
                                             {{ $select.selected.name }}
                                         </ui-select-match>
@@ -125,7 +175,7 @@
                             <div class="col-sm-4">
                                 <label for="state" class="control-label">{{ 'country.state' | translate }}</label>
                                 <div class="form-group">
-                                    <ui-select id="state" ng-model="formCtrl.user.city.state" on-select="formCtrl.refreshCities($select.selected.id)" theme="selectize">
+                                    <ui-select id="state" ng-model="formCtrl.state" on-select="formCtrl.refreshCities($select.selected.id)" theme="selectize">
                                         <ui-select-match placeholder="All states" >
                                             {{ $select.selected.name }}
                                         </ui-select-match>
@@ -141,7 +191,7 @@
                             <div class="col-sm-4">
                                 <label for="city" class="control-label">{{ 'user.city' | translate }}</label>
                                 <div class="form-group">
-                                    <ui-select id="city" ng-model="formCtrl.user.city" theme="selectize">
+                                    <ui-select id="city" ng-model="formCtrl.city" theme="selectize">
                                         <ui-select-match placeholder="All cities" >
                                             {{ $select.selected.name }}
                                         </ui-select-match>
@@ -168,7 +218,7 @@
                             <label for="password" class="control-label">{{ 'user.password' | translate }}</label>
                             <input id="password" type="password" class="form-control"
                                    placeholder="{{ 'user.password' | translate }}"
-                                   ng-minlength="formCtrl.user.id === '' ? 8 : 0" ng-required="formCtrl.user.id === ''"
+                                   ng-minlength="formCtrl.user.id === '' ? 6 : 0" ng-required="formCtrl.user.id === ''"
                                    ng-model="formCtrl.user.password">
                         </div>
 
@@ -176,37 +226,36 @@
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
-
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Social</h3>
+                        <h3 class="box-title">{{ 'global.social' | translate }}</h3>
                     </div>
                     <div class="box-body">
 
                         <div class="row">
                             <div class="col-sm-4">
-                                <label for="facebook" class="control-label">{{ 'user.facebook' | translate }}</label>
+                                <label for="facebook" class="control-label">{{ 'global.facebook' | translate }}</label>
                                 <div class="form-group">
                                     <input id="facebook" type="text" class="form-control"
-                                           placeholder="{{ 'user.facebook' | translate }}"
+                                           placeholder="{{ 'global.facebook' | translate }}"
                                            ng-model="formCtrl.user.facebook">
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <label for="twitter" class="control-label">{{ 'user.twitter' | translate }}</label>
+                                <label for="twitter" class="control-label">{{ 'global.twitter' | translate }}</label>
 
                                 <div class="form-group">
                                     <input id="twitter" type="text" class="form-control"
-                                           placeholder="{{ 'user.twitter' | translate }}"
+                                           placeholder="{{ 'global.twitter' | translate }}"
                                            ng-model="formCtrl.user.twitter">
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <label for="google" class="control-label">{{ 'user.google' | translate }}</label>
+                                <label for="google" class="control-label">{{ 'global.google' | translate }}</label>
 
                                 <div class="form-group">
                                     <input id="google" type="text" class="form-control"
-                                           placeholder="{{ 'user.google' | translate }}"
+                                           placeholder="{{ 'global.google' | translate }}"
                                            ng-model="formCtrl.user.google">
                                 </div>
                             </div>
@@ -220,27 +269,28 @@
             <div class="col-md-4">
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Avatar</h3>
+                        <h3 class="box-title">{{ 'global.avatar' | translate }}</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
-                            <div ng-if="formCtrl.user.avatar.src" class="pull-left" style="margin-right: 10px; height: 100px;">
-                                <img class="img-responsive center-block" ng-src="{{formCtrl.user.avatar.src}}"/>
+                            <div ng-if="formCtrl.file" class="pull-left" style="margin-right: 10px; height: 100px;">
+                                <img ng-src="{{formCtrl.file.src}}" style="max-height: 100px; width: auto;" />
                             </div>
-                            <div ng-if="!formCtrl.user.avatar.src" class="pull-left" style="margin-right: 10px; height: 100px;">
-                                <img class="img-responsive center-block" ng-src="{{formCtrl.user.avatar.src}}"/>
+                            <div ng-if="!formCtrl.file" class="pull-left" style="margin-right: 10px; height: 100px;">
+                                <img ng-src="{{formCtrl.file.src}}" style="max-height: 100px; width: auto;" />
                             </div>
                             <div class="file-wrap">
                                 <label class="btn btn-default" for="fileToUpload">
                                     <i class="fa fa-user"></i> Change avatar
                                 </label>
-                                <input id="fileToUpload" type="file" name="myImage" style="opacity: 0;" image-with-preview
-                                        ng-model="formCtrl.user.avatar"
-                                        accept="image/jpeg,image/png"
-                                        dimensions="height < 400 && width < 1800">
+                                <input id="fileToUpload" ngf-select type="file" name="myAvatar" style="opacity: 0;"
+                                        image-with-preview
+                                        ng-model="formCtrl.file"
+                                        ngf-accept="'image/*'">
                             </div>
-                            <span class="error" ng-show="formCtrl.userForm.myImage.$error.formCtrl.user.avatar">Not a JPEG or a PNG!</span>
-                            <span class="error" ng-show="formCtrl.userForm.myImage.$error.dimensions">Invalid dimensions! Expecting a landscape image smaller than 1800x400.</span>
+                                <div class="button" ng-click="formCtrl.upload(formCtrl.file)">Upload on file select</div>
+                            <span class="error" ng-show="formCtrl.userForm.myAvatar.$error.formCtrl.user.avatar">Not a JPEG or a PNG!</span>
+                            <span class="error" ng-show="formCtrl.userForm.myAvatar.$error.dimensions">Invalid dimensions! Expecting a landscape image smaller than 1800x400.</span>
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -276,18 +326,17 @@
                 </div><!-- /.box -->
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Status</h3>
+                        <h3 class="box-title">{{ 'global.status' | translate }}</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
-                            <md-checkbox class="md-primary" ng-model="formCtrl.user.active">{{ 'global.status' |
+                            <md-checkbox class="md-primary" ng-model="formCtrl.user.active">{{ 'global.active' |
                                     translate }}</md-checkbox>
                         </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
-
             </div><!-- /.col -->
         </div><!-- /.row -->
     </form><!-- /form -->

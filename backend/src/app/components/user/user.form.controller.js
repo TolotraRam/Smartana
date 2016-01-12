@@ -12,6 +12,11 @@
         // Variable
         //==========================================
         vm.user = (_.isEmpty(user) || _.isUndefined(user)) ? userService.init() : user;
+        if(vm.user.id) {
+            vm.country = user.city.state.country;
+            vm.state = user.city.state;
+            vm.city = user.city;
+        }
 
 
         //==========================================
@@ -26,70 +31,80 @@
             }
         };
 
-        vm.filter = {
-            page: parseInt($location.page) || 1,
-            search: $location.search().search || '',
-            state_ids: []
-        };
         //==========================================
         // Load Data
         //==========================================
         vm.countries = [];
+        vm.states = [];
+        vm.cities = [];
+        vm.loadState = false;
+        vm.loadCity = false;
+
         vm.refreshCountries = function (string) {
             if (string !== '') {
-                countryService.get({search: string}).then(function (result) {
+                countryService.get().then(function (result) {
                     vm.countries = result;
                 });
             }
         };
-        vm.refreshCountries();
 
-
-        vm.states = [];
-        vm.loadState = false;
         vm.refreshStates = function (string) {
             if (string !== '') {
-                stateService.get({search: string}).then(function (result) {
+                stateService.get({country_id: string}).then(function (result) {
                     vm.states = result;
                 });
             }
             vm.loadState = true;
         };
-        vm.cities = [];
-        vm.loadCity = false;
+
         vm.refreshCities = function (string) {
             if (string !== '') {
-                var params = angular.copy(vm.filter);
-                if (params.state_ids.length > 0) {
-                    params['state_ids[]'] = params.state_ids[0];
-                    delete params.state_ids;
-                }
-                cityService.get(params, {cache: false}).then(function (result) {
+                cityService.get({state_id: string}).then(function (result) {
                     vm.cities = result;
                 });
             }
             vm.loadCity = true;
         };
 
+
+        vm.refreshCountries();
+        if(vm.user.id) {
+            vm.refreshStates();
+            vm.refreshCities();
+        }
         //==========================================
         // Profile image
         //==========================================
-        
-
+        vm.upload = function (file) {
+            var filename = file.name;
+            var deferred = $q.defer();
+            Upload.upload({
+                method: 'PUT',
+                url: 'http://api.dev/api/admin/users/' + vm.user.id + '/upload',
+                data: {'attachment': file, 'name': filename}
+            }).then(function (result) {
+                deferred.resolve(result);
+            }, function (result) {
+                deferred.reject(result);
+            });
+        };
         //==========================================
         // save
         //==========================================
         var save = function () {
             var user = angular.copy(vm.user);
             user.roles = _.pluck(user.roles, 'id');
+            user.city_id = vm.city;
+            console.log(user);
             var deferred = $q.defer();
             if (user.id !== '') {
-                userService.update(user.id, user).then(function (result) {
+                userService.update(user.id, formData).then(function (result) {
                     deferred.resolve(result);
                 }, function (result) {
                     deferred.reject(result);
                 });
             } else {
+                console.log('store');
                 userService.store(user).then(function (result) {
                     deferred.resolve(result);
                 }, function (result) {
