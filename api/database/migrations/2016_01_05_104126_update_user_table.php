@@ -25,8 +25,8 @@ class UpdateUserTable extends Migration
             $table->integer('city_id')->unsigned()->nullable();
 
             $table->foreign('city_id')->references('id')->on('cities')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->onDelete('set null')
+                ->onUpdate('set null');
 
         });
     }

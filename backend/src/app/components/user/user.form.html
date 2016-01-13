@@ -8,7 +8,7 @@
 <!-- Main content -->
 <section class="content">
 
-    <form name="formCtrl.userForm" ng-if="formCtrl.user.id == ''">
+    <form name="formCtrl.userForm">
         <div class="row">
             <div class="col-md-4">
                 <button type="button" class="btn btn-default" ng-click="$location.path('users')"><i
@@ -227,6 +227,26 @@
                 </div>
                 <!-- /.box -->
                 <div class="box box-default">
+
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="biography" class="control-label">{{ 'user.biography' | translate }}</label>
+                                <div class="form-group">
+                                    <textarea id="biography" type="text" class="form-control"
+                                           placeholder="{{ 'user.biography' | translate }}"
+                                           ng-model="formCtrl.user.biography">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+                <div class="box box-default">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'global.social' | translate }}</h3>
                     </div>
@@ -290,11 +310,6 @@
                                         ngf-accept="'image/*'">
                             </div>
                             <div class="button" ng-if="formCtrl.user.id !==''" ng-click="formCtrl.upload(formCtrl.file)">Upload on file select</div>
-                            <div ng-show="formCtrl.file">
-                                {{formCtrl.file.name}}<br />
-                                {{formCtrl.file.size}} byte(s)<br/>
-                                {{formCtrl.file.type}}
-                            </div>
                             <span class="error" ng-show="formCtrl.userForm.myAvatar.$error.formCtrl.user.avatar">Not a JPEG or a PNG!</span>
                             <span class="error" ng-show="formCtrl.userForm.myAvatar.$error.dimensions">Invalid dimensions! Expecting a landscape image smaller than 1800x400.</span>
                         </div>

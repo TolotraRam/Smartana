@@ -112,11 +112,6 @@
                     function( msg ) {
                         console.log('error');
                     });
-                    /*userService.store(formData).then(function (result) {
-                        deferred.resolve(result);
-                    }, function (result) {
-                        deferred.reject(result);
-                    });*/
                 }
 
                 return deferred.promise;

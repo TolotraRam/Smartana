@@ -98,7 +98,8 @@
     "delete_error_msg": "Error occurred when trying to delete user.",
     "phone": "Phone",
     "address" : "Address",
-    "postal_code" : "Postal code"
+    "postal_code" : "Postal code",
+    "biography": "Biography"
   },
   "role": {
     "roles": "Roles",

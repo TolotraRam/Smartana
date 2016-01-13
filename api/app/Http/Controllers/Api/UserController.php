@@ -118,14 +118,15 @@ class UserController extends ApiController
         DB::beginTransaction();
         try {
             $user = new User;
+
+            $this->fillFieldFromJson($user, ['email', 'password']);
+            $this->fillNullableFieldFromJson($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography', 'city_id']);
+            
             $user->avatar = Input::get('filename', '');
             $file = Input::file('attachment');
-            //upload file
-            Storage::put('uploads/avatar/user/' . $user->id . '/' . Input::get('filename', ''), File::get($file));
 
-            $this->fillFieldFromInput($user, ['email', 'password']);
-            $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography']);
-            
+            Storage::put('uploads/avatar/user/' . $user->id . '/avatar.jpg', File::get($file));
+
             $user->save();
             $user->roles()->sync(Input::get('roles', []));
 
