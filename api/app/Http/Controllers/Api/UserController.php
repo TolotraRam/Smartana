@@ -90,40 +90,53 @@ class UserController extends ApiController
      */
     public function store()
     {
+        $input = json_decode(Input::get('data'), true);
+
         $rules = [
             'lastname'  => 'string|min:1|max:255',
             'firstname' => 'string|min:1|max:255',
             'active'    => 'boolean',
             'email'     => 'required|email',
             'password'  => 'required|min:6|max:255',
-            'avatar' => 'string|min:1|max:255',
-            'facebook' => 'string|min:1|max:255',
-            'twitter' => 'string|min:1|max:255',
-            'google' => 'string|min:1|max:255',
-            'phone' => 'string|min:1|max:255',
-            'address' => 'string|min:1|max:255',
+            'avatar'    => 'string|min:1|max:255',
+            'facebook'  => 'string|min:1|max:255',
+            'twitter'   => 'string|min:1|max:255',
+            'google'    => 'string|min:1|max:255',
+            'phone'     => 'string|min:1|max:255',
+            'address'   => 'string|min:1|max:255',
             'biography' => 'string|min:1|max:255',
             'roles'     => 'array|integerInArray|existsInArray:role,id',
-            'city'     => 'array|integerInArray|existsInArray:city,id',
+            'city_id'   => 'integer',
         ];
 
-        $validator = Validator::make(Input::only(array_keys($rules)), $rules);
+        $validator = Validator::make($input, $rules);
 
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
 
-        $user = new User;
+        DB::beginTransaction();
+        try {
+            $user = new User;
+            $user->avatar = Input::get('filename', '');
+            $file = Input::file('attachment');
+            //upload file
+            Storage::put('uploads/avatar/user/' . $user->id . '/' . Input::get('filename', ''), File::get($file));
 
+            $this->fillFieldFromInput($user, ['email', 'password']);
+            $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography']);
+            
+            $user->save();
+            $user->roles()->sync(Input::get('roles', []));
 
-        $this->fillFieldFromInput($user, ['email', 'password']);
-        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography', 'city_id']);
+            DB::commit();
 
-        $user->save();
+            return $this->show($user->id);
 
-        $user->roles()->sync(Input::get('roles', []));
-
-        return $this->show($user->id);
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new ResourceException($e);
+        }
     }
 
     /**

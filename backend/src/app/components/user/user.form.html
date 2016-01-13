@@ -8,7 +8,7 @@
 <!-- Main content -->
 <section class="content">
 
-    <form name="formCtrl.userForm">
+    <form name="formCtrl.userForm" ng-if="formCtrl.user.id == ''">
         <div class="row">
             <div class="col-md-4">
                 <button type="button" class="btn btn-default" ng-click="$location.path('users')"><i
@@ -285,10 +285,16 @@
                                 </label>
                                 <input id="fileToUpload" ngf-select type="file" name="myAvatar" style="opacity: 0;"
                                         image-with-preview
+                                        data-bind-file=""
                                         ng-model="formCtrl.file"
                                         ngf-accept="'image/*'">
                             </div>
-                                <div class="button" ng-click="formCtrl.upload(formCtrl.file)">Upload on file select</div>
+                            <div class="button" ng-if="formCtrl.user.id !==''" ng-click="formCtrl.upload(formCtrl.file)">Upload on file select</div>
+                            <div ng-show="formCtrl.file">
+                                {{formCtrl.file.name}}<br />
+                                {{formCtrl.file.size}} byte(s)<br/>
+                                {{formCtrl.file.type}}
+                            </div>
                             <span class="error" ng-show="formCtrl.userForm.myAvatar.$error.formCtrl.user.avatar">Not a JPEG or a PNG!</span>
                             <span class="error" ng-show="formCtrl.userForm.myAvatar.$error.dimensions">Invalid dimensions! Expecting a landscape image smaller than 1800x400.</span>
                         </div>

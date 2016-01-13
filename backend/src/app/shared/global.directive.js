@@ -4,7 +4,9 @@
 
     angular
         .module('global.directive', [])
-        .directive('ngReallyClick', function ($modal) {
+        .directive('ngReallyClick', ngReallyClick);
+
+        function ngReallyClick($modal) {
 
             var ModalInstanceCtrl = function ($scope, $modalInstance) {
                 $scope.ok = function () {
@@ -43,16 +45,6 @@
 
                 }
             }
-        })
-        .directive("ngFileSelect",function(){    
-          return {
-            link: function($scope,el){          
-              el.bind("change", function(e){          
-                $scope.file = (e.srcElement || e.target).files[0];
-                $scope.getFile();
-              });          
-            }        
-          }
-        });
+        }
 
 })();

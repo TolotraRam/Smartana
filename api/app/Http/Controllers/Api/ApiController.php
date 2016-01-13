@@ -45,6 +45,27 @@ class ApiController extends BaseController
     }
 
     /**
+     * fill nullable field from json
+     *
+     * @param  Model $obj
+     * @param  array $fields
+     *
+     * @return void
+     */
+    public function fillNullableFieldFromJson($obj, $fields = [])
+    {
+        $fields = json_decode(Input::get('data'), true);
+        foreach ($fields as $key => $field) {
+            if (Input::get($field) === '') {
+                $obj->{$field} = null;
+            } elseif (Input::has($field)) {
+                $obj->{$field} = Input::get($field);
+            }
+        }
+
+    }
+
+    /**
      * fill field from input
      *
      * @param  Model $obj

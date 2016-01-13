@@ -19,7 +19,9 @@
         'theme.services',
         'global.filter',
         'global.service',
+        'upload.service',
         'global.directive',
+        'file.directive',
 
 
         //UI Plugin
