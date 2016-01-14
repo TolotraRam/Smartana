@@ -95,8 +95,10 @@ Route::group(['prefix' => 'api'], function () {
     });
 
     Route::group(['middleware' => ['before' => 'csrf']], function () {
-
+        // Get media
         Route::get('/media/{type}/{yearAndMonth}/{day}/{filename}', 'Api\MediaController@get');
+        // Get avatar
+        Route::get('/media/{type}/{filename}', 'Api\UserController@get');
 
         Route::group(['middleware' => 'App\Http\Middleware\ThrottleMiddleware:600,5', 'prefix' => ''], function () {
         });

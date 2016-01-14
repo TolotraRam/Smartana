@@ -19,6 +19,7 @@ class UserTransformer extends TransformerAbstract
             'firstname'         => $item->firstname,
             'active'            => (boolean)$item->active,
             'avatar'            => $item->avatar,
+            'avatar_url'        => $item->url,
             'facebook'          => $item->facebook,
             'twitter'           => $item->twitter,
             'google'            => $item->google,

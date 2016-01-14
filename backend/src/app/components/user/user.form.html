@@ -173,7 +173,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <label for="state" class="control-label">{{ 'country.state' | translate }}</label>
+                                <label for="state" class="control-label">{{ 'state.state' | translate }}</label>
                                 <div class="form-group">
                                     <ui-select id="state" ng-model="formCtrl.state" on-select="formCtrl.refreshCities($select.selected.id)" theme="selectize">
                                         <ui-select-match placeholder="All states" >
@@ -189,7 +189,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <label for="city" class="control-label">{{ 'user.city' | translate }}</label>
+                                <label for="city" class="control-label">{{ 'city.city' | translate }}</label>
                                 <div class="form-group">
                                     <ui-select id="city" ng-model="formCtrl.city" theme="selectize">
                                         <ui-select-match placeholder="All cities" >
@@ -296,22 +296,26 @@
                             <div ng-if="formCtrl.file" class="pull-left" style="margin-right: 10px; height: 100px;">
                                 <img ng-src="{{formCtrl.file.src}}" style="max-height: 100px; width: auto;" />
                             </div>
-                            <div ng-if="!formCtrl.file" class="pull-left" style="margin-right: 10px; height: 100px;">
-                                <img ng-src="{{formCtrl.file.src}}" style="max-height: 100px; width: auto;" />
+                            <div ng-if="formCtrl.user.avatar && !formCtrl.file" class="pull-left" style="margin-right: 10px; height: 100px;">
+                                <img ng-src="{{formCtrl.user.avatar_url}}" style="max-height: 100px; width: auto;" />
                             </div>
                             <div class="file-wrap">
                                 <label class="btn btn-default" for="fileToUpload">
                                     <i class="fa fa-user"></i> Change avatar
                                 </label>
-                                <input id="fileToUpload" ngf-select type="file" name="myAvatar" style="opacity: 0;"
+                                <input id="fileToUpload" type="file" name="myAvatar" style="opacity: 0;"
                                         image-with-preview
                                         data-bind-file=""
                                         ng-model="formCtrl.file"
-                                        ngf-accept="'image/*'">
+                                        accept="image/jpeg,image/png"
+                                        dimensions="height < 200 && width < 200" />
                             </div>
-                            <div class="button" ng-if="formCtrl.user.id !==''" ng-click="formCtrl.upload(formCtrl.file)">Upload on file select</div>
-                            <span class="error" ng-show="formCtrl.userForm.myAvatar.$error.formCtrl.user.avatar">Not a JPEG or a PNG!</span>
-                            <span class="error" ng-show="formCtrl.userForm.myAvatar.$error.dimensions">Invalid dimensions! Expecting a landscape image smaller than 1800x400.</span>
+                            <div style="margin-top: 10px;" class="alert alert-danger alert-dismissible" ng-show="formCtrl.userForm.myAvatar.$error.formCtrl.file">
+                                Not a JPEG or a PNG!
+                            </div>
+                            <div style="margin-top: 10px;" class="alert alert-danger alert-dismissible" ng-show="formCtrl.userForm.myAvatar.$error.dimensions">
+                                Invalid dimensions! Expecting image under 200x200.
+                            </div>
                         </div>
                     </div>
                     <!-- /.box-body -->

@@ -84,6 +84,29 @@ class UserController extends ApiController
     }
 
     /**
+     * Get avatar image
+     *
+     * @param  string $type
+     * @param  string $filename
+     *
+     * @return Response
+     */
+    public function get($type, $filename)
+    {
+
+        $user = User::where('avatar', '=', $filename)->first();
+        if ($user->avatar && !is_null($user->avatar)) {
+            $file = Storage::get('uploads/'. $type .'/' . $user->avatar);
+            if ($file) {
+                $extension = explode('.', $user->avatar);
+                return Response($file, 200)->header('Content-Type', 'image/' . $extension[1]);
+            }
+        }
+
+        throw new NotFoundException;
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @return Response
@@ -122,13 +145,15 @@ class UserController extends ApiController
             $this->fillFieldFromJson($user, ['email', 'password']);
             $this->fillNullableFieldFromJson($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography', 'city_id']);
             
-            $user->avatar = Input::get('filename', '');
             $file = Input::file('attachment');
+            $extension = $file->getClientOriginalExtension();
+            $key = strtolower(md5(uniqid($input['email']))) . '.' . $extension;
+            $user->avatar = $key;
 
-            Storage::put('uploads/avatar/user/' . $user->id . '/avatar.jpg', File::get($file));
+            Storage::put('uploads/avatar/' . $key, File::get($file));
 
             $user->save();
-            $user->roles()->sync(Input::get('roles', []));
+            $user->roles()->sync($input['roles']);
 
             DB::commit();
 
@@ -149,6 +174,7 @@ class UserController extends ApiController
      */
     public function update($id)
     {
+        $input = json_decode(Input::get('data'), true);
         $rules = [
             'lastname'  => 'string|min:1|max:255',
             'firstname' => 'string|min:1|max:255',
@@ -158,27 +184,35 @@ class UserController extends ApiController
             'roles'     => 'array|integerInArray|existsInArray:role,id',
         ];
 
-        $validator = Validator::make(Input::only(array_keys($rules)), $rules);
+        $validator = Validator::make($input, $rules);
 
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
 
-        $user = new User;
-        $user = User::find($id);
+        DB::beginTransaction();
+        try {
 
-        $this->checkExist($user);
+            $user = new User;
+            $user = User::find($id);
 
-        $this->fillFieldFromInput($user, ['email', 'password']);
-        $this->fillNullableFieldFromInput($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography', 'city_id']);
+            $this->checkExist($user);
 
-        $user->save();
+            $this->fillFieldFromJson($user, ['email', 'password']);
+            $this->fillNullableFieldFromJson($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography', 'city_id']);
 
-        if (Input::has('roles')) {
-            $user->roles()->sync(Input::get('roles', []));
+            $user->save();
+
+            if (Input::has('roles')) {
+                $user->roles()->sync($input['roles']);
+            }
+
+            return $this->show($user->id);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new ResourceException($e);
         }
-
-        return $this->show($user->id);
         
     }
 

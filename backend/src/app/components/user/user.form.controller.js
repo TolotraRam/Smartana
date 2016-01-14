@@ -76,19 +76,6 @@
             //==========================================
             // Profile image
             //==========================================
-            vm.upload = function (file) {
-                var filename = file.name;
-                var deferred = $q.defer();
-                Upload.upload({
-                    method: 'PUT',
-                    url: 'http://api.dev/api/admin/users/' + vm.user.id + '/upload',
-                    data: {'attachment': file, 'name': filename}
-                }).then(function (result) {
-                    deferred.resolve(result);
-                }, function (result) {
-                    deferred.reject(result);
-                });
-            };
 
             //==========================================
             // save
@@ -106,11 +93,11 @@
                     });
                 } else {
                     uploadService.uploadfile(vm.file, user,
-                    function( msg ) {
-                        console.log('uploaded');
+                    function(result) {
+                        deferred.resolve(result);
                     },
-                    function( msg ) {
-                        console.log('error');
+                    function(result) {
+                        deferred.resolve(result);
                     });
                 }
 

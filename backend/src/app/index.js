@@ -18,6 +18,7 @@
         'theme.directives',
         'theme.services',
         'global.filter',
+        'constants.service',
         'global.service',
         'upload.service',
         'global.directive',
