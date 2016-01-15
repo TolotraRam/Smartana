@@ -85,6 +85,16 @@
                 user.roles = _.pluck(user.roles, 'id');
                 user.city_id = vm.city;
                 var deferred = $q.defer();
+
+                var fd = new FormData();
+                var url = 'http://api.dev/api/admin/users';
+                if(vm.files) {
+                    fd.append('attachment',vm.files);
+                    fd.append('filename', vm.files.name);
+                }
+
+                fd.append("data", JSON.stringify(user));
+
                 if (user.id !== '') {
                     userService.update(user.id, user).then(function (result) {
                         deferred.resolve(result);
@@ -92,17 +102,20 @@
                         deferred.reject(result);
                     });
                 } else {
-                    uploadService.uploadfile(vm.file, user,
-                    function(result) {
+                    userService.store(fd).then(function (result) {
                         deferred.resolve(result);
-                    },
-                    function(result) {
-                        deferred.resolve(result);
+                    }, function (result) {
+                        deferred.reject(result);
                     });
+                    /*uploadService.uploadfile(vm.file, data).then(function (result) {
+                        console.log(result);
+                        deferred.resolve(result);
+                    }, function(result) {
+                        console.log(result);
+                        deferred.resolve(result);
+                    });*/
                 }
-
                 return deferred.promise;
-
             };
 
             vm.isSaveAndExit = false;
@@ -110,6 +123,7 @@
             vm.save = function () {
                 vm.saveLoading = true;
                 save().then(function (result) {
+                    console.log(result);
                     vm.saveLoading = false;
                     toaster.pop('success', '', $translate.instant('user.' + (vm.user.id !== '' ? 'update_success_msg' : 'create_success_msg')));
                     if (vm.isSaveAndExit) {

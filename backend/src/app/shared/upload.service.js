@@ -16,9 +16,10 @@
                 var deferred = $q.defer();
                 var fd = new FormData();
                 var url = 'http://api.dev/api/admin/users';
-                fd.append('attachment',files);
-                fd.append('filename', files.name);
-                var data = data;
+                if(files) {
+                    fd.append('attachment',files);
+                    fd.append('filename', files.name);
+                }
 
                 fd.append("data", JSON.stringify(data));
 
@@ -29,12 +30,11 @@
                         'Authorization': authenticationService.getToken()
                     },
                     transformRequest : angular.identity
-                }).success(function(data) {
-                    deferred.resolve(data);
-                }).error(function(data) {
-                    deferred.reject(data);
+                }).then(function(response) {
+                    deferred.resolve(response);
+                }, function(response) {
+                    deferred.reject(response);
                 });
-
                 return deferred.promise;
             }
         }

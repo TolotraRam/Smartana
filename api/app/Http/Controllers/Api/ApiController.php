@@ -56,9 +56,11 @@ class ApiController extends BaseController
     {
         $input = json_decode(Input::get('data'), true);
         foreach ($fields as $key => $field) {
-            if ($input[$field] === '') {
+            if (!isset($input[$field])) {
                 $obj->{$field} = null;
-            } elseif ($input[$field] && $input[$field] !=='') {
+            } elseif($input[$field] =='') {
+                $obj->{$field} = null;
+            } else {
                 $obj->{$field} = $input[$field];
             }
         }

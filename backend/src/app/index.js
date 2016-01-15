@@ -18,7 +18,6 @@
         'theme.directives',
         'theme.services',
         'global.filter',
-        'constants.service',
         'global.service',
         'upload.service',
         'global.directive',
@@ -150,10 +149,10 @@
                     return false;
                 }
 
-                if (response.status === 400) {
+                /*if (response.status === 400) {
                     toaster.pop('error', '', $translate.instant('golbal.oops'));
                     return false;
-                }
+                }*/
 
                 console.log('error not handled');
                 return true; // error not handled

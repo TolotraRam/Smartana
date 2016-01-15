@@ -24,7 +24,9 @@
                 return Restangular.one('users', id).customPUT(data);
             };
             service.store = function (data) {
-                return Restangular.all('users').post(data);
+                return Restangular.all('users')
+                .withHttpConfig({transformRequest: angular.identity})
+                .customPOST(data, undefined, undefined, {'Content-Type': undefined});;
             };
             service.destroy = function (id) {
                 return Restangular.one('users', id).remove();

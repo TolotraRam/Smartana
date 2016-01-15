@@ -145,12 +145,15 @@ class UserController extends ApiController
             $this->fillFieldFromJson($user, ['email', 'password']);
             $this->fillNullableFieldFromJson($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography', 'city_id']);
             
-            $file = Input::file('attachment');
-            $extension = $file->getClientOriginalExtension();
-            $key = strtolower(md5(uniqid($input['email']))) . '.' . $extension;
-            $user->avatar = $key;
+            if(!is_null(Input::file('attachment')) && Input::file('attachment')) {
+                
+                $file = Input::file('attachment');
+                $extension = $file->getClientOriginalExtension();
+                $key = strtolower(md5(uniqid($input['email']))) . '.' . $extension;
+                $user->avatar = $key;
 
-            Storage::put('uploads/avatar/' . $key, File::get($file));
+                Storage::put('uploads/avatar/' . $key, File::get($file));
+            }
 
             $user->save();
             $user->roles()->sync($input['roles']);
