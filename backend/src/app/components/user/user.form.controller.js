@@ -5,7 +5,7 @@
         .module('userModule')
         .controller('UserFormController', UserFormController);
 
-        function UserFormController($scope, Upload, $http, $timeout, userService, uploadService, cityService, countryService, stateService, messageService, toaster, $translate, user, $location, $q, roleService, $state) {
+        function UserFormController(userService, cityService, countryService, stateService, messageService, toaster, $translate, user, $location, $q, roleService, $state) {
             var vm = this;
             vm.file = null;
 
@@ -67,6 +67,7 @@
                 vm.loadCity = true;
             };
 
+            console.log(vm.file);
 
             vm.refreshCountries();
             if(vm.user.id) {
@@ -83,20 +84,28 @@
             var save = function () {
                 var user = angular.copy(vm.user);
                 user.roles = _.pluck(user.roles, 'id');
-                user.city_id = vm.city;
-                var deferred = $q.defer();
-
-                var fd = new FormData();
-                var url = 'http://api.dev/api/admin/users';
-                if(vm.files) {
-                    fd.append('attachment',vm.files);
-                    fd.append('filename', vm.files.name);
+                if(typeof vm.city === 'object') {
+                    user.city_id = vm.city.id;
+                } else {
+                    user.city_id = vm.city;
                 }
 
-                fd.append("data", JSON.stringify(user));
+                var deferred = $q.defer();
+
+                console.log(vm.file);
+
+                var fd = new FormData();
+                if(vm.file) {
+                    fd.append('attachment',vm.file);
+                    fd.append('filename', vm.file.name);
+                }
+
+                fd.append("data", angular.toJson(user));
+
 
                 if (user.id !== '') {
-                    userService.update(user.id, user).then(function (result) {
+                    fd.append('_method', 'PUT');
+                    userService.update(user.id, fd).then(function (result) {
                         deferred.resolve(result);
                     }, function (result) {
                         deferred.reject(result);
@@ -107,13 +116,6 @@
                     }, function (result) {
                         deferred.reject(result);
                     });
-                    /*uploadService.uploadfile(vm.file, data).then(function (result) {
-                        console.log(result);
-                        deferred.resolve(result);
-                    }, function(result) {
-                        console.log(result);
-                        deferred.resolve(result);
-                    });*/
                 }
                 return deferred.promise;
             };

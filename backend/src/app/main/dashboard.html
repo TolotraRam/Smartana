@@ -59,7 +59,8 @@
           <div class="box-body no-padding" ng-if="dashCtrl.loadState">
             <ul class="users-list clearfix">
               <li ng-repeat="row in dashCtrl.rowCollection | orderBy:'-created_at'">
-                <img src="assets/img/user5-128x128.jpg" alt="User Image">
+                <img ng-if="row.avatar" ng-src="{{row.avatar_url}}" alt="User Image">
+                <img ng-if="!row.avatar" src="assets/img/avatar/default.png" alt="User Image">
                 <a class="users-list-name" href="#">{{ row.getFullName() }}</a>
                 <span class="users-list-date" am-time-ago="row.created_at"></span>
               </li>

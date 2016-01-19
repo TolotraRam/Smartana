@@ -3,7 +3,7 @@
 
 	angular
 		.module('file.directive', [])
-		.directive('customOnChange',function () {
+		.directive('bindFile',function () {
 		  	return {
 		    	require: "ngModel",
 		        restrict: 'A',

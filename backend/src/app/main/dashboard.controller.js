@@ -11,7 +11,7 @@
       vm.loadState = false;
 
       vm.callServer = function callServer() {
-        userService.get({cache: false}).then(function (result) {
+        userService.get({limit: 8, cache: false}).then(function (result) {
             vm.rowCollection = result;
             vm.loadState = true;
         });

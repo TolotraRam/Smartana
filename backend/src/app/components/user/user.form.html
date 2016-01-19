@@ -299,16 +299,23 @@
                             <div ng-if="formCtrl.user.avatar && !formCtrl.file" class="pull-left" style="margin-right: 10px; height: 100px;">
                                 <img ng-src="{{formCtrl.user.avatar_url}}" style="max-height: 100px; width: auto;" />
                             </div>
+                            <div ng-if="!formCtrl.user.avatar && !formCtrl.file" class="pull-left" style="margin-right: 10px; height: 100px;">
+                                <img ng-src="assets/img/avatar/default.png" style="max-height: 100px; width: auto;" />
+                            </div>
                             <div class="file-wrap">
                                 <label class="btn btn-default" for="fileToUpload">
-                                    <i class="fa fa-user"></i> Change avatar
+                                    <i class="fa fa-user"></i> Change image
                                 </label>
-                                <input id="fileToUpload" type="file" name="myAvatar" style="opacity: 0;"
+                                <input id="fileToUpload" ngf-select type="file" name="myAvatar" style="opacity: 0;"                                        
                                         image-with-preview
                                         data-bind-file=""
                                         ng-model="formCtrl.file"
-                                        accept="image/jpeg,image/png"
-                                        dimensions="height < 200 && width < 200" />
+                                        ngf-accept="'image/*'" />
+                            </div>
+                            <div ng-show="formCtrl.file">
+                                {{formCtrl.file.name}}<br />
+                                {{formCtrl.file.size}} byte(s)<br/>
+                                {{formCtrl.file.type}}
                             </div>
                             <div style="margin-top: 10px;" class="alert alert-danger alert-dismissible" ng-show="formCtrl.userForm.myAvatar.$error.formCtrl.file">
                                 Not a JPEG or a PNG!

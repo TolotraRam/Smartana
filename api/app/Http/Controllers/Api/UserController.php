@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Api;
 
-use Input, Validator, DB, Storage, File, Response;
+use Input, Request, Log, Validator, DB, Storage, File, Response;
 
 use App\Models\User;
 use App\Transformers\UserTransformer;
@@ -59,7 +59,7 @@ class UserController extends ApiController
             $users = $users->where('created_at', '<=', Input::get('created_at_max'));
         }
 
-        $users = $users->simplePaginate(Input::get('limit', 50));
+        $users = $users->orderBy('created_at','DESC')->simplePaginate(Input::get('limit', 50));
 
         return response()->paginator($users, new UserTransformer);
 
@@ -138,6 +138,11 @@ class UserController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
+        if(User::where('email', '=', $input['email'])->first())
+        {
+            throw new ResourceException("E-mail already exist");
+        }
+
         DB::beginTransaction();
         try {
             $user = new User;
@@ -193,16 +198,64 @@ class UserController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
-        DB::beginTransaction();
-        try {
+        /*DB::beginTransaction();
+        try {*/
 
             $user = new User;
             $user = User::find($id);
 
             $this->checkExist($user);
 
-            $this->fillFieldFromJson($user, ['email', 'password']);
-            $this->fillNullableFieldFromJson($user, ['lastname', 'firstname', 'active', 'facebook', 'twitter', 'google', 'phone', 'address', 'postal_code', 'biography', 'city_id']);
+            if(isset($input['email']) && $input['email'] !="") {
+                $user->email = $input['email'];
+            }
+            if(isset($input['password']) && $input['password'] !="") {
+                $user->password = $input['password'];
+            }
+            if(isset($input['lastname']) && $input['lastname'] !="") {
+                $user->lastname = $input['lastname'];
+            }
+            if(isset($input['firstname']) && $input['firstname'] !="") {
+                $user->firstname = $input['firstname'];
+            }
+            if(isset($input['active']) && $input['active'] !="") {
+                $user->active = $input['active'];
+            }
+            if(isset($input['facebook']) && $input['facebook'] !="") {
+                $user->facebook = $input['facebook'];
+            }
+            if(isset($input['twitter']) && $input['twitter'] !="") {
+                $user->twitter = $input['twitter'];
+            }
+            if(isset($input['google']) && $input['google'] !="") {
+                $user->google = $input['google'];
+            }
+            if(isset($input['phone']) && $input['phone'] !="") {
+                $user->phone = $input['phone'];
+            }
+            if(isset($input['address']) && $input['address'] !="") {
+                $user->address = $input['address'];
+            }
+            if(isset($input['postal_code']) && $input['postal_code'] !="") {
+                $user->postal_code = $input['postal_code'];
+            }
+            if(isset($input['biography']) && $input['biography'] !="") {
+                $user->biography = $input['biography'];
+            }
+            if(isset($input['city_id']) && $input['city_id'] !="") {
+                $user->city_id = $input['city_id'];
+            }
+            if(!is_null(Input::file('attachment')) && Input::file('attachment')) {
+                if(isset($user->avatar) && $user->avatar != "") {
+                    $file = Storage::delete('uploads/avatar/' . $user->avatar);
+                }
+                $file = Input::file('attachment');
+                $extension = $file->getClientOriginalExtension();
+                $key = strtolower(md5(uniqid($input['email']))) . '.' . $extension;
+                $user->avatar = $key;
+
+                Storage::put('uploads/avatar/' . $key, File::get($file));
+            }
 
             $user->save();
 
@@ -212,10 +265,10 @@ class UserController extends ApiController
 
             return $this->show($user->id);
 
-        } catch (\Exception $e) {
+        /*} catch (\Exception $e) {
             DB::rollback();
             throw new ResourceException($e);
-        }
+        }*/
         
     }
 
