@@ -84,6 +84,12 @@ Route::group(['prefix' => 'api'], function () {
             Route::put('roles/{id}', ['uses' => 'Api\RoleController@update', 'as' => 'roles.update', 'middleware' => 'permission:roles.update']);
             Route::delete('roles/{id}', ['uses' => 'Api\RoleController@destroy', 'as' => 'roles.destroy', 'middleware' => 'permission:roles.destroy']);
 
+            //Settings =================================
+            //Route::get('setting', ['uses' => 'Api\RoleController@index', 'as' => 'setting.index', 'middleware' => 'permission:setting.index']);
+            Route::post('setting', ['uses' => 'Api\RoleController@store', 'as' => 'setting.store', 'middleware' => 'permission:setting.store']);
+            Route::get('setting/cache/clear', ['uses' => 'Api\RoleController@ClearCache', 'as' => 'setting.clear.cache', 'middleware' => 'permission:setting.clear.cache']);
+        
+
             //Permissions =================================
             Route::get('permissions', ['uses' => 'Api\PermissionController@index', 'as' => 'permissions.index']);
             Route::get('permissions/{id}', ['uses' => 'Api\PermissionController@show', 'as' => 'permissions.show']);

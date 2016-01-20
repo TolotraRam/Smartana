@@ -89,6 +89,11 @@
                 iconClasses: 'fa fa-file-archive-o',
                 state: 'main.media-list',
                 enabled: vm.me.can(['media.index'])
+            }, {
+                label: 'Setting',
+                iconClasses: 'fa fa-gear',
+                state: 'main.setting-form',
+                enabled: vm.me.can(['setting.store'])
             }];
 
             var setParent = function (children, parent) {

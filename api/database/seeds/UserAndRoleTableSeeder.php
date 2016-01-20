@@ -85,6 +85,10 @@ class UserAndRoleTableSeeder extends Seeder
         $deleteCityPermission = Permission::create(['name' => 'city.destroy', 'display_name' => 'Delete City']);
         array_push($allPermissions, $listCityPermission->id, $createCityPermission->id, $editCityPermission->id, $listCityPermission->id, $deleteCityPermission->id);
 
+        $createEditSettingPermission = Permission::create(['name' => 'setting.store', 'display_name' => 'Create or Update Setting']);
+        $clearCacheSettingPermission = Permission::create(['name' => 'setting.clear.cache', 'display_name' => 'Clear Cache']);
+        array_push($allPermissions, $createEditSettingPermission->id, $clearCacheSettingPermission->id);
+
         $ownerRole->perms()->sync($allPermissions);
         $administratorRole->perms()->sync($allPermissions);
         $redactorRole->perms()->sync($redactorPermission);

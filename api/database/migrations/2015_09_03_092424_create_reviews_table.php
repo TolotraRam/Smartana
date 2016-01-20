@@ -15,20 +15,21 @@ class CreateReviewsTable extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('store_id');
             $table->integer('score');
             $table->text('message');
             $table->integer('user_id')->unsigned();
+            $table->integer('venue_id')->unsigned()->nullable();
             $table->timestamp('published_at');
+            $table->timestamps();
         });
-
         Schema::table('reviews', function(Blueprint $table) {
-            $table->foreign('store_id')->references('store_id')->on('venues')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
+            $table->foreign('venue_id')->references('id')->on('venues')
+                ->onDelete('set null')
+                ->onUpdate('set null');
+                
             $table->foreign('user_id')->references('id')->on('user')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
@@ -40,7 +41,7 @@ class CreateReviewsTable extends Migration
     public function down()
     {
         Schema::table('reviews', function(Blueprint $table) {
-            $table->dropForeign('reviews_store_id_foreign');
+            $table->dropForeign('reviews_venue_id_foreign');
         });
         Schema::drop('reviews');
     }

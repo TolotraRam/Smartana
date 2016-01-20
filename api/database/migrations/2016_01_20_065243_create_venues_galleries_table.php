@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOpeningsTable extends Migration
+class CreateVenuesGalleriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,17 @@ class CreateOpeningsTable extends Migration
      */
     public function up()
     {
-        Schema::create('openings', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
+        Schema::create('venues_galleries', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('day');
-            $table->timestamp('open_time');
-            $table->timestamp('close_time');
-            $table->integer('venue_id')->unsigned()->nullable();
+            $table->string('path', 255)->nullable();
+            $table->bigInteger('filesize')->unsigned()->default(0);
+            $table->string('name')->nullable()->index();
+            $table->string('key');
+            $table->string('mime');
+            $table->integer('venue_id')->nullable()->unsigned();
             $table->timestamps();
-
+        });
+        Schema::table('venues_galleries', function(Blueprint $table) {
             $table->foreign('venue_id')->references('id')->on('venues')
                 ->onDelete('set null')
                 ->onUpdate('set null');
@@ -34,9 +36,6 @@ class CreateOpeningsTable extends Migration
      */
     public function down()
     {
-        Schema::table('openings', function(Blueprint $table) {
-            $table->dropForeign('openings_venue_id_foreign');
-        });
-        Schema::drop('openings');
+        //
     }
 }

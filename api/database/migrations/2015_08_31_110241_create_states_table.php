@@ -21,8 +21,8 @@ class CreateStatesTable extends Migration
         });
         Schema::table('states', function(Blueprint $table) {
             $table->foreign('country_id')->references('id')->on('countries')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
