@@ -1,18 +1,39 @@
-<?php
+<?php namespace App\Http\Controllers\Api;
 
-namespace App\Http\Controllers\Api;
+use Input;
+use Validator;
+use Response;
 
-use Illuminate\Http\Request;
+use App\Models\Setting;
+use App\Transformers\SettingTransformer;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
-class SettingController extends Controller
+class SettingController extends ApiController
 {
 
     public function __construct()
     {
         parent::__construct();
+    }
+
+    /**
+     * List resource
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $settings = new Setting;
+        $settings = $settings->simplePaginate(Input::get('limit', 50));
+
+        return response()->paginator($settings, new SettingTransformer);
+    }
+
+    public function findByName($name) {
+        $setting = Setting::where('name', '=', $name)->first();
+        $this->checkExist($setting);
+
+        return $setting;
     }
 
     /**

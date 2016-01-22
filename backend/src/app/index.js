@@ -18,6 +18,7 @@
         'theme.directives',
         'theme.services',
         'global.filter',
+        'replace.filter',
         'global.service',
         'upload.service',
         'global.directive',
@@ -58,7 +59,7 @@
         //================================================
         // Check isLogin when run system
         //================================================
-        .run(function ($rootScope, $location, authenticationService, localStorageService, amMoment, tmhDynamicLocale, settingService, $translate, $timeout, $cacheFactory) {
+        .run(function ($rootScope, $location, authenticationService, localStorageService, tmhDynamicLocale, $translate, $timeout, $cacheFactory) {
             var routesThatRequireAuth = ['/auth/login', '/auth/logout'];
 
             //================================================
@@ -96,13 +97,8 @@
             //================================================
             $rootScope.$location = $location;
 
-            //================================================
-            // timezone init
-            //================================================
-            amMoment.changeTimezone(settingService.find('timezone'));
-
         })
-        .run(function ($location, authenticationService, localStorageService, $timeout, Restangular, $http, $q, $state, toaster, $translate) {
+        .run(function ($location, authenticationService, localStorageService, $timeout, Restangular, $http, $q, $state, toaster, $translate, amMoment, settingService) {
 
             var refreshAccessToken = function () {
                 var deferred = $q.defer();
@@ -189,6 +185,17 @@
                     httpConfig: httpConfig
                 };
             });
+
+            //================================================
+            // timezone init
+            //================================================
+            var timezone;
+            settingService.findByName('timezone').then(function(result) {
+                console.log(result);
+            }, function(error) {
+                console.log(error);
+            });
+            amMoment.changeTimezone(settingService.findSettings('timezone'));
         })
         //================================================
         // UI router Config

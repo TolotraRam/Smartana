@@ -31,6 +31,7 @@
                     model.init();
                 }
 
+                console.log(model);
                 return model;
 
             });

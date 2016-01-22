@@ -53,7 +53,6 @@
           // data event ===================================================
           if (model.id === '') {
             model.init();
-          } else {
           }
 
           return model;

@@ -1,4 +1,3 @@
-
 (function () {
     'use strict';
 
@@ -8,10 +7,10 @@
 	      	//================================================
 	      	// Restangular init
 	      	//================================================
-	      	Restangular.extendCollection('setting', function (model) {
+	      	Restangular.extendCollection('settings', function (model) {
 	        	return model;
 	      	});
-	      	Restangular.extendModel('setting', function (model) {
+	      	Restangular.extendModel('settings', function (model) {
 	        	// variable ===================================================
 	        	// event ===================================================
 	        	model.init = function () {
@@ -27,10 +26,10 @@
 
 	      	});
 	    })
-	    .config(function ($stateProvider, $urlRouterProvider) {
+	    .config(function ($stateProvider) {
 	      $stateProvider
-	        .state('main.setting-edit', {
-	          url: 'setting/edit',
+	        .state('main.setting-form', {
+	          url: 'setting',
 	          templateUrl: 'app/components/setting/setting.form.html',
 	          controller: 'SettingFormController as formCtrl',
 	          resolve: {
@@ -48,19 +47,19 @@
 	              });
 	              return deferred.promise;
 	            },
-	            setting: function (settingService, $stateParams, $q, $state) {
-	              var deferred = $q.defer();
-	              settingService.find({cache: false}).then(function (result) {
-	                deferred.resolve(result);
-	              }, function () {
-	                $state.go('main.dashboard');
-	                deferred.reject();
-	              });
-	              return deferred.promise;
-	            },
+	            setting: function (settingService, $q, $state) {
+                    var deferred = $q.defer();
+	              	settingService.get({'cache': false}).then(function (result) {
+	                	deferred.resolve(result);
+	              	}, function () {
+	                	$state.go('main.dashboard');
+	                	deferred.reject();
+	              	});
+	              	return deferred.promise;
+                },
 	            meta: function ($rootScope, $translate, $q) {
 	              var deferred = $q.defer();
-	              $translate('setting.edit_setting').then(function (translation) {
+	              $translate('setting.settings').then(function (translation) {
 	                $rootScope.meta.pageTitle = translation;
 	                deferred.resolve(true);
 	              }, function () {

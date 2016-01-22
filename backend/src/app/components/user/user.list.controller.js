@@ -98,6 +98,7 @@
                 tableState.pagination.prev = result.meta.pagination.prev_page || null;
                 //update users list
                 vm.rowCollection = result;
+                console.log(vm.rowCollection);
                 vm.tableLoading = false;
             });
         };

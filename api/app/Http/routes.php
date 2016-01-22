@@ -85,10 +85,10 @@ Route::group(['prefix' => 'api'], function () {
             Route::delete('roles/{id}', ['uses' => 'Api\RoleController@destroy', 'as' => 'roles.destroy', 'middleware' => 'permission:roles.destroy']);
 
             //Settings =================================
-            //Route::get('setting', ['uses' => 'Api\RoleController@index', 'as' => 'setting.index', 'middleware' => 'permission:setting.index']);
-            Route::post('setting', ['uses' => 'Api\RoleController@store', 'as' => 'setting.store', 'middleware' => 'permission:setting.store']);
-            Route::get('setting/cache/clear', ['uses' => 'Api\RoleController@ClearCache', 'as' => 'setting.clear.cache', 'middleware' => 'permission:setting.clear.cache']);
-        
+            Route::get('setting', ['uses' => 'Api\SettingController@index', 'as' => 'setting.index', 'middleware' => 'permission:setting.index']);
+            Route::post('setting', ['uses' => 'Api\SettingController@store', 'as' => 'setting.store', 'middleware' => 'permission:setting.store']);
+            Route::get('setting/cache/clear', ['uses' => 'Api\SettingController@ClearCache', 'as' => 'setting.clear.cache', 'middleware' => 'permission:setting.clear.cache']);
+            Route::get('setting/{name}', 'Api\SettingController@findByName');
 
             //Permissions =================================
             Route::get('permissions', ['uses' => 'Api\PermissionController@index', 'as' => 'permissions.index']);
@@ -105,6 +105,8 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('/media/{type}/{yearAndMonth}/{day}/{filename}', 'Api\MediaController@get');
         // Get avatar
         Route::get('/media/{type}/{filename}', 'Api\UserController@get');
+
+        Route::get('setting/{name}', 'Api\SettingController@findByName');
 
         Route::group(['middleware' => 'App\Http\Middleware\ThrottleMiddleware:600,5', 'prefix' => ''], function () {
         });

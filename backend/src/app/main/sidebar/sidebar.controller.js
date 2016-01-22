@@ -93,7 +93,7 @@
                 label: 'Setting',
                 iconClasses: 'fa fa-gear',
                 state: 'main.setting-form',
-                enabled: vm.me.can(['setting.store'])
+                enabled: vm.me.can(['setting.index'])
             }];
 
             var setParent = function (children, parent) {

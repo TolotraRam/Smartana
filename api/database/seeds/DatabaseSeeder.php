@@ -13,29 +13,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
-        
-
         $this->call(SettingTableSeeder::class);
-        $this->command->info('Setting table seeded!');
-
-        $this->call(PostCategoryTableSeeder::class);
-        $this->command->info('PostCategory table seeded!');
-
         $this->call(CountryTableSeeder::class);
-        $this->command->info('Country table seeded!');
-
         $this->call(StateTableSeeder::class);
-        $this->command->info('State table seeded!');
-
         $this->call(CityTableSeeder::class);
-        $this->command->info('City table seeded!');
-
         $this->call(UserAndRoleTableSeeder::class);
-        $this->command->info('UserAndRoleTableSeeder table seeded!');
-
-//        $this->call(SettingTableSeeder::class);
-//        $this->command->info('Setting table seeded!');
 
         Model::reguard();
     }
