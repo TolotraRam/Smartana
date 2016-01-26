@@ -36,7 +36,7 @@
 	            hasPermission: function (userService, $state, $q) {
 	              var deferred = $q.defer();
 	              userService.getMe().then(function (result) {
-	                if (!result.can(['users.index', 'users.update'], true)) {
+	                if (!result.can(['setting.index', 'setting.store'], true)) {
 	                  $state.go('main.index');
 	                  deferred.resolve(false);
 	                }

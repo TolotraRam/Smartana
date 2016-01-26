@@ -55,11 +55,20 @@
     "facebook" : "Facebook",
     "twitter" : "Twitter",
     "google" : "Google",
+    "phone": "Phone",
+    "address" : "Address",
+    "postal_code" : "Postal code",
+    "is_verified" : "Verified",
+    "verification" : "Verification",
     "active" : "Active",
     "yes": "Yes",
     "no": "No",
     "top_page": "Top",
     "back_to_top": "Back to Top"
+  },
+  "setting" : {
+        "setting" : "Setting",
+        "settings": "Settings"
   },
   "upload": {
     "uploading": "Uploading",
@@ -96,9 +105,6 @@
     "update_error_msg": "Error occurred when trying to update user.",
     "delete_before_msg": "This will only delete user with no orders. You cannot recover deleted user, do you wish to continue?",
     "delete_error_msg": "Error occurred when trying to delete user.",
-    "phone": "Phone",
-    "address" : "Address",
-    "postal_code" : "Postal code",
     "biography": "Biography"
   },
   "role": {
@@ -198,11 +204,24 @@
     "title": "Title",
     "enabled": "Enabled",
     "code": "City code"
-    },
+  },
+  "venue": {
+    "venue": "Venue",
+    "venues": "Venues",
+    "add_a_venue": "Add a venue",
+    "edit_venue": "Edit venue",
+    "remove_venues": "Remove venues",
+    "delete_venue": "Delete venue",
+    "title": "Title",
+    "name": "Name",
+    "summary": "Summary",
+    "description": "Description",
+    "website": "Website"
+  },
   "event": {
     "events": "Events",
     "event": "Event",
-    "add_a_event": "Add a event",
+    "add_a_event": "Add an event",
     "edit_event": "Edit event",
     "remove_events": "Remove events",
     "delete_event": "Delete event",

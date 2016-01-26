@@ -11,10 +11,8 @@
         //================================================
         //Variable
         //================================================
-        // get product categories data
-        postCategoryService.get({
-            parent_id: 1
-        }, {cache: false}).then(function (result) {
+        // get post categories data
+        postCategoryService.get({cache: false}).then(function (result) {
             vm.categories = result;
         });
 

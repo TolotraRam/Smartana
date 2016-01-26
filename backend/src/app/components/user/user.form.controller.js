@@ -67,8 +67,6 @@
                 vm.loadCity = true;
             };
 
-            console.log(vm.file);
-
             vm.refreshCountries();
             if(vm.user.id) {
                 vm.refreshStates();

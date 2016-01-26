@@ -18,8 +18,7 @@ class SettingController extends ApiController
     /**
      * List resource
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -30,43 +29,29 @@ class SettingController extends ApiController
     }
 
     public function findByName($name) {
-        $setting = Setting::where('name', '=', $name)->first();
+        $setting = Setting::where('name', '=', $name)->paginate(15);
         $this->checkExist($setting);
 
-        return $setting;
+        return response()->paginator($setting, new SettingTransformer);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
-    }
+        foreach(Input::all() as $fields) 
+        {
+            $setting = Setting::where('name', '=', $fields['name'])->first();
+            $setting->value = $fields['value'];
+            $setting->save();
+        }
+        $settings = new Setting;
+        $settings = $settings->simplePaginate(Input::get('limit', 50));
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->paginator($settings, new SettingTransformer);
+        //return $input;
     }
 }

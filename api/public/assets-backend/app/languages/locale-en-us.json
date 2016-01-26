@@ -61,6 +61,10 @@
     "top_page": "Top",
     "back_to_top": "Back to Top"
   },
+  "setting" : {
+        "setting" : "Setting",
+        "settings": "Settings"
+    },
   "upload": {
     "uploading": "Uploading",
     "supported_drop_msg": "Drop here or Click to upload",

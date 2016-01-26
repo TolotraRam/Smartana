@@ -70,6 +70,13 @@ Route::group(['prefix' => 'api'], function () {
             Route::put('posts/{id}', ['uses' => 'Api\PostController@update', 'as' => 'posts.update', 'middleware' => 'permission:posts.update']);
             Route::delete('posts/{id}', ['uses' => 'Api\PostController@destroy', 'as' => 'posts.destroy', 'middleware' => 'permission:posts.destroy']);
 
+            //Venues =================================
+            Route::get('venues', ['uses' => 'Api\VenueController@index', 'as' => 'venues.index', 'middleware' => 'permission:venues.index']);
+            Route::get('venues/{id}', ['uses' => 'Api\VenueController@show', 'as' => 'venues.show', 'middleware' => 'permission:venues.index']);
+            Route::post('venues', ['uses' => 'Api\VenueController@store', 'as' => 'venues.store', 'middleware' => 'permission:venues.store']);
+            Route::put('venues/{id}', ['uses' => 'Api\VenueController@update', 'as' => 'venues.update', 'middleware' => 'permission:venues.update']);
+            Route::delete('venues/{id}', ['uses' => 'Api\VenueController@destroy', 'as' => 'venues.destroy', 'middleware' => 'permission:venues.destroy']);
+
             //Users =================================
             Route::get('users', ['uses' => 'Api\UserController@index', 'as' => 'users.index', 'middleware' => 'permission:users.index']);
             Route::get('users/{id}', ['uses' => 'Api\UserController@show', 'as' => 'users.show', 'middleware' => 'permission:users.index']);
@@ -86,7 +93,7 @@ Route::group(['prefix' => 'api'], function () {
 
             //Settings =================================
             Route::get('setting', ['uses' => 'Api\SettingController@index', 'as' => 'setting.index', 'middleware' => 'permission:setting.index']);
-            Route::post('setting', ['uses' => 'Api\SettingController@store', 'as' => 'setting.store', 'middleware' => 'permission:setting.store']);
+            Route::put('setting', ['uses' => 'Api\SettingController@store', 'as' => 'setting.store', 'middleware' => 'permission:setting.store']);
             Route::get('setting/cache/clear', ['uses' => 'Api\SettingController@ClearCache', 'as' => 'setting.clear.cache', 'middleware' => 'permission:setting.clear.cache']);
             Route::get('setting/{name}', 'Api\SettingController@findByName');
 

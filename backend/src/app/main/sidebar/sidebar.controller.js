@@ -93,7 +93,29 @@
                 label: 'Setting',
                 iconClasses: 'fa fa-gear',
                 state: 'main.setting-form',
-                enabled: vm.me.can(['setting.index'])
+                enabled: vm.me.can(['setting.index', 'setting.store', 'setting.clear.cache'])
+            }, {
+                label: 'Venue',
+                iconClasses: 'fa fa-map-marker',
+                enabled: vm.me.can(['venues.index', 'venues.store'/*, 'venues.categories.index'*/]),
+                children: [
+                    {
+                        label: 'All Venues',
+                        iconClasses: 'fa fa-circle-o',
+                        state: 'main.venue-list',
+                        enabled: vm.me.can(['venues.index'])
+                    }, {
+                        label: 'Add new',
+                        iconClasses: 'fa fa-circle-o',
+                        state: 'main.venue-create',
+                        enabled: vm.me.can(['venues.store'])
+                    }/*, {
+                        label: 'Categories',
+                        iconClasses: 'fa fa-circle-o',
+                        state: 'main.post-category-list',
+                        enabled: vm.me.can(['posts.categories.index'])
+                    }*/
+                ]
             }];
 
             var setParent = function (children, parent) {

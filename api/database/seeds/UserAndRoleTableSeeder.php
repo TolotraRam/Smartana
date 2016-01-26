@@ -85,6 +85,12 @@ class UserAndRoleTableSeeder extends Seeder
         $deleteCityPermission = Permission::create(['name' => 'city.destroy', 'display_name' => 'Delete City']);
         array_push($allPermissions, $listCityPermission->id, $createCityPermission->id, $editCityPermission->id, $listCityPermission->id, $deleteCityPermission->id);
 
+        $listVenuesPermission = Permission::create(['name' => 'venues.index', 'display_name' => 'List Venues']);
+        $createVenuesPermission = Permission::create(['name' => 'venues.store', 'display_name' => 'Create Venues']);
+        $editVenuesPermission = Permission::create(['name' => 'venues.update', 'display_name' => 'Edit Venues']);
+        $deleteVenuesPermission = Permission::create(['name' => 'venues.destroy', 'display_name' => 'Delete Venues']);
+        array_push($allPermissions, $listVenuesPermission->id, $createVenuesPermission->id, $editVenuesPermission->id, $listVenuesPermission->id, $deleteVenuesPermission->id);
+
         $listSettingPermission = Permission::create(['name' => 'setting.index', 'display_name' => 'List Setting']);
         $createEditSettingPermission = Permission::create(['name' => 'setting.store', 'display_name' => 'Create or Update Setting']);
         $clearCacheSettingPermission = Permission::create(['name' => 'setting.clear.cache', 'display_name' => 'Clear Cache']);

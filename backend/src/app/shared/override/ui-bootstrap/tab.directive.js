@@ -4,7 +4,7 @@
 
     angular.module('backend')
         .run(function ($templateCache) {
-            $templateCache.put('template/tabs/tabset.html', '<div> <ul class="{{tabClass}} nav nav-{{type || \'tabs\'}}" ng-class="{\'nav-stacked\': vertical, \'nav-justified\': justified}" ng-transclude></ul> <div class="tab-content"> <div class="tab-pane" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab"> </div></div></div>');
+            $templateCache.put('template/tabs/tabset.html', '<div> <ul class="{{tabClass}} nav nav-{{type || \'tabs\'}}" ng-class="{\'nav-stacked\': vertical, \'nav-justified\': justified}" ng-transclude></ul> <div class="tab-content" class="{{contentTabClass}}"> <div class="tab-pane" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab"> </div></div></div>');
         })
         .config(function ($provide) {
 
@@ -32,6 +32,7 @@
                         // Get the value for the `custom-class` attribute and assign it to the scope.
                         // This is the same the original link method does for the `vertical` and ``justified` attributes
                         scope.tabClass = attrs.tabClass;
+                        scope.contentTabClass = attrs.contentTabClass;
                     }
                 };
 

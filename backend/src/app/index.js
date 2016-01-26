@@ -12,6 +12,7 @@
         'mediaCategoryModule',
         'postCategoryModule',
         'localisationModule',
+        'venueModule',
         'settingModule',
         'languageModule',
 
@@ -36,7 +37,6 @@
         'ui.tinymce',
         'uiSwitch',
         'checklist-model',
-        'textAngular',
         'toaster', //notification plugin
         'ngMaterial',
 
@@ -189,13 +189,10 @@
             //================================================
             // timezone init
             //================================================
-            var timezone;
             settingService.findByName('timezone').then(function(result) {
-                console.log(result);
-            }, function(error) {
-                console.log(error);
+               var timezone = result[0].value;
+                amMoment.changeTimezone(timezone);
             });
-            amMoment.changeTimezone(settingService.findSettings('timezone'));
         })
         //================================================
         // UI router Config

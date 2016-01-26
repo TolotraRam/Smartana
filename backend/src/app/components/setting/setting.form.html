@@ -25,21 +25,6 @@
                             class="fa fa-reply"></i> {{ 'button.go_back' |
                         translate }}
                     </button>
-
-                    <button type="submit" ng-click="formCtrl.saveAndExit()"
-                            ng-disabled="formCtrl.settingForm.$invalid || formCtrl.deleteLoading || formCtrl.saveLoading"
-                            class="btn btn-primary">
-                        <span ng-if="formCtrl.saveLoading"><i class="fa fa-spin fa-spinner"></i></span>
-                        <span ng-if="!formCtrl.saveLoading"><i class="fa fa-save"></i> {{
-                            'button.save_exit' | translate }}</span>
-                    </button>
-                    <button ng-if="formCtrl.country.id !== ''" type="button"
-                            ng-disabled="formCtrl.deleteLoading || formCtrl.saveLoading"
-                            ng-click="formCtrl.delete()" class="btn btn-danger">
-                        <span ng-if="formCtrl.deleteLoading"><i class="fa fa-spin fa-spinner"></i></span>
-                        <span ng-if="!formCtrl.deleteLoading"><i class="fa fa-save"></i> {{
-                            'button.delete' | translate }}</span>
-                    </button>
                 </div>
             </div><!-- /.col -->
         </div>
@@ -47,19 +32,22 @@
         <!-- /.row -->
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-success">
-                    <div class="box-body">
-                        <div class="form-group" ng-repeat="setting in formCtrl.setting | groupBy: type">
-                            <label for="{{ setting.name }}" class="control-label">{{ setting.name | replace:'_':' '| ucfirst }}</label>
-                            <input id="{{ setting.name }}" type="text" class="form-control"
-                                   ng-model="setting.value">
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
+                <div class="nav-tabs-custom">
+                    <tabset>
+                        <tab ng-repeat="(key, value) in formCtrl.setting | groupBy: 'type'">
+                            <tab-heading>
+                                {{ key | uppercase }}
+                            </tab-heading>
+                            <div class="form-group" ng-repeat="setting in value">
+                                <label for="{{ setting.name }}" class="control-label">{{ setting.name | replace:'_':' '| ucfirst }}</label>
+                                <input id="{{ setting.name }}" type="text" class="form-control"
+                                       ng-model="setting.value">
+                            </div>
+                        </tab>
+                    </tabset>
                 </div>
-                <!-- /.box -->
             </div><!-- /.col -->
         </div><!-- /.row -->
     </form><!-- /form -->
 
-</section>>
+</section>

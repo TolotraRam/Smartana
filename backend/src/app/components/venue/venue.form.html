@@ -1,0 +1,296 @@
+<section class="content-header">
+    <h1>
+        <span ng-if="formCtrl.venue.id !== ''">{{ 'venue.edit_venue' | translate }}</span>
+        <span ng-if="formCtrl.venue.id === ''">{{ 'venue.add_a_venue' | translate }}</span>
+        <small>{{ formCtrl.venue.title }}</small>
+    </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <form name="formCtrl.venueForm">
+        <div class="row">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-default" ng-click="$location.path('venues')"><i
+                        class="fa fa-reply"></i> {{ 'button.go_back' |
+                    translate }}
+                </button>
+            </div>
+            <div class="col-md-8">
+                <div class="pull-right">
+                    <button type="submit"
+                            ng-disabled="formCtrl.venueForm.$invalid || formCtrl.deleteLoading || formCtrl.saveLoading"
+                            ng-click="formCtrl.save()"
+                            class="btn btn-primary">
+                        <span ng-if="formCtrl.saveLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.saveLoading"><i class="fa fa-save"></i> {{
+                            'button.save' | translate }}</span>
+                    </button>
+                    
+                    
+                    <button type="submit" ng-click="formCtrl.saveAndExit()"
+                            ng-disabled="formCtrl.venueForm.$invalid || formCtrl.deleteLoading || formCtrl.saveLoading"
+                            class="btn btn-primary">
+                        <span ng-if="formCtrl.saveLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.saveLoading"><i class="fa fa-save"></i> {{
+                            'button.save_exit' | translate }}</span>
+                    </button>
+                    <button ng-if="formCtrl.venue.id !== ''" type="button"
+                            ng-disabled="formCtrl.deleteLoading || formCtrl.saveLoading"
+                            ng-click="formCtrl.delete()" class="btn btn-danger">
+                        <span ng-if="formCtrl.deleteLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.deleteLoading"><i class="fa fa-save"></i> {{
+                            'button.delete' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br />
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'global.informations' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="name" class="control-label">{{ 'venue.name' | translate }}</label>
+
+                                <div class="form-group">
+                                    <input id="name" type="text" class="form-control"
+                                           placeholder="{{ 'venue.name' | translate }}"
+                                           required=""
+                                           ng-model="formCtrl.venue.name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="summary" class="control-label">{{ 'venue.summary' | translate }}</label>
+
+                                <div class="form-group">
+                                    <input id="summary" type="text" class="form-control"
+                                           placeholder="{{ 'venue.summary' | translate }}"
+                                           required=""
+                                           ng-model="formCtrl.venue.summary">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="description" class="control-label">{{ 'venue.description' | translate }}</label>
+
+                                <div class="form-group">
+                                    <textarea ui-tinymce="formCtrl.tinymceOptions" placeholder="{{ 'global.content' | translate }}" ng-model="formCtrl.venue.description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="phone" class="control-label">{{ 'global.phone' | translate }}</label>
+                                <div class="form-group">
+                                    <input id="phone" type="text" class="form-control"
+                                           placeholder="{{ 'global.phone' | translate }}"
+                                           ng-model="formCtrl.venue.phone">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="address" class="control-label">{{ 'global.address' | translate }}</label>
+                                <div class="form-group">
+                                    <input id="address" type="text" class="form-control"
+                                           placeholder="{{ 'global.address' | translate }}"
+                                           ng-model="formCtrl.venue.address">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="postal_code" class="control-label">{{ 'global.postal_code' | translate }}</label>
+                                <div class="form-group">
+                                    <input id="postal_code" type="text" class="form-control"
+                                           placeholder="{{ 'global.postal_code' | translate }}"
+                                           ng-model="formCtrl.venue.postal_code">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-if="!formCtrl.venue.id">
+                            <div class="col-sm-4">
+                                <label for="country" class="control-label">{{ 'country.country' | translate }}</label>
+                                <div class="form-group">
+                                    <ui-select id="country" ng-model="formCtrl.country" on-select="formCtrl.refreshStates($select.selected.id)" theme="selectize">
+                                        <ui-select-match placeholder="All countries" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="country.id as country in formCtrl.countries track by $index"
+                                                refresh="formCtrl.refreshCountries($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" ng-if="formCtrl.loadState">
+                                <label for="state" class="control-label">{{ 'country.state' | translate }}</label>
+                                <div class="form-group">
+                                    <ui-select id="state" ng-model="formCtrl.state" on-select="formCtrl.refreshCities($select.selected.id)" theme="selectize">
+                                        <ui-select-match placeholder="All states" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="state.id as state in formCtrl.states track by $index"
+                                                refresh="formCtrl.refreshStates($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="state.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" ng-if="formCtrl.loadCity">
+                                <label for="city" class="control-label">{{ 'venue.city' | translate }}</label>
+                                <div class="form-group">
+                                    <ui-select id="city" ng-model="formCtrl.city" theme="selectize">
+                                        <ui-select-match placeholder="All cities" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="city.id as city in formCtrl.cities track by $index"
+                                                refresh="formCtrl.refreshCities($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="city.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" ng-if="formCtrl.venue.id">
+                            <div class="col-sm-4">
+                                <label for="country" class="control-label">{{ 'country.country' | translate }}</label>
+                                <div class="form-group">
+                                    <ui-select id="country" ng-model="formCtrl.country" on-select="formCtrl.refreshStates($select.selected.id)" theme="selectize">
+                                        <ui-select-match placeholder="All countries" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="country.id as country in formCtrl.countries track by $index"
+                                                refresh="formCtrl.refreshCountries($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="state" class="control-label">{{ 'state.state' | translate }}</label>
+                                <div class="form-group">
+                                    <ui-select id="state" ng-model="formCtrl.state" on-select="formCtrl.refreshCities($select.selected.id)" theme="selectize">
+                                        <ui-select-match placeholder="All states" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="state.id as state in formCtrl.states track by $index"
+                                                refresh="formCtrl.refreshStates($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="state.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="city" class="control-label">{{ 'city.city' | translate }}</label>
+                                <div class="form-group">
+                                    <ui-select id="city" ng-model="formCtrl.city" theme="selectize">
+                                        <ui-select-match placeholder="All cities" >
+                                            {{ $select.selected.name }}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="city.id as city in formCtrl.cities track by $index"
+                                                refresh="formCtrl.refreshCities($select.search)"
+                                                refresh-delay="0">
+                                            <div ng-bind-html="city.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="website" class="control-label">{{ 'venue.website' | translate }}</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">http://</span>
+                                <input id="website" type="website" class="form-control"
+                                       placeholder="{{ 'venue.website' | translate }}"
+                                       required=""
+                                       ng-model="formCtrl.venue.website">
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'global.social' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="facebook" class="control-label">{{ 'global.facebook' | translate }}</label>
+                                <div class="form-group">
+                                    <input id="facebook" type="text" class="form-control"
+                                           placeholder="{{ 'global.facebook' | translate }}"
+                                           ng-model="formCtrl.venue.facebook">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="twitter" class="control-label">{{ 'global.twitter' | translate }}</label>
+
+                                <div class="form-group">
+                                    <input id="twitter" type="text" class="form-control"
+                                           placeholder="{{ 'global.twitter' | translate }}"
+                                           ng-model="formCtrl.venue.twitter">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="google" class="control-label">{{ 'global.google' | translate }}</label>
+
+                                <div class="form-group">
+                                    <input id="google" type="text" class="form-control"
+                                           placeholder="{{ 'global.google' | translate }}"
+                                           ng-model="formCtrl.venue.google">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <div class="col-md-4">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'global.status' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <md-checkbox class="md-primary" ng-model="formCtrl.venue.active">{{ 'global.is_verified' |
+                                    translate }}</md-checkbox>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </form>
+    <!-- /form -->
+
+</section>

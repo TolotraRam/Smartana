@@ -198,8 +198,8 @@ class UserController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
-        /*DB::beginTransaction();
-        try {*/
+        DB::beginTransaction();
+        try {
 
             $user = new User;
             $user = User::find($id);
@@ -265,10 +265,10 @@ class UserController extends ApiController
 
             return $this->show($user->id);
 
-        /*} catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             throw new ResourceException($e);
-        }*/
+        }
         
     }
 
