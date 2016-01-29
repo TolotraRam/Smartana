@@ -1,7 +1,5 @@
 <?php namespace App\Models;
 
-//use App\Models\Relations\BelongsToCustomerTrait;
-
 class PostCategory extends \Baum\Node
 {
     use TimestampsFormatTrait;

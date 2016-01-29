@@ -32,10 +32,6 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ 'role.roles' | translate }}</h3>
-                </div>
-                <!-- /.box-header -->
                 <div class="box-body" st-table="listCtrl.rowCollection" st-safe-src="listCtrl.rowCollection"
                      st-pipe="listCtrl.callServer">
 
@@ -45,7 +41,7 @@
 
                                 <div class="form-group">
                                     <input type="text" class="form-control" ng-model="listCtrl.filter.search"
-                                           placeholder="Serach Title"/>
+                                           placeholder="Search roles"/>
                                 </div>
 
                                 <div class="form-group">
@@ -91,16 +87,16 @@
                                                    count-selected-rows="listCtrl.countSelectedRows"
                                                    ng-model="isAllSelected"></st-select-all>
                                 </th>
-                                <th width="25%">{{ 'global.name' | translate}}</th>
+                                <th width="20%">{{ 'global.name' | translate}}</th>
                                 <th width="">{{ 'user.permissions' | translate}}</th>
-                                <th width="15%"></th>
+                                <th width="10%"></th>
                             </tr>
                             </thead>
                             <tbody ng-if="!listCtrl.tableLoading">
 
                             <tr ng-repeat="row in listCtrl.rowCollection">
                                 <td>
-                                    <input type="checkbox" ng-checked="row.isSelected" st-select-row="row"/>
+                                    <md-checkbox class="md-primary" ng-checked="row.isSelected" st-select-row="row" aria-label="{{ row.name }}"></md-checkbox>
                                 </td>
                                 <td>
                                     <div class="form-group">
@@ -119,11 +115,12 @@
                                                ng-model="row.display_name">
                                     </div>
                                 </td>
-                                <td>
+                                <td class="checklist">
                                     <label class="checkbox-inline" ng-repeat="permission in listCtrl.permissions">
-                                        <input type="checkbox" checklist-model="$parent.row.permissionIds"
-                                               checklist-value="permission.id"> {{
-                                        permission.display_name }}
+                                        <md-checkbox class="md-primary" aria-label="{{ permission.display_name }}" 
+                                            checklist-model="$parent.row.permissionIds"
+                                            checklist-value="permission.id">{{
+                                        permission.display_name }}</md-checkbox>
                                     </label>
                                 </td>
                                 <td>

@@ -18,6 +18,7 @@ class CreateSettingTable extends Migration
             $table->string('type', 128)->index();
             $table->string('name', 128)->unique();
             $table->string('value', 128);
+            $table->string('form', 128)->nullable();
         });
     }
 

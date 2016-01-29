@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVenuesCategoriesTable extends Migration
+class CreateVenueCategoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,12 @@ class CreateVenuesCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('venues_categories', function (Blueprint $table) {
+        Schema::create('venue_category', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('type', 100);
+            $table->string('name', 100);
+            $table->string('description', 255)->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateVenuesCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('venues_categories');
+        Schema::drop('venue_category');
     }
 }

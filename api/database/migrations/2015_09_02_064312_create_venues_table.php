@@ -17,6 +17,7 @@ class CreateVenuesTable extends Migration
             $table->increments('id');
             $table->string('place_id', 30)->unique();
             $table->string('name');
+            $table->string('image');
             $table->string('postal_code', 30);
             $table->string('address', 100);
             $table->string('formatted_address', 150);
@@ -29,6 +30,7 @@ class CreateVenuesTable extends Migration
             $table->string('google', 150)->nullable();
             $table->string('website', 150);
             $table->boolean('is_verified')->default(0);
+            $table->boolean('enabled')->default(0);
             $table->integer('city_id')->nullable()->unsigned();
             $table->integer('user_id')->nullable()->unsigned();
             $table->timestamps();
