@@ -1,5 +1,3 @@
-
-
 (function () {
     'use strict';
 
@@ -13,6 +11,7 @@
         'postCategoryModule',
         'localisationModule',
         'venueModule',
+        'venueCategoryModule',
         'settingModule',
         'languageModule',
 
@@ -21,7 +20,6 @@
         'global.filter',
         'replace.filter',
         'global.service',
-        'upload.service',
         'global.directive',
         'file.directive',
 
@@ -39,6 +37,8 @@
         'checklist-model',
         'toaster', //notification plugin
         'ngMaterial',
+        'uiGmapgoogle-maps',
+        'google.places',
 
         //Plugin
         'angular.filter',
@@ -145,11 +145,6 @@
                     return false;
                 }
 
-                /*if (response.status === 400) {
-                    toaster.pop('error', '', $translate.instant('golbal.oops'));
-                    return false;
-                }*/
-
                 console.log('error not handled');
                 return true; // error not handled
             });
@@ -214,7 +209,7 @@
             delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
             localStorageServiceProvider
-                .setPrefix('emcoocms')
+                .setPrefix('smartanacms')
                 .setStorageType('localStorage')
                 .setNotify(true, true);
         })

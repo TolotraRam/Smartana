@@ -51,50 +51,41 @@
             <div class="col-md-8">
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{ 'global.informations' | translate }}</h3>
+                        <h3 class="box-title">{{ 'global.map_localisation' | translate }}</h3>
                     </div>
                     <div class="box-body">
-
+                        <div class="callout callout-info">
+                            <h4>Read this before filling the form!</h4>
+                            <p>Follow the steps to continue to payment.</p>
+                        </div> <!-- /call out-->
                         <div class="row">
                             <div class="col-sm-12">
-                                <label for="name" class="control-label">{{ 'venue.name' | translate }}</label>
-
+                                <div class="form-group map-search">
+                                    <input class="form-control" placeholder="{{ 'venue.Search_place' | translate }}" ng-change="formCtrl.placeChange()" g-places-autocomplete options="formCtrl.autocompleteOptions" ng-model="formCtrl.place"/>
+                                </div>
                                 <div class="form-group">
-                                    <input id="name" type="text" class="form-control"
-                                           placeholder="{{ 'venue.name' | translate }}"
-                                           required=""
-                                           ng-model="formCtrl.venue.name">
+                                    <ui-gmap-google-map options='formCtrl.map.options' center='formCtrl.map.center' zoom='formCtrl.map.zoom' events="formCtrl.events">
+                                        <ui-gmap-marker coords="formCtrl.marker.coords" options="formCtrl.marker.options" events="formCtrl.marker.events" idkey="formCtrl.marker.id"></ui-gmap-marker>
+                                    </ui-gmap-google-map>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label for="summary" class="control-label">{{ 'venue.summary' | translate }}</label>
-
+                            <!--<div class="col-sm-12">
+                                <pre>{{formCtrl.place | json}}</pre>
+                            </div>-->
+                            <div class="col-sm-6">
+                                <label for="latitude" class="control-label">{{ 'global.latitude' | translate }}</label>
                                 <div class="form-group">
-                                    <input id="summary" type="text" class="form-control"
-                                           placeholder="{{ 'venue.summary' | translate }}"
-                                           required=""
-                                           ng-model="formCtrl.venue.summary">
+                                    <input id="latitude" type="text" class="form-control"
+                                           placeholder="{{ 'global.latitude' | translate }}"
+                                           ng-model="formCtrl.venue.latitude">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label for="description" class="control-label">{{ 'venue.description' | translate }}</label>
-
+                            <div class="col-sm-6">
+                                <label for="longitude" class="control-label">{{ 'global.longitude' | translate }}</label>
                                 <div class="form-group">
-                                    <textarea ui-tinymce="formCtrl.tinymceOptions" placeholder="{{ 'global.content' | translate }}" ng-model="formCtrl.venue.description"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label for="phone" class="control-label">{{ 'global.phone' | translate }}</label>
-                                <div class="form-group">
-                                    <input id="phone" type="text" class="form-control"
-                                           placeholder="{{ 'global.phone' | translate }}"
-                                           ng-model="formCtrl.venue.phone">
+                                    <input id="longitude" type="text" class="form-control"
+                                           placeholder="{{ 'global.longitude' | translate }}"
+                                           ng-model="formCtrl.venue.longitude">
                                 </div>
                             </div>
                         </div>
@@ -116,7 +107,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row" ng-if="!formCtrl.venue.id">
                             <div class="col-sm-4">
                                 <label for="country" class="control-label">{{ 'country.country' | translate }}</label>
@@ -167,7 +157,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row" ng-if="formCtrl.venue.id">
                             <div class="col-sm-4">
                                 <label for="country" class="control-label">{{ 'country.country' | translate }}</label>
@@ -218,6 +207,56 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div><!-- /.box -->
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'global.informations' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="name" class="control-label">{{ 'venue.name' | translate }}</label>
+
+                                <div class="form-group">
+                                    <input id="name" type="text" class="form-control"
+                                           placeholder="{{ 'venue.name' | translate }}"
+                                           required=""
+                                           ng-model="formCtrl.venue.name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="summary" class="control-label">{{ 'venue.summary' | translate }}</label>
+
+                                <div class="form-group">
+                                    <input id="summary" type="text" class="form-control"
+                                           placeholder="{{ 'venue.summary' | translate }}"
+                                           ng-model="formCtrl.venue.summary">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="description" class="control-label">{{ 'venue.description' | translate }}</label>
+
+                                <div class="form-group">
+                                    <textarea ui-tinymce="formCtrl.tinymceOptions" placeholder="{{ 'global.content' | translate }}" ng-model="formCtrl.venue.description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="phone" class="control-label">{{ 'global.phone' | translate }}</label>
+                                <div class="form-group">
+                                    <input id="phone" type="text" class="form-control"
+                                           placeholder="{{ 'global.phone' | translate }}"
+                                           ng-model="formCtrl.venue.phone">
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label for="website" class="control-label">{{ 'venue.website' | translate }}</label>
@@ -225,15 +264,12 @@
                                 <span class="input-group-addon">http://</span>
                                 <input id="website" type="website" class="form-control"
                                        placeholder="{{ 'venue.website' | translate }}"
-                                       required=""
                                        ng-model="formCtrl.venue.website">
                             </div>
                         </div>
-
                     </div>
                     <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
+                </div><!-- /.box -->
                 <div class="box box-default">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'global.social' | translate }}</h3>
@@ -271,18 +307,91 @@
 
                     </div>
                     <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
+                </div><!-- /.box -->
             </div>
             <div class="col-md-4">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'global.image' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div ng-if="formCtrl.file" class="pull-left" style="margin-right: 10px; height: 100px;">
+                                <img ng-src="{{formCtrl.file.src}}" style="max-height: 100px; width: auto;" />
+                            </div>
+                            <div ng-if="formCtrl.venue.image && !formCtrl.file">
+                                <img ng-src="{{formCtrl.venue.avatar_url}}" style="max-height: 100px; width: auto;" />
+                            </div>
+                            <div class="file-wrap">
+                                <label class="btn btn-default" for="fileToUpload">
+                                    <i class="fa fa-user"></i> Change image
+                                </label>
+                                <input id="fileToUpload" ngf-select type="file" name="myAvatar" style="opacity: 0;"                                        
+                                        image-with-preview
+                                        data-bind-file=""
+                                        ng-model="formCtrl.file"
+                                        ngf-accept="'image/*'" />
+                            </div>
+                            <div ng-show="formCtrl.file">
+                                {{formCtrl.file.name}}<br />
+                                {{formCtrl.file.size}} byte(s)<br/>
+                                {{formCtrl.file.type}}
+                            </div>
+                            <div style="margin-top: 10px;" class="alert alert-danger alert-dismissible" ng-show="formCtrl.userForm.myAvatar.$error.formCtrl.file">
+                                Not a JPEG or a PNG!
+                            </div>
+                            <div style="margin-top: 10px;" class="alert alert-danger alert-dismissible" ng-show="formCtrl.userForm.myAvatar.$error.dimensions">
+                                Invalid dimensions! Expecting image under 200x200.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+                <div class="box box-deffault">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'venue.category.categories' | translate }} </h3>
+
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool"
+                                    ng-click="$location.path('venues/categories/create')"><i
+                                    class="fa fa-plus"></i> {{ 'button.add' | translate }}
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <ui-select multiple ng-model="formCtrl.venue.categories">
+                            <ui-select-match placeholder="">{{$item.name}}</ui-select-match>
+                            <ui-select-choices
+                                    repeat="category in formCtrl.categories"
+                                    refresh="formCtrl.refreshCategory($select.search)"
+                                    refresh-delay="0">
+                                <div ng-bind-html="category.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+
+
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="overlay" ng-show="!formCtrl.venue.categories">
+                        <i class="fa fa-cog fa-spin"></i>
+                    </div>
+                    <!-- /.overlay -->
+                </div>
+                <!-- /.box -->
                 <div class="box box-default">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'global.status' | translate }}</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
-                            <md-checkbox class="md-primary" ng-model="formCtrl.venue.active">{{ 'global.is_verified' |
-                                    translate }}</md-checkbox>
+                            <switch id="verified" name="verified" ng-model="formCtrl.venue.is_verified" ng-change="listCtrl.save(row)" class="green"></switch><span class="switch-label"><b>{{ 'global.is_verified' | translate }}</b></span>
+                        </div>
+                        <div class="form-group">
+                            <switch id="active" name="active" ng-model="formCtrl.venue.active" ng-change="listCtrl.save(row)" class="green"></switch><span class="switch-label"><b>{{ 'global.active' | translate }}</b></span>
                         </div>
                     </div>
                     <!-- /.box-body -->

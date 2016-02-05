@@ -64,7 +64,7 @@
             }, {
                 label: 'Localisation',
                 iconClasses: 'fa fa-globe',
-                enabled: vm.me.can(['country.index', 'state.index', 'city.categories.index']),
+                enabled: vm.me.can(['country.index', 'state.index', 'city.index']),
                 children: [
                     {
                         label: 'Countries',
@@ -96,7 +96,7 @@
             }, {
                 label: 'Venue',
                 iconClasses: 'fa fa-map-marker',
-                enabled: vm.me.can(['venues.index', 'venues.store'/*, 'venues.categories.index'*/]),
+                enabled: vm.me.can(['venues.index', 'venues.store', 'venues.categories.index']),
                 children: [
                     {
                         label: 'All Venues',
@@ -108,12 +108,12 @@
                         iconClasses: 'fa fa-circle-o',
                         state: 'main.venue-create',
                         enabled: vm.me.can(['venues.store'])
-                    }/*, {
+                    }, {
                         label: 'Categories',
                         iconClasses: 'fa fa-circle-o',
-                        state: 'main.post-category-list',
-                        enabled: vm.me.can(['posts.categories.index'])
-                    }*/
+                        state: 'main.venue-category-list',
+                        enabled: vm.me.can(['venues.categories.index'])
+                    }
                 ]
             }];
 

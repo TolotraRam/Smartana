@@ -5,35 +5,92 @@
     angular
         .module('venueModule')
         .controller('VenueFormController', VenueFormController);
-        function VenueFormController($scope, venueService, countryService, stateService, cityService, messageService, toaster, $translate, venue, $location, Restangular, $q) {
+        function VenueFormController($scope, venueService, venueCategoryService, countryService, stateService, cityService, messageService, toaster, $translate, venue, $location, Restangular, $q, $log) {
             var vm = this;
-
             //==========================================
             // Variable
             //==========================================
             vm.venue = (_.isEmpty(venue) || _.isUndefined(venue)) ? venueService.init() : venue;
+            console.log(vm.venue);
             if(vm.venue.id) {
                 vm.country = venue.city.state.country;
                 vm.state = venue.city.state;
                 vm.city = venue.city;
             }
+            if(!vm.venue.id) {
+                vm.place = null;
+                vm.map = { 
+                    center: { 
+                        latitude: vm.venue.longitude || -18.8791902, 
+                        longitude: vm.venue.longitude || 47.50790549999999 
+                    },
+                    options: {
+                        scrollwheel: false, 
+                        disableDoubleClickZoom: true,
+                    },
+                    zoom: 15
+                };
+                vm.autocompleteOptions = {
+                    componentRestrictions: { country: 'mg' }
+                }
+                vm.marker = {
+                    id: 0,
+                    coords: {
+                        latitude: vm.venue.longitude || -18.8791902,
+                        longitude: vm.venue.longitude || 47.50790549999999 
+                    },
+                    options: { draggable: true },
+                    events: {
+                        dragend: function (marker, eventName, args) {
+                            vm.venue.latitude = marker.getPosition().lat();
+                            vm.venue.longitude = marker.getPosition().lng();
+                        }
+                    }
+                };
+                vm.placeChange = function() {
+                    if(typeof vm.place === 'object') {
+                        console.log(vm.place);
+                        vm.venue.name = vm.place.name;
+                        vm.venue.phone = vm.place.international_phone_number || '';
+                        vm.venue.longitude = vm.place.geometry.location.lng() || '';
+                        vm.venue.latitude = vm.place.geometry.location.lat() || '';
+                        vm.venue.website = vm.place.website || '';
+                        vm.venue.address = vm.place.address_components[1].short_name || '';
+                        vm.marker = {
+                            id: 0,
+                            coords: {
+                                latitude: vm.venue.latitude,
+                                longitude: vm.venue.longitude
+                            },
+                            options: { draggable: true },
+                            events: {
+                                dragend: function (marker, eventName, args) {
+                                    vm.venue.latitude = marker.getPosition().lat();
+                                    vm.venue.longitude = marker.getPosition().lng();
+                                }
+                            }
+                        };
+                    }
+                }
+            }
             //==========================================
             // Load Data
             //==========================================
-            /*if (vm.post.categories.length > 0) {
-                postCategoryService.get({'ids[]': vm.post.categories}).then(function (result) {
-                    vm.post.categories = result;
+            if (vm.venue.categories.length > 0) {
+                console.log('msg');
+                venueCategoryService.get({'ids[]': vm.venue.categories}).then(function (result) {
+                    vm.venue.categories = result;
                 });
-            }*/
+            }
 
-            /*vm.categories = [];
+            vm.categories = [];
             vm.refreshCategory = function (string) {
                 if (string !== '') {
-                    postCategoryService.get({name: string}).then(function (result) {
+                    venueCategoryService.get({name: string}).then(function (result) {
                         vm.categories = result;
                     });
                 }
-            };*/
+            };
 
             vm.countries = [];
             vm.states = [];

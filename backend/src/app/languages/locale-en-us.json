@@ -77,7 +77,6 @@
   },
   "auth": {
     "login_now": "Login now",
-    "remember_me": "Remember Me",
     "forget_password": "Forgot password?",
     "logout": "Logout",
     "login": "Log in",
@@ -216,7 +215,26 @@
     "name": "Name",
     "summary": "Summary",
     "description": "Description",
-    "website": "Website"
+    "website": "Website",
+    "category": {
+        "categories": "Venue Categories",
+        "category": "Venue Category",
+        "name": "Venue Category Name",
+        "description": "Venue Category Description",
+        "is_featured": "Is featured",
+        "enabled": "enabled",
+        "add_a_category": "Add a venue category",
+        "edit_category": "Edit venue category",
+        "remove_categories": "Remove venue categories",
+        "delete_category": "Delete venue category",
+        "create_success_msg": "New venue category has been created.",
+        "create_error_msg": "Error occurred when trying to create venue category.",
+        "update_success_msg": "Updated a venue category.",
+        "update_error_msg": "Error occurred when trying to update venue category.",
+        "delete_success_msg": "Deleted a venue category.",
+        "delete_before_msg": "This will only delete venue category with no orders. You cannot recover deleted venue category, do you wish to continue?",
+        "delete_error_msg": "Error occurred when trying to delete venue category."
+    }
   },
   "event": {
     "events": "Events",

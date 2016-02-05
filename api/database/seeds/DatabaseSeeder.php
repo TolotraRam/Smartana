@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CityTableSeeder::class);
         $this->call(PostCategoryTableSeeder::class);
         $this->call(UserAndRoleTableSeeder::class);
+        $this->call(VenueCategoryTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 

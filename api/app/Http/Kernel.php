@@ -17,7 +17,6 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
-        //\App\Http\Middleware\VerifyCsrfToken::class,
     ];
 
     /**
@@ -26,12 +25,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'auth.user' => \App\Http\Middleware\UserAuthMiddleware::class,
-        'csrf'       => \App\Http\Middleware\VerifyCsrfToken::class,
-
+        'auth'          => \App\Http\Middleware\Authenticate::class,
+        'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'guest'         => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'auth.user'     => \App\Http\Middleware\UserAuthMiddleware::class,
+        'csrf'          => \App\Http\Middleware\VerifyCsrfToken::class,
         'role'          => \App\Http\Middleware\EntrustRoleMiddleware::class,
         'permission'    => \App\Http\Middleware\EntrustPermissionMiddleware::class,
         'ability'       => \App\Http\Middleware\EntrustAbilityMiddleware::class,

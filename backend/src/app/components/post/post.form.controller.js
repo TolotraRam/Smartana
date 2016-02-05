@@ -7,7 +7,7 @@
         var vm = this;
 
         vm.post = (_.isEmpty(post) || _.isUndefined(post)) ? postService.init() : post;
-
+        console.log(vm.post);
         //==========================================
         // Load Data
         //==========================================

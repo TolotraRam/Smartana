@@ -39,14 +39,18 @@
     "textAngular": "~1.4.3",
     "angular-ui-switch": "~0.1.1",
     "angular-material": "~1.0.1",
-    "ng-image-input-with-preview": "~0.0.6"
+    "ng-image-input-with-preview": "~0.0.6",
+    "angular-google-maps": "~2.3.1",
+    "angular-google-places-autocomplete": "~0.2.7"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0"
   },
   "overrides": {
     "ng-image-input-with-preview": {
-      "main": ["dist/ng-image-input-with-preview.js"]
+      "main": [
+        "dist/ng-image-input-with-preview.js"
+      ]
     }
   },
   "resolutions": {

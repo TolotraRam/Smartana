@@ -40,7 +40,6 @@
             vm.cities = [];
             vm.loadState = false;
             vm.loadCity = false;
-
             vm.refreshCountries = function (string) {
                 if (string !== '') {
                     countryService.get().then(function (result) {
@@ -48,7 +47,6 @@
                     });
                 }
             };
-
             vm.refreshStates = function (string) {
                 if (string !== '') {
                     stateService.get({country_id: string}).then(function (result) {
@@ -57,7 +55,6 @@
                 }
                 vm.loadState = true;
             };
-
             vm.refreshCities = function (string) {
                 if (string !== '') {
                     cityService.get({state_id: string}).then(function (result) {
@@ -66,7 +63,6 @@
                 }
                 vm.loadCity = true;
             };
-
             vm.refreshCountries();
             if(vm.user.id) {
                 vm.refreshStates();
@@ -87,19 +83,14 @@
                 } else {
                     user.city_id = vm.city;
                 }
-
                 var deferred = $q.defer();
-
-                console.log(vm.file);
 
                 var fd = new FormData();
                 if(vm.file) {
                     fd.append('attachment',vm.file);
                     fd.append('filename', vm.file.name);
                 }
-
                 fd.append("data", angular.toJson(user));
-
 
                 if (user.id !== '') {
                     fd.append('_method', 'PUT');

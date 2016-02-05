@@ -1,0 +1,144 @@
+<section class="content-header">
+    <h1>
+        <span ng-if="formCtrl.category.id !== ''">{{ 'venue.category.edit_category' | translate }}</span>
+        <span ng-if="formCtrl.category.id === ''">{{ 'venue.category.add_a_category' | translate }}</span>
+        <small></small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content">
+
+    <form name="formCtrl.venueCategoryForm">
+        <div class="row">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-default" ng-click="$location.path('venue/category')"><i
+                        class="fa fa-reply"></i> {{ 'button.go_back' |
+                    translate }}
+                </button>
+            </div>
+            <div class="col-md-8">
+                <div class="pull-right">
+                    <button type="submit"
+                            ng-disabled="formCtrl.venueCategoryForm.$invalid || formCtrl.deleteLoading || formCtrl.saveLoading"
+                            ng-click="formCtrl.save()"
+                            class="btn btn-primary">
+                        <span ng-if="formCtrl.saveLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.saveLoading"><i class="fa fa-save"></i> {{
+                            'button.save' | translate }}</span>
+                    </button>
+                    <button type="submit" ng-click="formCtrl.saveAndExit()"
+                            ng-disabled="formCtrl.venueCategoryForm.$invalid || formCtrl.deleteLoading || formCtrl.saveLoading"
+                            class="btn btn-primary">
+                        <span ng-if="formCtrl.saveLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.saveLoading"><i class="fa fa-save"></i> {{
+                            'button.save_exit' | translate }}</span>
+                    </button>
+                    <button ng-if="formCtrl.category.id !== ''" type="button"
+                            ng-disabled="formCtrl.deleteLoading || formCtrl.saveLoading"
+                            ng-click="formCtrl.delete()" class="btn btn-danger">
+                        <span ng-if="formCtrl.deleteLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.deleteLoading"><i class="fa fa-save"></i> {{
+                            'button.delete' | translate }}</span>
+                    </button>
+                </div>
+            </div><!-- /.col -->
+        </div>
+        <br />
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'global.informations' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="name" class="control-label">{{ 'venue.category.name' | translate }}</label>
+
+                                <div class="form-group">
+                                    <input id="name" type="text" class="form-control"
+                                           placeholder="{{ 'venue.category.name' | translate }}"
+                                           required=""
+                                           ng-model="formCtrl.category.name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="description" class="control-label">{{ 'venue.category.description' | translate }}</label>
+
+                                <div class="form-group">
+                                    <textarea style="min-height: 100px;" id="description" type="text" class="form-control"
+                                           placeholder="{{ 'venue.category.description' | translate }}"
+                                           ng-model="formCtrl.category.description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+                
+            </div>
+            <div class="col-md-4">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'global.image' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div ng-if="formCtrl.file" class="pull-left" style="margin-bottom: 10px;">
+                                <img ng-src="{{formCtrl.file.src}}" style="height: auto; max-width: 100%;" />
+                            </div>
+                            <div ng-if="formCtrl.category.image && !formCtrl.file" class="pull-left" style="margin-bottom: 10px;">
+                                <img ng-src="{{formCtrl.category.image_url}}" style="height: auto; max-width: 100%;" />
+                            </div>
+                            <div class="file-wrap">
+                                <label class="btn btn-default" for="fileToUpload">
+                                    <i class="fa fa-file-image-o"></i> Change image
+                                </label>
+                                <input id="fileToUpload" ngf-select type="file" name="myImage" style="opacity: 0;"                                        
+                                        image-with-preview
+                                        data-bind-file=""
+                                        ng-model="formCtrl.file"
+                                        ngf-accept="'image/*'" />
+                            </div>
+                            <div ng-show="formCtrl.file">
+                                {{formCtrl.file.name}}<br />
+                                {{formCtrl.file.size}} byte(s)<br/>
+                                {{formCtrl.file.type}}
+                            </div>
+                            <div style="margin-top: 10px;" class="alert alert-danger alert-dismissible" ng-show="formCtrl.venueCategoryForm.myImage.$error.formCtrl.file">
+                                Not a JPEG or a PNG!
+                            </div>
+                            <div style="margin-top: 10px;" class="alert alert-danger alert-dismissible" ng-show="formCtrl.venueCategoryForm.myImage.$error.dimensions">
+                                Invalid dimensions! Expecting image under 200x200.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'global.status' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <switch id="featured" name="featured" ng-model="formCtrl.category.is_featured" class="green"></switch><span class="switch-label"><b>{{ 'venue.category.is_featured' | translate }}</b></span>
+                        </div>
+                        <div class="form-group">
+                            <switch id="enabled" name="enabled" ng-model="formCtrl.category.enabled" class="green"></switch><span class="switch-label"><b>{{ 'global.enabled' | translate }}</b></span>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </form><!-- /form -->
+
+</section>

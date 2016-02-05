@@ -55,6 +55,11 @@
     "facebook" : "Facebook",
     "twitter" : "Twitter",
     "google" : "Google",
+    "phone": "Phone",
+    "address" : "Address",
+    "postal_code" : "Postal code",
+    "is_verified" : "Verified",
+    "verification" : "Verification",
     "active" : "Active",
     "yes": "Yes",
     "no": "No",
@@ -64,7 +69,7 @@
   "setting" : {
         "setting" : "Setting",
         "settings": "Settings"
-    },
+  },
   "upload": {
     "uploading": "Uploading",
     "supported_drop_msg": "Drop here or Click to upload",
@@ -72,7 +77,6 @@
   },
   "auth": {
     "login_now": "Login now",
-    "remember_me": "Remember Me",
     "forget_password": "Forgot password?",
     "logout": "Logout",
     "login": "Log in",
@@ -100,9 +104,6 @@
     "update_error_msg": "Error occurred when trying to update user.",
     "delete_before_msg": "This will only delete user with no orders. You cannot recover deleted user, do you wish to continue?",
     "delete_error_msg": "Error occurred when trying to delete user.",
-    "phone": "Phone",
-    "address" : "Address",
-    "postal_code" : "Postal code",
     "biography": "Biography"
   },
   "role": {
@@ -202,11 +203,43 @@
     "title": "Title",
     "enabled": "Enabled",
     "code": "City code"
-    },
+  },
+  "venue": {
+    "venue": "Venue",
+    "venues": "Venues",
+    "add_a_venue": "Add a venue",
+    "edit_venue": "Edit venue",
+    "remove_venues": "Remove venues",
+    "delete_venue": "Delete venue",
+    "title": "Title",
+    "name": "Name",
+    "summary": "Summary",
+    "description": "Description",
+    "website": "Website",
+    "category": {
+        "categories": "Venue Categories",
+        "category": "Venue Category",
+        "name": "Venue Category Name",
+        "description": "Venue Category Description",
+        "is_featured": "Is featured",
+        "enabled": "enabled",
+        "add_a_category": "Add a venue category",
+        "edit_category": "Edit venue category",
+        "remove_categories": "Remove venue categories",
+        "delete_category": "Delete venue category",
+        "create_success_msg": "New venue category has been created.",
+        "create_error_msg": "Error occurred when trying to create venue category.",
+        "update_success_msg": "Updated a venue category.",
+        "update_error_msg": "Error occurred when trying to update venue category.",
+        "delete_success_msg": "Deleted a venue category.",
+        "delete_before_msg": "This will only delete venue category with no orders. You cannot recover deleted venue category, do you wish to continue?",
+        "delete_error_msg": "Error occurred when trying to delete venue category."
+    }
+  },
   "event": {
     "events": "Events",
     "event": "Event",
-    "add_a_event": "Add a event",
+    "add_a_event": "Add an event",
     "edit_event": "Edit event",
     "remove_events": "Remove events",
     "delete_event": "Delete event",
