@@ -6,7 +6,6 @@
         .factory('messageService', messageService);
 
         function messageService(toaster) {
-            var _self = this;
             var service = {};
             service.formError = function (result) {
                 toaster.pop('error', '', result.data.result.message);

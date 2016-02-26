@@ -6,7 +6,7 @@
         .module('venueCategoryModule')
         .controller('VenueCategoryListController', VenueCategoryListController);
 
-    function VenueCategoryListController($location, $q, $scope, venueCategoryService, messageService, toaster, $translate, category, Restangular) {
+    function VenueCategoryListController($location, $q, $scope, venueCategoryService, messageService, toaster, $translate, category) {
 
         var vm = this;
         //==========================================
@@ -85,7 +85,7 @@
 
         vm.bulkRemove = function () {
             var removePromises = [];
-            _.each(vm.rowCollection, function (row, index) {
+            _.each(vm.rowCollection, function (row) {
                 if (row.isSelected === true && row.id !== '') {
                     removePromises.push(venueCategoryService.destroy(row.id));
                 }
@@ -108,11 +108,10 @@
         // save
         //==========================================
         vm.save = function (row) {
-            var deferred = $q.defer();
             var fd = new FormData();
             fd.append("data", angular.toJson({'enabled': row.enabled, 'is_featured': row.is_featured}));
             fd.append('_method', 'PUT');
-            venueCategoryService.update(row.id, fd).then(function (result) {
+            venueCategoryService.update(row.id, fd).then(function () {
                 toaster.pop('success', '', $translate.instant('venue.category.update_success_msg'));
             }, function () {
                 toaster.pop('error', '', $translate.instant('venue.category.update_error_msg'));

@@ -68,16 +68,13 @@
                 vm.refreshStates();
                 vm.refreshCities();
             }
-            //==========================================
-            // Profile image
-            //==========================================
 
             //==========================================
             // save
             //==========================================
             var save = function () {
                 var user = angular.copy(vm.user);
-                user.roles = _.pluck(user.roles, 'id');
+                user.roles = _.map(user.roles, 'id');
                 if(typeof vm.city === 'object') {
                     user.city_id = vm.city.id;
                 } else {
@@ -114,7 +111,6 @@
             vm.save = function () {
                 vm.saveLoading = true;
                 save().then(function (result) {
-                    console.log(result);
                     vm.saveLoading = false;
                     toaster.pop('success', '', $translate.instant('user.' + (vm.user.id !== '' ? 'update_success_msg' : 'create_success_msg')));
                     if (vm.isSaveAndExit) {
@@ -145,7 +141,7 @@
                     userService.destroy(vm.user.id).then(function () {
                         toaster.pop('success', '', $translate.instant('user.delete_success_msg'));
                         $location.path('users');
-                    }, function (result) {
+                    }, function () {
                         vm.deleteLoading = false;
                         toaster.pop('success', '', $translate.instant('user.delete_error_msg'));
                     });

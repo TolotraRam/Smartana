@@ -30,7 +30,7 @@
         //==========================================
         var save = function () {
             var state = angular.copy(vm.state);
-            state.country = _.pluck(state.country, 'id');
+            state.country = _.map(state.country, 'id');
             var deferred = $q.defer();
             if (state.id !== '') {
                 stateService.update(state.id, state).then(function (result) {
@@ -85,7 +85,7 @@
                 stateService.destroy(vm.state.id).then(function () {
                     toaster.pop('success', '', $translate.instant('state.delete_success_msg'));
                     $location.path('states');
-                }, function (result) {
+                }, function () {
                     vm.deleteLoading = false;
                     toaster.pop('success', '', $translate.instant('state.delete_error_msg'));
                 });

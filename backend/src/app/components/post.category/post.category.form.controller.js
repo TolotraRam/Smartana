@@ -50,7 +50,7 @@
             vm.saveLoading = false;
             vm.save = function () {
                 vm.saveLoading = true;
-                save().then(function (result) {
+                save().then(function () {
                     vm.saveLoading = false;
                     toaster.pop('success', '', $translate.instant('post.category.update_success_msg'));
                 }, function (result) {
@@ -61,7 +61,7 @@
 
             vm.saveAndExit = function () {
                 vm.saveLoading = true;
-                save().then(function (result) {
+                save().then(function () {
                     vm.saveLoading = false;
                     toaster.pop('success', '', $translate.instant('post.category.update_success_msg'));
                     $location.path('/posts/categories');

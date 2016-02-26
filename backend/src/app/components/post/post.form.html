@@ -162,46 +162,21 @@
 
                         <div class="form-group">
                             <label class="control-label" for="status">{{ 'global.status' | translate }}</label>
-
-                            <div class="radio">
-                                <label>
-                                    <input name="status" ng-model="formCtrl.post.status" value="published" type="radio">
-                                    Published
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input name="status" ng-model="formCtrl.post.status" value="draft" type="radio">
-                                    Draft
-                                </label>
-                            </div>
-
-                            <div class="radio">
-                                <label>
-                                    <input name="status" ng-model="formCtrl.post.status" value="trash" type="radio">
-                                    Trash
-                                </label>
-                            </div>
+                            <md-radio-group ng-model="formCtrl.post.status">
+                                <md-radio-button value="published" aria-label="Published">Published</md-radio-button>
+                                <md-radio-button value="draft" aria-label="Draft"> Draft </md-radio-button>
+                                <md-radio-button value="trash" aria-label="Trash">Trash</md-radio-button>
+                            </md-radio-group>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label"
                                    for="visibility">{{ 'post.visibility' | translate }}</label>
-
-                            <div class="radio">
-                                <label>
-                                    <input name="visibility" ng-model="formCtrl.post.visibility" value="public"
-                                           type="radio">
-                                    Public
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input name="visibility" ng-model="formCtrl.post.visibility" value="private"
-                                           type="radio">
-                                    Private
-                                </label>
-                            </div>
+                            
+                            <md-radio-group ng-model="formCtrl.post.visibility">
+                                <md-radio-button value="public" aria-label="" class="md-primary">Public</md-radio-button>
+                                <md-radio-button value="private" aria-label="" class="md-primary"> Private </md-radio-button>
+                            </md-radio-group>
                         </div>
 
 

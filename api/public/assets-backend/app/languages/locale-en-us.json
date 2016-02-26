@@ -217,10 +217,10 @@
     "description": "Description",
     "website": "Website",
     "category": {
-        "categories": "Venue Categories",
-        "category": "Venue Category",
-        "name": "Venue Category Name",
-        "description": "Venue Category Description",
+        "categories": "Categories",
+        "category": "Category",
+        "name": "Category Name",
+        "description": "Category Description",
         "is_featured": "Is featured",
         "enabled": "enabled",
         "add_a_category": "Add a venue category",
@@ -234,6 +234,12 @@
         "delete_success_msg": "Deleted a venue category.",
         "delete_before_msg": "This will only delete venue category with no orders. You cannot recover deleted venue category, do you wish to continue?",
         "delete_error_msg": "Error occurred when trying to delete venue category."
+    },
+    "gallery": {
+        "galleries": "Venue Galleries",
+        "gallery": "Venue Gallery",
+        "name": "Venue Gallery Name",
+        "description": "Venue Gallery Description"
     }
   },
   "event": {

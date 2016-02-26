@@ -33,7 +33,7 @@
                         // This is the same the original link method does for the `vertical` and ``justified` attributes
                         scope.tabClass = attrs.tabClass;
                         scope.contentTabClass = attrs.contentTabClass;
-                    }
+                    };
                 };
 
                 // Return the modified directive

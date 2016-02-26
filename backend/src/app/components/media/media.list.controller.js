@@ -20,7 +20,6 @@
                 var uploadPromises = [];
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
-                    console.log(file);
                     var formData = new FormData();
                     formData.append('name', file.name);
                     if (vm.filter.category_ids[0] > 0) {
@@ -69,7 +68,7 @@
         };
         vm.removeCategory = function () {
             vm.deleteLoading = true;
-            mediaCategoryService.destroy(vm.filter.category_ids[0]).then(function (result) {
+            mediaCategoryService.destroy(vm.filter.category_ids[0]).then(function () {
                 vm.deleteLoading = false;
                 $state.go($state.$current, null, {reload: true});
             });
@@ -79,7 +78,7 @@
                 return;
             }
             var movePromises = [];
-            _.each(vm.rowCollection, function (row, index) {
+            _.each(vm.rowCollection, function (row) {
                 if (row.isSelected === true && row.id !== '') {
                     movePromises.push(mediaService.update(row.id, {media_category_id: vm.moveSelectedCategory.id}));
                 }
@@ -155,8 +154,7 @@
         vm.saveLoading = {};
         vm.save = function (row) {
             vm.saveLoading[row.id] = true;
-            var index = vm.rowCollection.indexOf(row);
-            mediaService.update(row.id, {'name': row.name}).then(function (result) {
+            mediaService.update(row.id, {'name': row.name}).then(function () {
                 // show notifications
                 toaster.pop('success', '', $translate.instant('media.update_success_msg'));
                 vm.saveLoading[row.id] = false;
@@ -188,7 +186,7 @@
 
         vm.bulkRemove = function () {
             var removePromises = [];
-            _.each(vm.rowCollection, function (row, index) {
+            _.each(vm.rowCollection, function (row) {
                 if (row.isSelected === true && row.id !== '') {
                     removePromises.push(mediaService.destroy(row.id));
                 }
@@ -209,8 +207,6 @@
                 toaster.pop('error', '', $translate.instant('media.delete_error_msg'));
             });
         };
-
-
     }
 
 })();

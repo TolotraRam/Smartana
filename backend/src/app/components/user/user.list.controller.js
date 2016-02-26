@@ -4,7 +4,7 @@
 
     angular.module('userModule').controller('UserListController', UserListController);
 
-    function UserListController(userService, $scope, $location, toaster, $translate, $q, angularMomentConfig, roleService) {
+    function UserListController(userService, $scope, $location, toaster, $translate, $q, angularMomentConfig, roleService, moment) {
         var vm = this;
         //==========================================
         // Date & Time picker
@@ -98,7 +98,6 @@
                 tableState.pagination.prev = result.meta.pagination.prev_page || null;
                 //update users list
                 vm.rowCollection = result;
-                console.log(vm.rowCollection);
                 vm.tableLoading = false;
             });
         };
@@ -127,7 +126,7 @@
 
         vm.bulkRemove = function () {
             var removePromises = [];
-            _.each(vm.rowCollection, function (row, index) {
+            _.each(vm.rowCollection, function (row) {
                 if (row.isSelected === true && row.id !== '') {
                     removePromises.push(userService.destroy(row.id));
                 }

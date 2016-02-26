@@ -9,8 +9,8 @@
                 scope: {
                     show: '=slideOutNav'
                 },
-                link: function (scope, element, attr) {
-                    scope.$watch('show', function (newVal, oldVal) {
+                link: function (scope, element) {
+                    scope.$watch('show', function (newVal) {
                         if (newVal) {
                             element.slideDown({
                                 complete: function () {

@@ -14,7 +14,7 @@
         vm.loading = false;
         vm.login = function () {
             vm.loading = true;
-            authenticationService.login(vm.form).then(function (result) {
+            authenticationService.login(vm.form).then(function () {
                 $location.path('/');
             }, function (result) {
                 toaster.pop('error', '', result.data.result.message);

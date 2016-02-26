@@ -1,6 +1,5 @@
 <?php namespace App\Models;
 
-//use App\Models\Relations\BelongsToCustomerTrait;
 use Carbon;
 use App\Models\Language;
 

@@ -94,7 +94,7 @@
                     ngModel: '=',
                     countSelectedRows: '='
                 },
-                link: function (scope, element, attr, ctrl) {
+                link: function (scope) {
 
                     function getAllSelected() {
                         return (getTotalRows() === getSelectedRows());
@@ -145,8 +145,8 @@
                 restrict: 'AE',
                 require: '^stTable',
                 link: function (scope, element, attrs, ctrl) {
-                    var table = ctrl.tableState();
-                    element.on('click', function (ev) {
+                    //var table = ctrl.tableState();
+                    element.on('click', function () {
                         scope.callback.call().then(function () {
                             ctrl.pipe();
                         });

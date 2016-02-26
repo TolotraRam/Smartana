@@ -12,6 +12,7 @@
         'localisationModule',
         'venueModule',
         'venueCategoryModule',
+        'venueGalleryModule',
         'settingModule',
         'languageModule',
 
@@ -59,7 +60,7 @@
         //================================================
         // Check isLogin when run system
         //================================================
-        .run(function ($rootScope, $location, authenticationService, localStorageService, tmhDynamicLocale, $translate, $timeout, $cacheFactory) {
+        .run(function ($rootScope, $location, authenticationService, localStorageService, tmhDynamicLocale, $translate, $timeout, $cacheFactory, $log) {
             var routesThatRequireAuth = ['/auth/login', '/auth/logout'];
 
             //================================================
@@ -67,9 +68,9 @@
             //================================================
             $rootScope.pageViewLoading = false;
 
-            $rootScope.$on('$stateChangeStart', function (event, next, current) {
-                if (!_(routesThatRequireAuth).contains($location.path()) && !authenticationService.check()) {
-                    console.log('Oops! please login!');
+            $rootScope.$on('$stateChangeStart', function () {
+                if (!_(routesThatRequireAuth).includes($location.path()) && !authenticationService.check()) {
+                    $log.error('Oops! please login!');
                     $location.path('auth/login');
                 }
                 $rootScope.pageViewLoading = true;
@@ -98,22 +99,22 @@
             $rootScope.$location = $location;
 
         })
-        .run(function ($location, authenticationService, localStorageService, $timeout, Restangular, $http, $q, $state, toaster, $translate, amMoment, settingService) {
+        .run(function ($location, authenticationService, localStorageService, $timeout, Restangular, $http, $q, $state, toaster, $translate, amMoment, settingService, $log) {
 
             var refreshAccessToken = function () {
                 var deferred = $q.defer();
-                console.log('start get refresh token');
+                $log.info('start get refresh token');
 
                 $http({
                     method: 'POST', url: 'http://api.dev/api/admin/auth/refresh-token', headers: {
                         'Authorization': authenticationService.getToken()
                     }
-                }).success(function (data, status, headers, config) {
-                    console.log('set token');
+                }).success(function (data) { //status, header, config
+                    $log.debug('set token');
                     localStorageService.set('token', data.result.token);
                     deferred.resolve(data.result.token);
-                }).error(function (data, status, headers, config) {
-                    console.log('Oops! Expired Token, please login again! ');
+                }).error(function (data) { //status, header, config
+                    $log.error('Oops! Expired Token, please login again! ');
                     $location.path('auth/login');
                     deferred.reject(data);
                 });
@@ -122,7 +123,6 @@
             };
 
             Restangular.setErrorInterceptor(function (response, deferred, responseHandler) {
-                console.log(response);
                 if (response.status === -1) {
                     //$state.go('main.not-found');
                     return false;
@@ -142,10 +142,9 @@
                         return false;
                         // Be aware that no request interceptors are called this way.
                     });
-                    return false;
                 }
 
-                console.log('error not handled');
+                $log.info('error not handled');
                 return true; // error not handled
             });
 
@@ -252,7 +251,7 @@
                 ids: "_ids"
             });
 
-            RestangularProvider.addResponseInterceptor(function (data, operation, what, url, response, deferred) {
+            RestangularProvider.addResponseInterceptor(function (data, operation) {
                 var extractedData;
                 if (operation === 'getList') {
                     // handle the data and meta data

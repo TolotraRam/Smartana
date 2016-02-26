@@ -77,6 +77,13 @@ Route::group(['prefix' => 'api'], function () {
             Route::put('venues/categories/{id}', ['uses' => 'Api\VenueCategoryController@update', 'as' => 'venues.categories.update', 'middleware' => 'permission:venues.categories.update']);
             Route::delete('venues/categories/{id}', ['uses' => 'Api\VenueCategoryController@destroy', 'as' => 'venues.categories.destroy', 'middleware' => 'permission:venues.categories.destroy']);
 
+            //Venue Galleries =================================
+            Route::get('venues/galleries', ['uses' => 'Api\VenueGalleryController@index', 'as' => 'venues.galleries.index', 'middleware' => 'permission:venues.galleries.index']);
+            Route::get('venues/galleries/{id}', ['uses' => 'Api\VenueGalleryController@show', 'as' => 'venues.galleries.show', 'middleware' => 'permission:venues.galleries.index']);
+            Route::post('venues/galleries', ['uses' => 'Api\VenueGalleryController@store', 'as' => 'venues.galleries.store', 'middleware' => 'permission:venues.galleries.store']);
+            Route::put('venues/galleries/{id}', ['uses' => 'Api\VenueGalleryController@update', 'as' => 'venues.galleries.update', 'middleware' => 'permission:venues.galleries.update']);
+            Route::delete('venues/galleries/{id}', ['uses' => 'Api\VenueGalleryController@destroy', 'as' => 'venues.galleries.destroy', 'middleware' => 'permission:venues.galleries.destroy']);
+
             //Venues =================================
             Route::get('venues', ['uses' => 'Api\VenueController@index', 'as' => 'venues.index', 'middleware' => 'permission:venues.index']);
             Route::get('venues/{id}', ['uses' => 'Api\VenueController@show', 'as' => 'venues.show', 'middleware' => 'permission:venues.index']);
@@ -121,6 +128,8 @@ Route::group(['prefix' => 'api'], function () {
         Route::get('/media/{type}/{filename}', 'Api\UserController@get');
         // Get venue category image
         Route::get('/media/category/{type}/{filename}', 'Api\VenueCategoryController@get');
+        // Get venue image
+        //Route::get('/media/{type}/{filename}', 'Api\VenueController@get');
 
         Route::get('setting/{name}', 'Api\SettingController@findByName');
 

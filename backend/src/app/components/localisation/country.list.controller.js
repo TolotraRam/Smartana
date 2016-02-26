@@ -78,7 +78,7 @@
 
         vm.bulkRemove = function () {
             var removePromises = [];
-            _.each(vm.rowCollection, function (row, index) {
+            _.each(vm.rowCollection, function (row) {
                 if (row.isSelected === true && row.id !== '') {
                     removePromises.push(countryService.destroy(row.id));
                 }
@@ -101,7 +101,7 @@
         // save
         //==========================================
         vm.save = function (row) {
-            countryService.update(row.id, {'enabled': row.enabled}).then(function (result) {
+            countryService.update(row.id, {'enabled': row.enabled}).then(function () {
                 toaster.pop('success', '', $translate.instant('country.update_success_msg'));
             }, function () {
                 toaster.pop('error', '', $translate.instant('country.update_error_msg'));

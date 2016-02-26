@@ -32,6 +32,7 @@ class VenueCategoryController extends ApiController
         $validator = Validator::make(Input::all(), [
             'page'           => 'integer',
             'limit'          => 'integer|min:1|max:250',
+            'name'           => 'max:250',
             'search'         => 'string'
         ]);
 
@@ -43,6 +44,14 @@ class VenueCategoryController extends ApiController
         //Filter
         if (Input::has('search')) {
             $categories = $categories->where('name', 'LIKE', '%' . Input::get('search') . '%');
+        }
+
+        if (Input::has('ids')) {
+            $categories = $categories->whereIn('id', Input::get('ids'));
+        }
+
+        if (Input::has('name')) {
+            $categories = $categories->where('name', 'like', Input::get('name') . '%');
         }
 
         $categories = $categories->simplePaginate(Input::get('limit', 50));

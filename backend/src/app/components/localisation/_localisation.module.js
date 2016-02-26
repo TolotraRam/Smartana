@@ -11,7 +11,6 @@
         return model;
       });
       Restangular.extendModel('country', function (model) {
-        // variable ===================================================
         // event ===================================================
         model.init = function () {
           _.extend(model, {
@@ -27,7 +26,7 @@
 
       });
     })
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider) {
       $stateProvider
         .state('main.country-list', {
           url: 'country',

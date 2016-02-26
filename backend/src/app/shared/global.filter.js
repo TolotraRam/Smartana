@@ -22,10 +22,11 @@
                         return input;
                 }
                 var result = [];
-                for (var i = lowBound; i <= highBound; i++)
+                for (var i = lowBound; i <= highBound; i++) {
                     result.push(i);
+                }
                 return result;
             };
-        })
+        });
 
 })();

@@ -7,6 +7,7 @@ class VenueCategoryTransformer extends TransformerAbstract
 {
     public function transform(VenueCategory $item)
     {
+        
         return [
             'id'         => (int)$item->id,
             'name'       => $item->name,

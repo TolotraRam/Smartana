@@ -4,7 +4,7 @@
     'use strict';
 
     angular.module('postCategoryModule', [])
-        .run(function (Restangular, postCategoryService) {
+        .run(function (Restangular) {
             //================================================
             // Restangular init
             //================================================
@@ -32,7 +32,7 @@
 
         })
 
-        .config(function ($stateProvider, $urlRouterProvider) {
+        .config(function ($stateProvider) {
             $stateProvider
                 .state('main.post-category-list', {
                     url: 'posts/categories',

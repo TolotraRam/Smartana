@@ -11,6 +11,7 @@ class RoleTransformer extends TransformerAbstract
 
     public function transform(Role $item)
     {
+        
         return [
             'id'           => (int)$item->id,
             'name'         => $item->name,

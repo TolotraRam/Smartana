@@ -1,84 +1,102 @@
-
 (function () {
     'use strict';
 
     angular
         .module('venueModule')
-        .controller('VenueFormController', VenueFormController);
-        function VenueFormController($scope, venueService, venueCategoryService, countryService, stateService, cityService, messageService, toaster, $translate, venue, $location, Restangular, $q, $log) {
+        .controller('VenueFormController', VenueFormController)
+        .controller('ModalInstanceCtrl', ModalInstanceCtrl);
+        function VenueFormController($scope, venueService, venueCategoryService, countryService, stateService, cityService, messageService, toaster, $translate, venue, $location, $q) {
             var vm = this;
             //==========================================
             // Variable
             //==========================================
             vm.venue = (_.isEmpty(venue) || _.isUndefined(venue)) ? venueService.init() : venue;
-            console.log(vm.venue);
+
             if(vm.venue.id) {
                 vm.country = venue.city.state.country;
                 vm.state = venue.city.state;
                 vm.city = venue.city;
             }
-            if(!vm.venue.id) {
-                vm.place = null;
-                vm.map = { 
-                    center: { 
-                        latitude: vm.venue.longitude || -18.8791902, 
-                        longitude: vm.venue.longitude || 47.50790549999999 
-                    },
-                    options: {
-                        scrollwheel: false, 
-                        disableDoubleClickZoom: true,
-                    },
-                    zoom: 15
+            vm.place = null;
+            if(!vm.venue.location) {
+                vm.venue.location = {
+                    lat: -18.8791902,
+                    lng: 47.50790549999999
                 };
-                vm.autocompleteOptions = {
-                    componentRestrictions: { country: 'mg' }
-                }
-                vm.marker = {
-                    id: 0,
-                    coords: {
-                        latitude: vm.venue.longitude || -18.8791902,
-                        longitude: vm.venue.longitude || 47.50790549999999 
-                    },
-                    options: { draggable: true },
-                    events: {
-                        dragend: function (marker, eventName, args) {
-                            vm.venue.latitude = marker.getPosition().lat();
-                            vm.venue.longitude = marker.getPosition().lng();
-                        }
-                    }
-                };
-                vm.placeChange = function() {
-                    if(typeof vm.place === 'object') {
-                        console.log(vm.place);
-                        vm.venue.name = vm.place.name;
-                        vm.venue.phone = vm.place.international_phone_number || '';
-                        vm.venue.longitude = vm.place.geometry.location.lng() || '';
-                        vm.venue.latitude = vm.place.geometry.location.lat() || '';
-                        vm.venue.website = vm.place.website || '';
-                        vm.venue.address = vm.place.address_components[1].short_name || '';
-                        vm.marker = {
-                            id: 0,
-                            coords: {
-                                latitude: vm.venue.latitude,
-                                longitude: vm.venue.longitude
-                            },
-                            options: { draggable: true },
-                            events: {
-                                dragend: function (marker, eventName, args) {
-                                    vm.venue.latitude = marker.getPosition().lat();
-                                    vm.venue.longitude = marker.getPosition().lng();
-                                }
-                            }
-                        };
-                    }
-                }
             }
+            vm.map = { 
+                center: { 
+                    latitude: (vm.venue.location) ? vm.venue.location.lat : -18.8791902, 
+                    longitude: (vm.venue.location) ? vm.venue.location.lng : 47.50790549999999 
+                },
+                options: {
+                    scrollwheel: false, 
+                    disableDoubleClickZoom: true,
+                    zoomControl: true,
+                    mapTypeControl: false,
+                    scaleControl: false,
+                    streetViewControl: false,
+                    rotateControl: false,
+                    fullscreenControl: false
+                },
+                zoom: 18
+            };
+            vm.autocompleteOptions = {
+                componentRestrictions: { country: 'mg' }
+            };
+            vm.marker = {
+                id: 0,
+                coords: {
+                    latitude: (vm.venue.location) ? vm.venue.location.lat : -18.8791902,
+                    longitude: (vm.venue.location) ? vm.venue.location.lng : 47.50790549999999 
+                },
+                options: { draggable: true },
+                events: {
+                    dragend: function (marker) {
+                        vm.venue.location.lat = marker.getPosition().lat();
+                        vm.venue.location.lng = marker.getPosition().lng();
+                    }
+                }
+            };
+            vm.placeChange = function() {
+                if(typeof vm.place === 'object') {
+                    vm.venue.name = vm.place.name;
+                    vm.venue.phone = vm.place.international_phone_number || '';
+                    vm.venue.location = {
+                        lat: vm.place.geometry.location.lat() || '',
+                        lng: vm.place.geometry.location.lng() || ''
+                    };
+                    vm.map = {
+                        center: {
+                            latitude: vm.place.geometry.location.lat() || '',
+                            longitude: vm.place.geometry.location.lng() || ''
+                        }
+                    };
+                    vm.venue.website = vm.place.website || '';
+                    var address = _.split(vm.place.formatted_address, ',') || '';
+                    vm.venue.address = address[0];
+                    vm.marker = {
+                        id: 0,
+                        coords: {
+                            latitude: vm.venue.location.lat,
+                            longitude: vm.venue.location.lng
+                        },
+                        options: { draggable: true },
+                        events: {
+                            dragend: function (marker) {
+                                vm.venue.location.lat = marker.getPosition().lat();
+                                vm.venue.location.lng = marker.getPosition().lng();
+                            }
+                        }
+                    };
+                }
+            };
+
             //==========================================
             // Load Data
             //==========================================
             if (vm.venue.categories.length > 0) {
-                console.log('msg');
-                venueCategoryService.get({'ids[]': vm.venue.categories}).then(function (result) {
+                venueCategoryService.get({'ids[]': vm.venue.categories, limit: 10}).then(function (result) {
                     vm.venue.categories = result;
                 });
             }
@@ -86,7 +104,7 @@
             vm.categories = [];
             vm.refreshCategory = function (string) {
                 if (string !== '') {
-                    venueCategoryService.get({name: string}).then(function (result) {
+                    venueCategoryService.get({name: string, limit: 250}).then(function (result) {
                         vm.categories = result;
                     });
                 }
@@ -131,25 +149,8 @@
             }
 
             //==========================================
-            // Date & Time picker
+            // TinyMCE
             //==========================================
-            /*vm.open = function ($event) {
-                $event.preventDefault();
-                $event.stopPropagation();
-                vm.opened = true;
-            };
-
-            vm.dateOptions = {
-                startingDay: 1,
-                showWeeks: false,
-                initDate: null,
-                maxDate: moment().add(3, 'year').format('YYYY-MM-DD')
-            };
-
-            vm.form = {
-                publishedDate: moment(vm.post.published_at).format('YYYY-MM-DD'),
-                publishedTime: vm.post.published_at
-            };*/
 
             vm.tinymceOptions = {
                 inline: false,
@@ -163,35 +164,36 @@
             };
 
             //==========================================
-            // Function
-            //==========================================
-            /*vm.generateSlug = function () {
-                vm.generlateSlugLoading = true;
-                Restangular.all('slug').post({'slug': vm.post.title}).then(function (result) {
-                    vm.generlateSlugLoading = false;
-                    vm.post.slug = result.slug;
-                });
-            };*/
-
-            //==========================================
             // save
             //==========================================
-            /*var save = function () {
-                var post = angular.copy(vm.post);
+            var save = function () {
+                var venue = angular.copy(vm.venue);
+                if(typeof vm.city === 'object') {
+                    venue.city_id = vm.city.id;
+                } else {
+                    venue.city_id = vm.city;
+                }
+                venue.location = venue.location.lat + ',' + venue.location.lng;
+                venue.categories = _.map(vm.venue.categories, 'id');
+
                 var deferred = $q.defer();
 
-                post.categories = _.pluck(vm.post.categories, 'id');
+                var fd = new FormData();
+                if(vm.file) {
+                    fd.append('attachment',vm.file);
+                    fd.append('filename', vm.file.name);
+                }
+                fd.append("data", angular.toJson(venue));
 
-                post.published_at = moment(vm.form.publishedDate).hour(new Date(vm.form.publishedTime).getHours()).minutes(new Date(vm.form.publishedTime).getMinutes()).tz(angularMomentConfig.timezone).utc().format('YYYY-MM-DD HH:mm:ss');
-
-                if (post.id !== '') {
-                    postService.update(post.id, post).then(function (result) {
+                if (venue.id !== '') {
+                    fd.append('_method', 'PUT');
+                    venueService.update(venue.id, fd).then(function (result) {
                         deferred.resolve(result);
                     }, function (result) {
                         deferred.reject(result);
                     });
                 } else {
-                    postService.store(post).then(function (result) {
+                    venueService.store(fd).then(function (result) {
                         deferred.resolve(result);
                     }, function (result) {
                         deferred.reject(result);
@@ -208,13 +210,18 @@
                 vm.saveLoading = true;
                 save().then(function (result) {
                     vm.saveLoading = false;
-                    toaster.pop('success', '', $translate.instant('post.' + (vm.post.id !== '' ? 'update_success_msg' : 'create_success_msg')));
+                    toaster.pop('success', '', $translate.instant('venue.' + (vm.venue.id !== '' ? 'update_success_msg' : 'create_success_msg')));
                     if (vm.isSaveAndExit) {
-                        $location.path('/posts');
-                    } else if (vm.post.id === '') {
-                        $location.path('/posts/' + result.id + '/edit');
+                        $location.path('/venue');
+                    } else if (vm.venue.id === '') {
+                        $location.path('/venues/' + result.id + '/edit');
                     } else {
-                        vm.post = result;
+                        vm.venue = result;
+                        if (vm.venue.categories.length > 0) {
+                            venueCategoryService.get({'ids[]': vm.venue.categories, limit: 10}).then(function (result) {
+                                vm.venue.categories = result;
+                            });
+                        }
                     }
                 }, function (result) {
                     vm.saveLoading = false;
@@ -225,7 +232,7 @@
             vm.saveAndExit = function () {
                 vm.isSaveAndExit = true;
                 vm.save();
-            };*/
+            };
 
             //==========================================
             // Delete
@@ -243,6 +250,19 @@
                 }
 
             };*/
+        }
+        function ModalInstanceCtrl($scope, $modalInstance, items) {
+            $scope.items = items;
+            $scope.selected = {
+                item: $scope.items[0]
+            };
 
+            $scope.ok = function () {
+                $modalInstance.close($scope.selected.item);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
         }
 })();

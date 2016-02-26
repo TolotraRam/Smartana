@@ -97,7 +97,7 @@
                 roleService.update(data.id, data).then(function () {
                     vm.saveLoading[data.id] = false;
                     toaster.pop('success', '', $translate.instant('role.update_success_msg'));
-                }, function (result) {
+                }, function () {
                     vm.saveLoading[data.id] = false;
                     toaster.pop('error', '', $translate.instant('role.update_error_msg'));
                 });
@@ -106,7 +106,7 @@
                     vm.saveLoading[data.id] = false;
                     vm.rowCollection[index] = result;
                     toaster.pop('success', '', $translate.instant('role.create_success_msg'));
-                }, function (result) {
+                }, function () {
                     vm.saveLoading[data.id] = false;
                     toaster.pop('error', '', $translate.instant('role.create_error_msg'));
                 });
@@ -136,7 +136,7 @@
 
         vm.bulkRemove = function () {
             var removePromises = [];
-            _.each(vm.rowCollection, function (row, index) {
+            _.each(vm.rowCollection, function (row) {
                 if (row.isSelected === true && row.id !== '') {
                     removePromises.push(userService.destroy(row.id));
                 }

@@ -1,17 +1,8 @@
-/*
- * This file is part of YOOV TEAM PROJECT.
- *
- * (c) YOOV TEAM
- * (c) DevMark <mark@yoov.com>
- *
- * For the full copyright and license information, please view http://yoov.com/
- *
- */
 (function () {
     'use strict';
 
     angular.module('mediaModule', ['ui.router', 'ngFileUpload'])
-        .run(function (Restangular, languageService, $filter, $log) {
+        .run(function (Restangular) {
             //================================================
             // Restangular init
             //================================================
@@ -30,14 +21,12 @@
                 if (model.id === '') {
                     model.init();
                 }
-
-                console.log(model);
                 return model;
 
             });
         })
 
-        .config(function ($stateProvider, $urlRouterProvider) {
+        .config(function ($stateProvider) {
             $stateProvider
                 .state('main.media-list', {
                     url: 'media',

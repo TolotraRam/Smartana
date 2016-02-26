@@ -182,6 +182,7 @@ class UserController extends ApiController
      */
     public function update($id)
     {
+        
         $input = json_decode(Input::get('data'), true);
         $rules = [
             'lastname'  => 'string|min:1|max:255',
@@ -259,7 +260,7 @@ class UserController extends ApiController
 
             $user->save();
 
-            if (Input::has('roles')) {
+            if (isset($input['roles']) && $input['roles']) {
                 $user->roles()->sync($input['roles']);
             }
 

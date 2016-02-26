@@ -23,4 +23,9 @@ class City extends BaseModel
     return $this->hasMany('App\Models\User');
   }
 
+  public function venues() 
+  {
+    return $this->hasMany('App\Models\Venue');
+  }
+
 }

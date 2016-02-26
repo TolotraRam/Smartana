@@ -339,7 +339,6 @@
                         </div>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-
                         <ui-select multiple ng-model="formCtrl.user.roles">
                             <ui-select-match placeholder="">{{ $item.display_name }}</ui-select-match>
                             <ui-select-choices
@@ -349,8 +348,6 @@
                                 <div ng-bind-html="role.display_name | highlight: $select.search"></div>
                             </ui-select-choices>
                         </ui-select>
-
-
                     </div><!-- /.box-body -->
                     <div class="overlay" ng-show="!formCtrl.user.roles">
                         <i class="fa fa-refresh fa-spin"></i>

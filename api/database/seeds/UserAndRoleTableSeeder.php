@@ -97,6 +97,12 @@ class UserAndRoleTableSeeder extends Seeder
     $deleteVenuesCategoriesPermission = Permission::create(['name' => 'venues.categories.destroy', 'display_name' => 'Delete Venues categories']);
     array_push($allPermissions, $listVenuesCategoriesPermission->id, $createVenuesCategoriesPermission->id, $editVenuesCategoriesPermission->id, $listVenuesCategoriesPermission->id, $deleteVenuesCategoriesPermission->id);
 
+    $listVenuesGalleriesPermission = Permission::create(['name' => 'venues.galleries.index', 'display_name' => 'List Venues galleries']);
+    $createVenuesGalleriesPermission = Permission::create(['name' => 'venues.galleries.store', 'display_name' => 'Create Venues galleries']);
+    $editVenuesGalleriesPermission = Permission::create(['name' => 'venues.galleries.update', 'display_name' => 'Edit Venues galleries']);
+    $deleteVenuesGalleriesPermission = Permission::create(['name' => 'venues.galleries.destroy', 'display_name' => 'Delete Venues galleries']);
+    array_push($allPermissions, $listVenuesGalleriesPermission->id, $createVenuesGalleriesPermission->id, $editVenuesGalleriesPermission->id, $listVenuesGalleriesPermission->id, $deleteVenuesGalleriesPermission->id);
+
     $listSettingPermission = Permission::create(['name' => 'setting.index', 'display_name' => 'List Setting']);
     $createEditSettingPermission = Permission::create(['name' => 'setting.store', 'display_name' => 'Create or Update Setting']);
     $clearCacheSettingPermission = Permission::create(['name' => 'setting.clear.cache', 'display_name' => 'Clear Cache']);

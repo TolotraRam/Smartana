@@ -29,7 +29,7 @@
 	        vm.saveLoading = false;
 	        vm.save = function () {
 	            vm.saveLoading = true;
-	            save().then(function (result) {
+	            save().then(function () {
 	                vm.saveLoading = false;
 	                toaster.pop('success', '', $translate.instant('setting.settingd update_success_msg'));
 	                $state.go('main.setting-form');

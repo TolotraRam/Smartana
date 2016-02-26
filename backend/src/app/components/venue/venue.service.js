@@ -22,10 +22,14 @@
                 return Restangular.one('venues', id).withHttpConfig(httpConfig).get();
             };
             service.update = function (id, data) {
-                return Restangular.one('venues', id).customPUT(data);
+                return Restangular.one('venues', id)
+                .withHttpConfig({transformRequest: angular.identity})
+                .customPOST(data, undefined, undefined, {'Content-Type': undefined});
             };
             service.store = function (data) {
-                return Restangular.all('venues').post(data);
+                return Restangular.all('venues')
+                .withHttpConfig({transformRequest: angular.identity})
+                .customPOST(data, undefined, undefined, {'Content-Type': undefined});
             };
             service.destroy = function (id) {
                 return Restangular.one('venues', id).remove();

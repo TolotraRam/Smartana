@@ -50,7 +50,7 @@
         // Category move event
         vm.categoryTree = {
             collapsed: true,
-            accept: function (sourceNodeScope, destNodesScope, destIndex) {
+            accept: function () {
                 return true;
             },
             dragStart: function (event) {
@@ -67,7 +67,7 @@
                 }
 
                 var source = event.source.nodeScope.$modelValue.id;
-                console.log('sad', event.source.nodeScope);
+
                 var categoryAPI = {};
 
                 var dest = event.dest.nodesScope.$parent.$modelValue;
@@ -87,7 +87,7 @@
                     }
                 }
 
-                postCategoryService.move(source, categoryAPI).then(function (result) {
+                postCategoryService.move(source, categoryAPI).then(function () {
                     if (!_.isUndefined(dest) && dest.children.length > 0) {
                         dest.rgt += 1;
                     }

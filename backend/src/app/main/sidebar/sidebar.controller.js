@@ -185,7 +185,7 @@
 
             $scope.$watch(function () {
                 return $location.path();
-            }, function (newVal, oldVal) {
+            }, function (newVal) {
                 if (vm.selectedFromNavMenu === false) {
                     var item = vm.findItemByUrl(vm.menu, newVal);
                     if (item) {

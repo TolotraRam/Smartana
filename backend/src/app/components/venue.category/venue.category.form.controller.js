@@ -80,7 +80,7 @@
                     venueCategoryService.destroy(vm.category.id).then(function () {
                         toaster.pop('success', '', $translate.instant('venue.category.delete_success_msg'));
                         $location.path('venue/category');
-                    }, function (result) {
+                    }, function () {
                         vm.deleteLoading = false;
                         toaster.pop('success', '', $translate.instant('venue.category.delete_error_msg'));
                     });

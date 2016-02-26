@@ -26,7 +26,7 @@
 
             });
         })
-        .config(function ($stateProvider, $urlRouterProvider) {
+        .config(function ($stateProvider) {
             $stateProvider
                 .state('main.venue-category-list', {
                   url: 'venue/category',

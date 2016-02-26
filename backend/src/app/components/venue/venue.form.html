@@ -28,7 +28,7 @@
                     </button>
                     
                     
-                    <button type="submit" ng-click="formCtrl.saveAndExit()"
+                    <button ng-if="formCtrl.venue.id" type="submit" ng-click="formCtrl.saveAndExit()"
                             ng-disabled="formCtrl.venueForm.$invalid || formCtrl.deleteLoading || formCtrl.saveLoading"
                             class="btn btn-primary">
                         <span ng-if="formCtrl.saveLoading"><i class="fa fa-spin fa-spinner"></i></span>
@@ -60,7 +60,7 @@
                         </div> <!-- /call out-->
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="form-group map-search">
+                                <div ng-if="!formCtrl.venue.id" class="form-group map-search">
                                     <input class="form-control" placeholder="{{ 'venue.Search_place' | translate }}" ng-change="formCtrl.placeChange()" g-places-autocomplete options="formCtrl.autocompleteOptions" ng-model="formCtrl.place"/>
                                 </div>
                                 <div class="form-group">
@@ -77,7 +77,7 @@
                                 <div class="form-group">
                                     <input id="latitude" type="text" class="form-control"
                                            placeholder="{{ 'global.latitude' | translate }}"
-                                           ng-model="formCtrl.venue.latitude">
+                                           ng-model="formCtrl.venue.location.lat">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -85,7 +85,7 @@
                                 <div class="form-group">
                                     <input id="longitude" type="text" class="form-control"
                                            placeholder="{{ 'global.longitude' | translate }}"
-                                           ng-model="formCtrl.venue.longitude">
+                                           ng-model="formCtrl.venue.location.lng">
                                 </div>
                             </div>
                         </div>
@@ -270,44 +270,6 @@
                     </div>
                     <!-- /.box-body -->
                 </div><!-- /.box -->
-                <div class="box box-default">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ 'global.social' | translate }}</h3>
-                    </div>
-                    <div class="box-body">
-
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label for="facebook" class="control-label">{{ 'global.facebook' | translate }}</label>
-                                <div class="form-group">
-                                    <input id="facebook" type="text" class="form-control"
-                                           placeholder="{{ 'global.facebook' | translate }}"
-                                           ng-model="formCtrl.venue.facebook">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <label for="twitter" class="control-label">{{ 'global.twitter' | translate }}</label>
-
-                                <div class="form-group">
-                                    <input id="twitter" type="text" class="form-control"
-                                           placeholder="{{ 'global.twitter' | translate }}"
-                                           ng-model="formCtrl.venue.twitter">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <label for="google" class="control-label">{{ 'global.google' | translate }}</label>
-
-                                <div class="form-group">
-                                    <input id="google" type="text" class="form-control"
-                                           placeholder="{{ 'global.google' | translate }}"
-                                           ng-model="formCtrl.venue.google">
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- /.box-body -->
-                </div><!-- /.box -->
             </div>
             <div class="col-md-4">
                 <div class="box box-default">
@@ -355,8 +317,8 @@
 
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool"
-                                    ng-click="$location.path('venues/categories/create')"><i
-                                    class="fa fa-plus"></i> {{ 'button.add' | translate }}
+                                    ng-click="$location.path('venue/category/create')"><i
+                                    class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
@@ -380,8 +342,56 @@
                         <i class="fa fa-cog fa-spin"></i>
                     </div>
                     <!-- /.overlay -->
-                </div>
-                <!-- /.box -->
+                </div><!-- /.box -->
+                <div ng-if="formCtrl.venue.id" class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'venue.gallery.galleries' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-default" ng-click="formCtrl.open('lg')">Open me!</button>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div><!-- /.box -->
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'global.social' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="facebook" class="control-label">{{ 'global.facebook' | translate }}</label>
+                                <div class="form-group">
+                                    <input id="facebook" type="text" class="form-control"
+                                           placeholder="{{ 'global.facebook' | translate }}"
+                                           ng-model="formCtrl.venue.facebook">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="twitter" class="control-label">{{ 'global.twitter' | translate }}</label>
+
+                                <div class="form-group">
+                                    <input id="twitter" type="text" class="form-control"
+                                           placeholder="{{ 'global.twitter' | translate }}"
+                                           ng-model="formCtrl.venue.twitter">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="google" class="control-label">{{ 'global.google' | translate }}</label>
+
+                                <div class="form-group">
+                                    <input id="google" type="text" class="form-control"
+                                           placeholder="{{ 'global.google' | translate }}"
+                                           ng-model="formCtrl.venue.google">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div><!-- /.box -->
                 <div class="box box-default">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ 'global.status' | translate }}</h3>
@@ -395,11 +405,9 @@
                         </div>
                     </div>
                     <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
+                </div><!-- /.box -->
             </div><!-- /.col -->
         </div><!-- /.row -->
     </form>
     <!-- /form -->
-
 </section>

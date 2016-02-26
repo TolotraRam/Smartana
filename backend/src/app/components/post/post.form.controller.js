@@ -7,7 +7,6 @@
         var vm = this;
 
         vm.post = (_.isEmpty(post) || _.isUndefined(post)) ? postService.init() : post;
-        console.log(vm.post);
         //==========================================
         // Load Data
         //==========================================
@@ -83,7 +82,7 @@
             var post = angular.copy(vm.post);
             var deferred = $q.defer();
 
-            post.categories = _.pluck(vm.post.categories, 'id');
+            post.categories = _.map(vm.post.categories, 'id');
 
             post.published_at = moment(vm.form.publishedDate).hour(new Date(vm.form.publishedTime).getHours()).minutes(new Date(vm.form.publishedTime).getMinutes()).tz(angularMomentConfig.timezone).utc().format('YYYY-MM-DD HH:mm:ss');
 
@@ -140,8 +139,6 @@
                 postService.destroy(vm.post.id).then(function () {
                     toaster.pop('success', '', $translate.instant('post.delete_success_msg'));
                     $location.path('/posts');
-                }, function (result) {
-                    deferred.reject(result);
                 });
             }
 

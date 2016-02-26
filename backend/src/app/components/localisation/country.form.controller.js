@@ -72,7 +72,7 @@
                 countryService.destroy(vm.country.id).then(function () {
                     toaster.pop('success', '', $translate.instant('country.delete_success_msg'));
                     $location.path('countrys');
-                }, function (result) {
+                }, function () {
                     vm.deleteLoading = false;
                     toaster.pop('success', '', $translate.instant('country.delete_error_msg'));
                 });

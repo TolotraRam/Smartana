@@ -4,7 +4,7 @@
 
     angular.module('postModule').controller('PostListController', PostListController);
 
-    function PostListController(postService, $location, toaster, postCategoryService, $translate, $q, angularMomentConfig) {
+    function PostListController(postService, $location, toaster, postCategoryService, $translate, $q, angularMomentConfig, moment) {
 
         var vm = this;
         //==========================================
@@ -68,7 +68,6 @@
             var deferred = $q.defer();
 
             if (vm.filter.published_at !== '' && vm.filter.published_at !== null) {
-                console.log(vm.filter.published_at);
                 vm.filter.published_at_max = moment.tz(vm.filter.published_at, angularMomentConfig.timezone).utc().add(1, 'months').format('YYYY-MM-DD HH:mm:ss');
                 vm.filter.published_at_min = moment.tz(vm.filter.published_at, angularMomentConfig.timezone).utc().add(1, 'days').format('YYYY-MM-DD HH:mm:ss');
             }
@@ -125,7 +124,7 @@
 
         vm.bulkRemove = function () {
             var removePromises = [];
-            _.each(vm.rowCollection, function (row, index) {
+            _.each(vm.rowCollection, function (row) {
                 if (row.isSelected === true && row.id !== '') {
                     removePromises.push(postService.destroy(row.id));
                 }

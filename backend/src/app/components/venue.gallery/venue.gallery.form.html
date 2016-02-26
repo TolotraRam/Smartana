@@ -1,0 +1,89 @@
+<section class="content-header">
+    <h1>
+        <span ng-if="formCtrl.gallery.id !== ''">{{ 'venue.gallery.edit_gallery' | translate }}</span>
+        <span ng-if="formCtrl.gallery.id === ''">{{ 'venue.gallery.add_a_gallery' | translate }}</span>
+        <small></small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content">
+
+    <form name="formCtrl.venueGalleryForm">
+        <div class="row">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-default" ng-click="$location.path('venue/gallery')"><i
+                        class="fa fa-reply"></i> {{ 'button.go_back' |
+                    translate }}
+                </button>
+            </div>
+            <div class="col-md-8">
+                <div class="pull-right">
+                    <button type="submit"
+                            ng-disabled="formCtrl.venueGalleryForm.$invalid || formCtrl.deleteLoading || formCtrl.saveLoading"
+                            ng-click="formCtrl.save()"
+                            class="btn btn-primary">
+                        <span ng-if="formCtrl.saveLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.saveLoading"><i class="fa fa-save"></i> {{
+                            'button.save' | translate }}</span>
+                    </button>
+                    <button type="submit" ng-click="formCtrl.saveAndExit()"
+                            ng-disabled="formCtrl.venueGalleryForm.$invalid || formCtrl.deleteLoading || formCtrl.saveLoading"
+                            class="btn btn-primary">
+                        <span ng-if="formCtrl.saveLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.saveLoading"><i class="fa fa-save"></i> {{
+                            'button.save_exit' | translate }}</span>
+                    </button>
+                    <button ng-if="formCtrl.gallery.id !== ''" type="button"
+                            ng-disabled="formCtrl.deleteLoading || formCtrl.saveLoading"
+                            ng-click="formCtrl.delete()" class="btn btn-danger">
+                        <span ng-if="formCtrl.deleteLoading"><i class="fa fa-spin fa-spinner"></i></span>
+                        <span ng-if="!formCtrl.deleteLoading"><i class="fa fa-save"></i> {{
+                            'button.delete' | translate }}</span>
+                    </button>
+                </div>
+            </div><!-- /.col -->
+        </div>
+        <br />
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ 'global.informations' | translate }}</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="name" class="control-label">{{ 'venue.gallery.name' | translate }}</label>
+
+                                <div class="form-group">
+                                    <input id="name" type="text" class="form-control"
+                                           placeholder="{{ 'venue.gallery.name' | translate }}"
+                                           required=""
+                                           ng-model="formCtrl.gallery.name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="description" class="control-label">{{ 'venue.gallery.description' | translate }}</label>
+
+                                <div class="form-group">
+                                    <textarea style="min-height: 100px;" id="description" type="text" class="form-control"
+                                           placeholder="{{ 'venue.gallery.description' | translate }}"
+                                           ng-model="formCtrl.gallery.description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+                
+            </div>
+        </div><!-- /.row -->
+    </form><!-- /form -->
+
+</section>

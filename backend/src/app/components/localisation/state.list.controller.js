@@ -94,7 +94,7 @@
 
         vm.bulkRemove = function () {
             var removePromises = [];
-            _.each(vm.rowCollection, function (row, index) {
+            _.each(vm.rowCollection, function (row) {
                 if (row.isSelected === true && row.id !== '') {
                     removePromises.push(stateService.destroy(row.id));
                 }
@@ -118,7 +118,7 @@
         //==========================================
 
         vm.save = function (row) {
-            stateService.update(row.id, {'enabled': row.enabled}).then(function (result) {
+            stateService.update(row.id, {'enabled': row.enabled}).then(function () {
                 toaster.pop('success', '', $translate.instant('state.update_success_msg'));
             }, function () {
                 toaster.pop('error', '', $translate.instant('state.update_error_msg'));

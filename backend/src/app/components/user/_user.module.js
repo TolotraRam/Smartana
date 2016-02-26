@@ -16,7 +16,7 @@
 
       function userRestangularModel(model) {
           // variable ===================================================
-          model.permissions = _.pluck(_.pluck(model.roles, 'permissions')[0], 'name');
+          model.permissions = _.map(_.map(model.roles, 'permissions')[0], 'name');
 
           // event ===================================================
           model.hasRole = function (roleNames, validateAll) {
@@ -60,7 +60,7 @@
       }
 
       Restangular.extendModel('roles', function (model) {
-        model.permissionIds = _.pluck(model.permissions, 'id');
+        model.permissionIds = _.map(model.permissions, 'id');
 
         return model;
       });
