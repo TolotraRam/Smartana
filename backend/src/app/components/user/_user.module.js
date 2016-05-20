@@ -64,9 +64,7 @@
 
         return model;
       });
-
     })
-
     .config(function ($stateProvider) {
       $stateProvider
         .state('main.role-list', {
@@ -206,7 +204,6 @@
             }
           }
         });
-
     });
 
 })();
