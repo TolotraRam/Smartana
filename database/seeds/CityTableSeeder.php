@@ -93,7 +93,7 @@ class CityTableSeeder extends Seeder
             'name' => $index[1],
             'enabled' => false,
             'state_id' => $index[2],
-          ];
+            ];
         }
         DB::table('cities')->insert($city);
     }

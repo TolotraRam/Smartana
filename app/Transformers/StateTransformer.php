@@ -14,9 +14,9 @@ class StateTransformer extends TransformerAbstract
     public function transform(State $item)
     {
         return [
-            'id'         => (int) $item->id,
+            'id'         => (int)$item->id,
             'name'       => $item->name,
-            'enabled'    => (bool) $item->enabled,
+            'enabled'    => (bool)$item->enabled,
         ];
     }
 

@@ -7,7 +7,7 @@ class CreateTaggedTable extends Migration
 {
     public function up()
     {
-        Schema::create('tagging_tagged', function (Blueprint $table) {
+        Schema::create('tagging_tagged', function(Blueprint $table) {
             $table->increments('id');
             $table->string('taggable_id', 36)->index();
             $table->string('taggable_type', 255)->index();

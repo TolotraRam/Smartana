@@ -12,7 +12,7 @@ class CreatePostPostCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_post_category', function (Blueprint $table) {
+        Schema::create('post_post_category', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->integer('post_category_id')->unsigned()->index();
             $table->integer('post_id')->unsigned()->index();

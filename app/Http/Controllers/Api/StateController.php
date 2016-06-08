@@ -37,17 +37,17 @@ class StateController extends ApiController
         $state = new State();
         //Filter
         if (Input::has('country_ids')) {
-            $state = $state->whereHas('country', function ($q) {
+            $state = $state->whereHas('country', function($q) {
                 $q->whereIn('id', Input::get('country_ids'));
             });
         }
         if (Input::has('country_id')) {
-            $state = $state->whereHas('country', function ($q) {
+            $state = $state->whereHas('country', function($q) {
                 $q->where('id', '=', Input::get('country_id'));
             });
         }
         if (Input::has('search')) {
-            $state = $state->where('name', 'LIKE', '%'.Input::get('search').'%');
+            $state = $state->where('name', 'LIKE', '%' . Input::get('search') . '%');
         }
         $state = $state->simplePaginate(Input::get('limit', 50));
 

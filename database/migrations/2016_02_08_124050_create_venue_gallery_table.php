@@ -12,13 +12,13 @@ class CreateVenueGalleryTable extends Migration
      */
     public function up()
     {
-        Schema::create('venue_gallery', function (Blueprint $table) {
+        Schema::create('venue_gallery', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable()->index();
             $table->string('description', 255)->nullable();
             $table->integer('venue_id')->nullable()->unsigned();
         });
-        Schema::table('venue_gallery', function (Blueprint $table) {
+        Schema::table('venue_gallery', function(Blueprint $table) {
             $table->foreign('venue_id')->references('id')->on('venues')
                 ->onDelete('set null')
                 ->onUpdate('set null');

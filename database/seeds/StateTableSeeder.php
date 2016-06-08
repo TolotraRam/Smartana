@@ -24,9 +24,9 @@ class StateTableSeeder extends Seeder
 
         foreach ($this->states as $index) {
             $state[] = [
-          'name' => $index[1],
-          'enabled' => false,
-          'country_id' => $index[2],
+            'name' => $index[1],
+            'enabled' => false,
+            'country_id' => $index[2],
         ];
         }
         DB::table('states')->insert($state);

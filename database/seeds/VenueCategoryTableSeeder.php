@@ -101,7 +101,7 @@ class VenueCategoryTableSeeder extends Seeder
     ['university'],
     ['veterinary_care'],
     ['zoo'],
-  ];
+    ];
 
     public function run()
     {
@@ -113,7 +113,7 @@ class VenueCategoryTableSeeder extends Seeder
         'description' => 'lorem ipsum dolor sit amet',
         'enabled' => false,
         'is_featured' => false,
-      ];
+        ];
         }
 
         DB::table('venue_category')->insert($type);

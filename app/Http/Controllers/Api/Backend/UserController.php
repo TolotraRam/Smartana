@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Backend;
 
 use App;
-use Input;
 use Request;
 use UserAuth;
 

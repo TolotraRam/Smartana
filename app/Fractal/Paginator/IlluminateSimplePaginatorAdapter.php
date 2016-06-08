@@ -25,7 +25,7 @@ class IlluminateSimplePaginatorAdapter implements PaginatorInterface
      *
      * @param \Illuminate\Contracts\Pagination\Paginator $paginator
      *
-     * @return void
+     * @return PaginatorInterface
      */
     public function __construct(Paginator $paginator)
     {
