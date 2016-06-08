@@ -18,6 +18,7 @@ before_script:
   - export DB_DATABASE=db-smartana
   - export DB_USERNAME=travis
   - export DB_PASSWORD=
+  - cd api/
   - cp .env.travis .env
   - composer self-update
   - composer install --no-interaction
@@ -25,4 +26,4 @@ before_script:
   - php artisan key:generate
 
 script:
-  - vendor/bin/phpunit
+  - api/vendor/bin/phpunit
