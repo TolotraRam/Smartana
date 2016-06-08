@@ -1,10 +1,11 @@
-<?php namespace App\Validation;
+<?php
+
+namespace App\Validation;
 
 use Illuminate\Validation\Validator;
 
 class CustomValidation extends Validator
 {
-
     /**
      * Magically adds validation methods. Normally the Laravel Validation methods
      * only support single values to be validated like 'numeric', 'alpha', etc.
@@ -16,8 +17,8 @@ class CustomValidation extends Validator
      *     'type'   => 'inOrArray:foo,bar' // "type" must be 'foo' or 'bar' OR an array containing nothing but those values
      * );
      *
-     * @param string $method Name of the validation to perform e.g. 'numeric', 'alpha', etc.
-     * @param array $parameters Contains the value to be validated, as well as additional validation information e.g. min:?, max:?, etc.
+     * @param string $method     Name of the validation to perform e.g. 'numeric', 'alpha', etc.
+     * @param array  $parameters Contains the value to be validated, as well as additional validation information e.g. min:?, max:?, etc.
      */
     public function __call($method, $parameters)
     {
@@ -26,57 +27,59 @@ class CustomValidation extends Validator
         $success = true;
         if (substr($method, -7) === 'InArray') {
             $method = substr($method, 0, -7);
-            if (!is_array($parameters[1]))
+            if (!is_array($parameters[1])) {
                 return false;
+            }
 
             foreach ($parameters[1] as $value) {
-                if (is_array($value))
+                if (is_array($value)) {
                     return false;
+                }
                 $parameters[1] = $value;
                 $success &= call_user_func_array([$this, $method], $parameters);
             }
-
-        } else if (substr($method, -7) === 'OrArray') {
-            if (!is_array($parameters[1]))
+        } elseif (substr($method, -7) === 'OrArray') {
+            if (!is_array($parameters[1])) {
                 return call_user_func_array([$this, $method], $parameters);
+            }
             // Call original method when we are dealing with a single value only, instead of an array
             foreach ($parameters[1] as $value) {
-                if (is_array($value))
+                if (is_array($value)) {
                     return false;
+                }
                 $parameters[1] = $value;
                 $success &= call_user_func_array([$this, $method], $parameters);
             }
         }
 
         return $success;
-
     }
 
     /**
-     * All ...OrArray validation functions can use their non-array error message counterparts
+     * All ...OrArray validation functions can use their non-array error message counterparts.
      *
-     * @param mixed $attribute The value under validation
-     * @param string $rule Validation rule
+     * @param mixed  $attribute The value under validation
+     * @param string $rule      Validation rule
      */
     protected function getMessage($attribute, $rule)
     {
-
-        if (substr($rule, -7) === 'InArray')
+        if (substr($rule, -7) === 'InArray') {
             $rule = substr($rule, 0, -7);
-        else if (substr($rule, -7) === 'OrArray')
+        } elseif (substr($rule, -7) === 'OrArray') {
             $rule = substr($rule, 0, -7);
+        }
 
         return parent::getMessage($attribute, $rule);
-
     }
 
     /**
      * Get the number of records that exist in storage.
      *
-     * @param  string $table
-     * @param  string $column
-     * @param  mixed $value
-     * @param  array $parameters
+     * @param string $table
+     * @param string $column
+     * @param mixed  $value
+     * @param array  $parameters
+     *
      * @return int
      */
     protected function getExistCount($connexion, $table, $column, $value, $parameters)
@@ -96,15 +99,15 @@ class CustomValidation extends Validator
         }
     }
 
-
     /**
      * Validate the uniqueness of an attribute value on a given database table.
      *
      * If a database column is not specified, the attribute will be used.
      *
-     * @param  string $attribute
-     * @param  mixed $value
-     * @param  array $parameters
+     * @param string $attribute
+     * @param mixed  $value
+     * @param array  $parameters
+     *
      * @return bool
      */
     protected function validateUnique($attribute, $value, $parameters)
@@ -128,7 +131,9 @@ class CustomValidation extends Validator
         if (isset($parameters[2])) {
             list($idColumn, $id) = $this->getUniqueIds($parameters);
 
-            if (strtolower($id) == 'null') $id = null;
+            if (strtolower($id) == 'null') {
+                $id = null;
+            }
         }
 
         // The presence verifier is responsible for counting rows within this store
@@ -149,5 +154,4 @@ class CustomValidation extends Validator
     {
         return preg_match("/^([0-9\s\-\+\(\)]*)$/", $value);
     }
-
 }

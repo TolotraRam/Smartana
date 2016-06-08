@@ -1,20 +1,15 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
+namespace App\Http\Controllers\Api;
 
-use Input;
-use Validator;
-use Cache;
-use DB;
-
+use App\Exceptions\ResourceException;
 use App\Models\MediaCategory;
 use App\Transformers\MediaCategoryTransformer;
-
-use App\Exceptions\NotFoundException;
-use App\Exceptions\ResourceException;
+use Input;
+use Validator;
 
 class MediaCategoryController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -38,15 +33,13 @@ class MediaCategoryController extends ApiController
 
         $categories = MediaCategory::simplePaginate(Input::get('limit', 50));
 
-        return response()->paginator($categories, new MediaCategoryTransformer);
-
+        return response()->paginator($categories, new MediaCategoryTransformer());
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -55,8 +48,7 @@ class MediaCategoryController extends ApiController
         $category = MediaCategory::find($id);
         $this->checkExist($category);
 
-        return response()->item($category, new MediaCategoryTransformer);
-
+        return response()->item($category, new MediaCategoryTransformer());
     }
 
     /**
@@ -76,7 +68,7 @@ class MediaCategoryController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
-        $category = new MediaCategory;
+        $category = new MediaCategory();
         $category->name = Input::get('name');
         $category->save();
 
@@ -86,7 +78,7 @@ class MediaCategoryController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -113,7 +105,7 @@ class MediaCategoryController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -126,7 +118,5 @@ class MediaCategoryController extends ApiController
         $category->delete();
 
         return response()->return();
-
     }
-
 }

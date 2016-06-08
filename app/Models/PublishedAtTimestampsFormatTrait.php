@@ -1,8 +1,8 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 use Carbon\Carbon as Carbon;
-
-use Config;
 
 trait PublishedAtTimestampsFormatTrait
 {
@@ -15,5 +15,4 @@ trait PublishedAtTimestampsFormatTrait
     {
         $this->attributes['published_at'] = Carbon::parse($value)->toDateTimeString();
     }
-
 }

@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateSettingTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -22,7 +21,6 @@ class CreateSettingTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
@@ -32,5 +30,4 @@ class CreateSettingTable extends Migration
     {
         Schema::drop('setting');
     }
-
 }

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateVenuesTable extends Migration
 {
@@ -35,9 +35,9 @@ class CreateVenuesTable extends Migration
             $table->integer('user_id')->nullable()->unsigned();
             $table->timestamps();
         });
-        DB::statement('ALTER TABLE venues ADD location POINT' );
+        DB::statement('ALTER TABLE venues ADD location POINT');
 
-        Schema::table('venues', function(Blueprint $table) {
+        Schema::table('venues', function (Blueprint $table) {
             $table->foreign('city_id')->references('id')->on('cities')
                 ->onDelete('set null')
                 ->onUpdate('set null');
@@ -54,7 +54,7 @@ class CreateVenuesTable extends Migration
      */
     public function down()
     {
-        Schema::table('venues', function(Blueprint $table) {
+        Schema::table('venues', function (Blueprint $table) {
             $table->dropForeign('venues_city_id_foreign');
             $table->dropForeign('venues_user_id_foreign');
         });

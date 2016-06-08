@@ -1,12 +1,11 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 use Carbon\Carbon as Carbon;
 
-use Config;
-
 trait TimestampsFormatTrait
 {
-
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->toIso8601String();
@@ -36,6 +35,4 @@ trait TimestampsFormatTrait
     {
         $this->attributes['last_login'] = Carbon::parse($value)->toDateTimeString();
     }
-
-
 }

@@ -1,16 +1,13 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
 use App\Models\Setting;
+use Illuminate\Database\Seeder;
 
 class SettingTableSeeder extends Seeder
 {
-
-  public function run()
-  {
-    
-    Setting::insert([
+    public function run()
+    {
+        Setting::insert([
       ['type' => 'general', 'name' => 'site_name', 'value' => 'CMS Site'],
       ['type' => 'general', 'name' => 'admin_email', 'value' => 'admin_email'],
       ['type' => 'general', 'name' => 'company_address_line1', 'value' => ''],
@@ -21,7 +18,5 @@ class SettingTableSeeder extends Seeder
       ['type' => 'general', 'name' => 'meta_title', 'value' => ''],
       ['type' => 'general', 'name' => 'meta_description', 'value' => ''],
     ]);
-
-  }
-
+    }
 }

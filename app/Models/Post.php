@@ -1,7 +1,6 @@
-<?php namespace App\Models;
+<?php
 
-use Carbon;
-use App\Models\Language;
+namespace App\Models;
 
 class Post extends BaseModel
 {
@@ -17,5 +16,4 @@ class Post extends BaseModel
     {
         return $this->belongsToMany('App\Models\PostCategory', 'post_post_category');
     }
-
 }

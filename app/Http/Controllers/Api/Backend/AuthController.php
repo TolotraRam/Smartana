@@ -1,26 +1,27 @@
-<?php namespace App\Http\Controllers\Api\Backend;
+<?php
 
-use Auth;
-use Input, Response, Validator;
-
-use Carbon\Carbon;
-use UserAuth;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+namespace App\Http\Controllers\Api\Backend;
 
 use App\Exceptions\EmailOrPasswordIncorrectException;
 use App\Exceptions\ResourceException;
 use App\Exceptions\UnauthorizedException;
+use Auth;
+use Carbon\Carbon;
+use Input;
+use JWTAuth;
+use Response;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use UserAuth;
+use Validator;
 
 class AuthController extends ApiController
 {
-
     /**
      * Create a new authentication controller instance.
      *
-     * @param  \Illuminate\Contracts\Auth\Guard     $auth
-     * @param  \Illuminate\Contracts\Auth\Registrar $registrar
+     * @param \Illuminate\Contracts\Auth\Guard     $auth
+     * @param \Illuminate\Contracts\Auth\Registrar $registrar
      *
      * @return void
      */
@@ -56,7 +57,7 @@ class AuthController extends ApiController
             return response()->return(['token' => $token->get()]);
         }
 
-        throw new EmailOrPasswordIncorrectException;
+        throw new EmailOrPasswordIncorrectException();
     }
 
     public function postLogout()
@@ -65,7 +66,6 @@ class AuthController extends ApiController
             JWTAuth::parseToken()->invalidate();
 
             return response()->return();
-
         } catch (TokenExpiredException $e) {
             return Response::json([
                 'status'      => false,
@@ -82,7 +82,7 @@ class AuthController extends ApiController
     }
 
     /**
-     * refresh token
+     * refresh token.
      *
      * @return Response
      */
@@ -92,7 +92,6 @@ class AuthController extends ApiController
             $token = JWTAuth::parseToken()->refresh();
 
             return response()->return(['token' => $token]);
-
         } catch (TokenExpiredException $e) {
             $token = JWTAuth::parseToken()->refresh();
 
@@ -104,8 +103,5 @@ class AuthController extends ApiController
                 'message'     => 'token_invalid',
             ], $e->getStatusCode());
         }
-
-
     }
-
 }

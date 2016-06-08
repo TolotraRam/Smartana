@@ -204,7 +204,7 @@ return [
         'Debugbar'  => Barryvdh\Debugbar\Facade::class,
         'Throttle'  => GrahamCampbell\Throttle\Facades\Throttle::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory'=> Tymon\JWTAuth\Facades\JWTFactory::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
         'UserAuth'  => App\Facades\UserAuth::class,

@@ -1,15 +1,11 @@
-<?php namespace App\Http\Controllers\Api\Backend;
+<?php
 
-use View, Input, Validator;
-use Auth, User;
-use Redirect;
+namespace App\Http\Controllers\Api\Backend;
 
 class ApiController extends \App\Http\Controllers\Api\ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
     }
-
 }

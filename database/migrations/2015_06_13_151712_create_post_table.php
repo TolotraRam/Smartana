@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreatePostTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -30,7 +29,6 @@ class CreatePostTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
@@ -40,5 +38,4 @@ class CreatePostTable extends Migration
     {
         Schema::drop('post');
     }
-
 }

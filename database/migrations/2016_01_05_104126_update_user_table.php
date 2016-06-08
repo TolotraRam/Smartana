@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class UpdateUserTable extends Migration
@@ -13,7 +12,6 @@ class UpdateUserTable extends Migration
     public function up()
     {
         Schema::table('user', function ($table) {
-
             $table->string('avatar')->nullable();
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();
@@ -27,7 +25,6 @@ class UpdateUserTable extends Migration
             $table->foreign('city_id')->references('id')->on('cities')
                 ->onDelete('set null')
                 ->onUpdate('set null');
-
         });
     }
 

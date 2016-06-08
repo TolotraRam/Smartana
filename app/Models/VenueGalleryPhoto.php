@@ -1,4 +1,6 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 class VenueGalleryPhoto extends BaseModel
 {
@@ -9,18 +11,19 @@ class VenueGalleryPhoto extends BaseModel
 
     public function getUrlAttribute()
     {
-        return URL::to('api/media/gallery/venue/' . $this->attributes['path'] . $this->attributes['key']);
+        return URL::to('api/media/gallery/venue/'.$this->attributes['path'].$this->attributes['key']);
     }
 
     protected static function boot()
     {
         parent::boot();
         static::deleting(function ($image) {
-            Storage::delete('uploads/m/gallery/venue/' . $image->path . $image->key);
+            Storage::delete('uploads/m/gallery/venue/'.$image->path.$image->key);
         });
     }
 
-    public function gallery() {
-    	return $this->belongsTo('App\Models\VenueGallery');
-  	}
+    public function gallery()
+    {
+        return $this->belongsTo('App\Models\VenueGallery');
+    }
 }

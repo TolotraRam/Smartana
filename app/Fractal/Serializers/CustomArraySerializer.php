@@ -1,4 +1,6 @@
-<?php namespace App\Fractal\Serializers;
+<?php
+
+namespace App\Fractal\Serializers;
 
 /*
  * This file is part of the League\Fractal package.
@@ -9,11 +11,10 @@
  * file that was distributed with this source code.
  */
 
-use League\Fractal\Serializer\SerializerAbstract;
-
 use League\Fractal\Pagination\CursorInterface;
 use League\Fractal\Pagination\PaginatorInterface;
 use League\Fractal\Resource\ResourceInterface;
+use League\Fractal\Serializer\SerializerAbstract;
 
 class CustomArraySerializer extends SerializerAbstract
 {
@@ -85,11 +86,11 @@ class CustomArraySerializer extends SerializerAbstract
      */
     public function paginator(PaginatorInterface $paginator)
     {
-        $currentPage = (int)$paginator->getCurrentPage();
+        $currentPage = (int) $paginator->getCurrentPage();
 
         $pagination = [
-            'count'        => (int)$paginator->getCount(),
-            'per_page'     => (int)$paginator->getPerPage(),
+            'count'        => (int) $paginator->getCount(),
+            'per_page'     => (int) $paginator->getPerPage(),
             'current_page' => $currentPage,
             'prev_page'    => null,
             'next_page'    => null,
@@ -119,7 +120,7 @@ class CustomArraySerializer extends SerializerAbstract
             'current' => $cursor->getCurrent(),
             'prev'    => $cursor->getPrev(),
             'next'    => $cursor->getNext(),
-            'count'   => (int)$cursor->getCount(),
+            'count'   => (int) $cursor->getCount(),
         ];
 
         return ['cursor' => $cursor];
