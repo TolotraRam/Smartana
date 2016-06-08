@@ -26,7 +26,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public function getUrlAttribute()
     {
         if ($this->attributes['avatar'] && !is_null($this->attributes['avatar'])) {
-            return URL::to('api/media/avatar/' . $this->attributes['avatar']);
+            return URL::to('api/media/avatar/'.$this->attributes['avatar']);
         }
     }
 

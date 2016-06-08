@@ -28,7 +28,7 @@ class CustomArraySerializer extends SerializerAbstract
      */
     public function collection($resourceKey, array $data)
     {
-        if ($resourceKey===null) {
+        if ($resourceKey === null) {
             return $data;
         } else {
             return [$resourceKey ?: 'data' => $data];
@@ -86,11 +86,11 @@ class CustomArraySerializer extends SerializerAbstract
      */
     public function paginator(PaginatorInterface $paginator)
     {
-        $currentPage = (int)$paginator->getCurrentPage();
+        $currentPage = (int) $paginator->getCurrentPage();
 
         $pagination = [
-            'count'        => (int)$paginator->getCount(),
-            'per_page'     => (int)$paginator->getPerPage(),
+            'count'        => (int) $paginator->getCount(),
+            'per_page'     => (int) $paginator->getPerPage(),
             'current_page' => $currentPage,
             'prev_page'    => null,
             'next_page'    => null,
@@ -100,7 +100,7 @@ class CustomArraySerializer extends SerializerAbstract
             $pagination['prev_page'] = $currentPage - 1;
         }
 
-        if ($pagination['per_page']==$pagination['count']) {
+        if ($pagination['per_page'] == $pagination['count']) {
             $pagination['next_page'] = $currentPage + 1;
         }
 
@@ -120,7 +120,7 @@ class CustomArraySerializer extends SerializerAbstract
             'current' => $cursor->getCurrent(),
             'prev'    => $cursor->getPrev(),
             'next'    => $cursor->getNext(),
-            'count'   => (int)$cursor->getCount(),
+            'count'   => (int) $cursor->getCount(),
         ];
 
         return ['cursor' => $cursor];

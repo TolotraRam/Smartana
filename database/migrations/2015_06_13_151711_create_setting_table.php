@@ -12,7 +12,7 @@ class CreateSettingTable extends Migration
      */
     public function up()
     {
-        Schema::create('setting', function(Blueprint $table) {
+        Schema::create('setting', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type', 128)->index();
             $table->string('name', 128)->unique();

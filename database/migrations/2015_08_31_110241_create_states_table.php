@@ -12,14 +12,14 @@ class CreateStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('states', function(Blueprint $table) {
+        Schema::create('states', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name', 30);
             $table->boolean('enabled');
             $table->integer('country_id')->unsigned();
         });
-        Schema::table('states', function(Blueprint $table) {
+        Schema::table('states', function (Blueprint $table) {
             $table->foreign('country_id')->references('id')->on('countries')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
@@ -33,7 +33,7 @@ class CreateStatesTable extends Migration
      */
     public function down()
     {
-        Schema::table('states', function(Blueprint $table) {
+        Schema::table('states', function (Blueprint $table) {
             $table->dropForeign('states_country_id_foreign');
         });
         Schema::drop('states');

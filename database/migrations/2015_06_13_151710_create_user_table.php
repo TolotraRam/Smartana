@@ -12,7 +12,7 @@ class CreateUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('user', function(Blueprint $table) {
+        Schema::create('user', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('lastname')->nullable();

@@ -15,7 +15,7 @@ class Venue extends BaseModel
     public function getUrlAttribute()
     {
         if ($this->attributes['image'] && !is_null($this->attributes['image'])) {
-            return URL::to('api/media/venue/' . $this->attributes['image']);
+            return URL::to('api/media/venue/'.$this->attributes['image']);
         }
     }
 
@@ -39,7 +39,7 @@ class Venue extends BaseModel
     {
         $raw = '';
         foreach ($this->geofields as $column) {
-            $raw .= ' astext(' . $column . ') as ' . $column . ' ';
+            $raw .= ' astext('.$column.') as '.$column.' ';
         }
 
         return parent::newQuery($excludeDeleted)->addSelect('*', DB::raw($raw));
@@ -47,7 +47,7 @@ class Venue extends BaseModel
 
     public function scopeDistance($query, $dist, $location)
     {
-        return $query->whereRaw('st_distance(location,POINT(' . $location . ')) < ' . $dist);
+        return $query->whereRaw('st_distance(location,POINT('.$location.')) < '.$dist);
     }
 
     public function city()

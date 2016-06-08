@@ -12,7 +12,7 @@ class CreateOpeningsTable extends Migration
      */
     public function up()
     {
-        Schema::create('openings', function(Blueprint $table) {
+        Schema::create('openings', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('day');
@@ -34,7 +34,7 @@ class CreateOpeningsTable extends Migration
      */
     public function down()
     {
-        Schema::table('openings', function(Blueprint $table) {
+        Schema::table('openings', function (Blueprint $table) {
             $table->dropForeign('openings_venue_id_foreign');
         });
         Schema::drop('openings');

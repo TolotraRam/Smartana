@@ -12,7 +12,7 @@ class CreateVenuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('venues', function(Blueprint $table) {
+        Schema::create('venues', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('place_id', 30)->unique();
@@ -37,7 +37,7 @@ class CreateVenuesTable extends Migration
         });
         DB::statement('ALTER TABLE venues ADD location POINT');
 
-        Schema::table('venues', function(Blueprint $table) {
+        Schema::table('venues', function (Blueprint $table) {
             $table->foreign('city_id')->references('id')->on('cities')
                 ->onDelete('set null')
                 ->onUpdate('set null');
@@ -54,7 +54,7 @@ class CreateVenuesTable extends Migration
      */
     public function down()
     {
-        Schema::table('venues', function(Blueprint $table) {
+        Schema::table('venues', function (Blueprint $table) {
             $table->dropForeign('venues_city_id_foreign');
             $table->dropForeign('venues_user_id_foreign');
         });

@@ -44,7 +44,7 @@ class VenueGalleryPhotoController extends ApiController
             $VenueGalleryPhoto = $VenueGalleryPhoto->whereIn('venue_gallery_id', Input::get('gallery_ids'));
         }
         if (Input::has('search')) {
-            $VenueGalleryPhoto = $VenueGalleryPhoto->where('name', 'LIKE', '%' . Input::get('search') . '%');
+            $VenueGalleryPhoto = $VenueGalleryPhoto->where('name', 'LIKE', '%'.Input::get('search').'%');
         }
 
         $VenueGalleryPhoto = $VenueGalleryPhoto->simplePaginate(Input::get('limit', 50));
@@ -72,7 +72,7 @@ class VenueGalleryPhotoController extends ApiController
     {
         $VenueGalleryPhoto = VenueGalleryPhoto::where('key', '=', $filename)->first();
         if (!is_null($VenueGalleryPhoto)) {
-            $file = Storage::get('uploads/' . $type . '/' . $yearAndMonth . '/' . $day . '/' . $VenueGalleryPhoto->key);
+            $file = Storage::get('uploads/'.$type.'/'.$yearAndMonth.'/'.$day.'/'.$VenueGalleryPhoto->key);
             if ($file) {
                 return Response($file, 200)->header('Content-Type', $VenueGalleryPhoto->mime);
             }
@@ -111,11 +111,11 @@ class VenueGalleryPhotoController extends ApiController
             $extension = $file->getClientOriginalExtension();
             $VenueGalleryPhoto->filesize = $file->getSize();
             $VenueGalleryPhoto->mime = $file->getClientMimeType();
-            $VenueGalleryPhoto->key = strtolower(md5(uniqid($VenueGalleryPhoto->id . rand()))) . '.' . $extension;
+            $VenueGalleryPhoto->key = strtolower(md5(uniqid($VenueGalleryPhoto->id.rand()))).'.'.$extension;
             $VenueGalleryPhoto->path = $this->generateDateFolder();
 
             //upload file
-            Storage::put('uploads/m/' . $VenueGalleryPhoto->path . $VenueGalleryPhoto->key, File::get($file));
+            Storage::put('uploads/m/'.$VenueGalleryPhoto->path.$VenueGalleryPhoto->key, File::get($file));
             $VenueGalleryPhoto->save();
             DB::commit();
 
