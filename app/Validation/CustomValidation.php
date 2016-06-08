@@ -25,7 +25,7 @@ class CustomValidation extends Validator
 
         // Convert method name to its non-array counterpart (e.g. validateNumericArray converts to validateNumeric)
         $success = true;
-        if (substr($method, -7)==='InArray') {
+        if (substr($method, -7) === 'InArray') {
             $method = substr($method, 0, -7);
             if (!is_array($parameters[1])) {
                 return false;
@@ -38,7 +38,7 @@ class CustomValidation extends Validator
                 $parameters[1] = $value;
                 $success &= call_user_func_array([$this, $method], $parameters);
             }
-        } elseif (substr($method, -7)==='OrArray') {
+        } elseif (substr($method, -7) === 'OrArray') {
             if (!is_array($parameters[1])) {
                 return call_user_func_array([$this, $method], $parameters);
             }
@@ -63,9 +63,9 @@ class CustomValidation extends Validator
      */
     protected function getMessage($attribute, $rule)
     {
-        if (substr($rule, -7)==='InArray') {
+        if (substr($rule, -7) === 'InArray') {
             $rule = substr($rule, 0, -7);
-        } elseif (substr($rule, -7)==='OrArray') {
+        } elseif (substr($rule, -7) === 'OrArray') {
             $rule = substr($rule, 0, -7);
         }
 
@@ -86,7 +86,7 @@ class CustomValidation extends Validator
     {
         $verifier = $this->getPresenceVerifier();
 
-        if (substr($table, 0, 7)==='master_') {
+        if (substr($table, 0, 7) === 'master_') {
             $verifier->setConnection($connexion);
         }
 
@@ -117,7 +117,7 @@ class CustomValidation extends Validator
 
         $table = $parameters[0];
 
-        if (substr($table, 0, 7)==='master_') {
+        if (substr($table, 0, 7) === 'master_') {
             $verifier->setConnection('mysql');
         }
 
@@ -131,7 +131,7 @@ class CustomValidation extends Validator
         if (isset($parameters[2])) {
             list($idColumn, $id) = $this->getUniqueIds($parameters);
 
-            if (strtolower($id)=='null') {
+            if (strtolower($id) == 'null') {
                 $id = null;
             }
         }
@@ -147,7 +147,7 @@ class CustomValidation extends Validator
 
             $table, $column, $value, $id, $idColumn, $extra
 
-        )==0;
+        ) == 0;
     }
 
     public function validatePhone($attribute, $value, $parameters)

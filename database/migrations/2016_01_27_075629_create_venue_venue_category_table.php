@@ -12,7 +12,7 @@ class CreateVenueVenueCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('venue_venue_category', function(Blueprint $table) {
+        Schema::create('venue_venue_category', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->integer('venue_category_id')->unsigned()->index();
             $table->integer('venue_id')->unsigned()->index();

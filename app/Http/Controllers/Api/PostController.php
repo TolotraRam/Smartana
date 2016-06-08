@@ -41,14 +41,14 @@ class PostController extends ApiController
         $posts = new Post();
         $posts = $posts->with([
             'tagged',
-            'categories' => function($query) {
+            'categories' => function ($query) {
                 $query->select(['post_category_id']);
             },
         ])->orderBy('published_at', 'DESC');
 
         //Filter
         if (Input::has('search')) {
-            $posts = $posts->where('title', 'LIKE', '%' . Input::get('search') . '%');
+            $posts = $posts->where('title', 'LIKE', '%'.Input::get('search').'%');
         }
 
         if (Input::has('ids')) {
@@ -56,7 +56,7 @@ class PostController extends ApiController
         }
 
         if (Input::has('category_ids')) {
-            $posts = $posts->whereHas('categories', function($q) {
+            $posts = $posts->whereHas('categories', function ($q) {
                 $q->whereIn('id', Input::get('category_ids'));
             });
         }
@@ -100,7 +100,7 @@ class PostController extends ApiController
 
         $post = $post->load([
             'tagged',
-            'categories' => function($query) {
+            'categories' => function ($query) {
                 $query->select(['post_category_id']);
             },
         ]);

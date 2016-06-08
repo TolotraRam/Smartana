@@ -12,7 +12,7 @@ class CreateMediaCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('media_category', function(Blueprint $table) {
+        Schema::create('media_category', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name')->nullable()->index();

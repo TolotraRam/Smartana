@@ -12,7 +12,7 @@ class CreatePostTable extends Migration
      */
     public function up()
     {
-        Schema::create('post', function(Blueprint $table) {
+        Schema::create('post', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->enum('status', ['published', 'draft', 'trash'])->nullable()->default('published');

@@ -37,7 +37,7 @@ class ApiController extends BaseController
     public function fillNullableFieldFromInput($obj, $fields = [])
     {
         foreach ($fields as $key => $field) {
-            if (Input::get($field)==='') {
+            if (Input::get($field) === '') {
                 $obj->{$field} = null;
             } elseif (Input::has($field)) {
                 $obj->{$field} = Input::get($field);
@@ -59,7 +59,7 @@ class ApiController extends BaseController
         foreach ($fields as $key => $field) {
             if (!isset($input[$field])) {
                 $obj->{$field} = null;
-            } elseif ($input[$field]=='') {
+            } elseif ($input[$field] == '') {
                 $obj->{$field} = null;
             } else {
                 $obj->{$field} = $input[$field];
@@ -96,7 +96,7 @@ class ApiController extends BaseController
     {
         $input = json_decode(Input::get('data'), true);
         foreach ($fields as $key => $field) {
-            if ($input[$field] && $input[$field]!=='') {
+            if ($input[$field] && $input[$field] !== '') {
                 $obj->{$field} = $input[$field];
             }
         }
