@@ -1,70 +1,27 @@
-# Smartana
+## Laravel PHP Framework
 
-# api-dev branch
+[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
+[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
+[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
 
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
 
-## Features:
+Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
 
-Independent Laravel, Angular
-Laravel 5.1 for API
-Include Json Auth Token
-Include Data Transformer
-Include API Data Exception
-Output JSON or others
-Include CSRF Protection
-Timezone
-Angular 1.4 for Backend
-Include AdminLTE template
-Include ui-router, Restangular etc ...
-Timezone
-Support Multi-Languages interface
-Backend
-User & Role management
-Manage Media & Media Categories
-Manage posts and posts categories
-## Frontend
-Soon
-## Install:
+## Official Documentation
 
-Step 1: Get the code
-Step 2: Init api
-Step 3: Init Backend
-Step 4: Production
+Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
 
-### Step 1: Get the code
+## Contributing
 
-Download Now
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
 
+## Security Vulnerabilities
 
-### Step 2: Init api
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
-Init Laravel
+### License
 
-Move to api directory
-Run composer install
-Init Database
-
-Setup database config in .env file (copy from .env.example)
-Run php artisan migrate --seed
-
-### Step 3: Init Backend
-
-This project makes use of Bower. You must first ensure that Node.js (included in homestead) is installed on your machine.
-
-Install npm, gulp, bower
-Run sudo npm install
-Run bower install
-Edit backend/src/index.js, replace cms.dev to your api domain
-Run gulp serve for development
-
-### Step 4: Production
-
-API
-
-edit .env file set APP_DEBUG to false
-Backend
-
-run gulp in backend directory. It will auto copy backend/dist all files to api/public/assets-backend
-Frontend
-
-Move all frontend files to api/public
+The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
