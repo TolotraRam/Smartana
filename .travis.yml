@@ -8,9 +8,6 @@ sudo: false
 services:
   - mysql
 
-before_install:
-  - nvm install 5.1
-
 before_script:
   - mysql -e 'create database db-smartana;'
   - export DB_DATABASE=db-smartana
