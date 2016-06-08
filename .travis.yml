@@ -10,7 +10,7 @@ services:
 
 before_script:
   - mysql -e 'create database db_smartana;'
-  - export DB_DATABASE=db-smartana
+  - export DB_DATABASE=db_smartana
   - export DB_USERNAME=travis
   - export DB_PASSWORD=
   - cp .env.travis .env

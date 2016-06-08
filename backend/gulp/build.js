@@ -32,12 +32,12 @@ gulp.task('htmlProductionChange', ['html'], function () {
 });
 
 gulp.task('cleanApiBackendFolder', function () {
-    return $.del(['../api/public/assets-backend/**/*'], {force: true});
+    return $.del(['../public/assets-backend/**/*'], {force: true});
 });
 
 gulp.task('copyDistToApiFolder', ['htmlProductionChange', 'cleanApiBackendFolder'], function () {
     return gulp.src([conf.paths.dist + '/**/*'])
-        .pipe(gulp.dest('../api/public/assets-backend/'));
+        .pipe(gulp.dest('../public/assets-backend/'));
 });
 
 gulp.task('html', ['inject', 'partials'], function () {
