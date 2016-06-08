@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 
 class VenueCategoryTableSeeder extends Seeder
 {
-  public $types = [
+    public $types = [
     ['accounting'],
     ['airport'],
     ['amusement_park'],
@@ -102,22 +102,20 @@ class VenueCategoryTableSeeder extends Seeder
     ['veterinary_care'],
     ['zoo'],
   ];
-  public function run()
-  {
-    
-    $type = [];
-    
-    foreach ($this->types as $index) {
-      $type[] = [
-        'name' => $index[0],
+
+    public function run()
+    {
+        $type = [];
+
+        foreach ($this->types as $index) {
+            $type[] = [
+        'name'        => $index[0],
         'description' => 'lorem ipsum dolor sit amet',
-        'enabled' => false,
-        'is_featured' => false
+        'enabled'     => false,
+        'is_featured' => false,
       ];
+        }
+
+        DB::table('venue_category')->insert($type);
     }
-
-    DB::table('venue_category')->insert($type);
-
-  }
-
 }

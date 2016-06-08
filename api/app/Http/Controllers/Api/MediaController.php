@@ -1,18 +1,20 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Input;
-use Validator;
-use DB, Storage, File, Response;
-
-use App\Models\Media;
-use App\Transformers\MediaTransformer;
+namespace App\Http\Controllers\Api;
 
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ResourceException;
+use App\Models\Media;
+use App\Transformers\MediaTransformer;
+use DB;
+use File;
+use Input;
+use Response;
+use Storage;
+use Validator;
 
 class MediaController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -25,7 +27,6 @@ class MediaController extends ApiController
      */
     public function index()
     {
-
         $validator = Validator::make(Input::all(), [
             'page'             => 'integer',
             'published_at_min' => 'date_format:"Y-m-d H:i:s"',
@@ -42,14 +43,14 @@ class MediaController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
-        $media = new Media;
+        $media = new Media();
 
         //Filter
         if (Input::has('category_ids')) {
             $media = $media->whereIn('media_category_id', Input::get('category_ids'));
         }
         if (Input::has('search')) {
-            $media = $media->where('name', 'LIKE', '%' . Input::get('search') . '%');
+            $media = $media->where('name', 'LIKE', '%'.Input::get('search').'%');
         }
         if (Input::has('created_at_min')) {
             $media = $media->where('created_at', '>=', Input::get('created_at_min'));
@@ -66,13 +67,13 @@ class MediaController extends ApiController
 
         $media = $media->simplePaginate(Input::get('limit', 50));
 
-        return response()->paginator($media, new MediaTransformer);
+        return response()->paginator($media, new MediaTransformer());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -82,29 +83,26 @@ class MediaController extends ApiController
 
         $this->checkExist($media);
 
-        return response()->item($media, new MediaTransformer);
+        return response()->item($media, new MediaTransformer());
     }
-
 
     public function get($type, $yearAndMonth, $day, $filename)
     {
-
         $media = Media::where('key', '=', $filename)->first();
         if (!is_null($media)) {
-            $file = Storage::get('uploads/' . $type . '/' . $yearAndMonth . '/' . $day . '/' . $media->key);
+            $file = Storage::get('uploads/'.$type.'/'.$yearAndMonth.'/'.$day.'/'.$media->key);
             if ($file) {
                 return Response($file, 200)->header('Content-Type', $media->mime);
             }
         }
 
-        throw new NotFoundException;
+        throw new NotFoundException();
     }
-
 
     private function generateDateFolder()
     {
         $date = date('Y-m-d');
-        $dateFolder = date('Y', strtotime($date)) . date('m', strtotime($date)) . '/' . date('d', strtotime($date)) . '/';
+        $dateFolder = date('Y', strtotime($date)).date('m', strtotime($date)).'/'.date('d', strtotime($date)).'/';
 
         return $dateFolder;
     }
@@ -119,7 +117,7 @@ class MediaController extends ApiController
         $rules = [
             'attachment'        => 'required|mimes:jpeg,png,pdf,docx,xlsx,pptx,txt,zip,rar|max:10000',
             'name'              => 'max:255',
-            'media_category_id' => 'exists:media_category,id'
+            'media_category_id' => 'exists:media_category,id',
         ];
 
         $validator = Validator::make(Input::only(array_keys($rules)), $rules);
@@ -130,7 +128,7 @@ class MediaController extends ApiController
 
         DB::beginTransaction();
         try {
-            $media = new Media;
+            $media = new Media();
             if (Input::has('media_category_id')) {
                 $media->media_category_id = Input::get('media_category_id');
             }
@@ -139,27 +137,25 @@ class MediaController extends ApiController
             $extension = $file->getClientOriginalExtension();
             $media->filesize = $file->getSize();
             $media->mime = $file->getClientMimeType();
-            $media->key = strtolower(md5(uniqid($media->id . rand()))) . '.' . $extension;
+            $media->key = strtolower(md5(uniqid($media->id.rand()))).'.'.$extension;
             $media->path = $this->generateDateFolder();
 
             //upload file
-            Storage::put('uploads/m/' . $media->path . $media->key, File::get($file));
+            Storage::put('uploads/m/'.$media->path.$media->key, File::get($file));
             $media->save();
             DB::commit();
 
             return $this->show($media->id);
-
         } catch (\Exception $e) {
             DB::rollback();
             throw new ResourceException('Invalid request parameters');
         }
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -167,7 +163,7 @@ class MediaController extends ApiController
     {
         $rules = [
             'name'              => 'max:255',
-            'media_category_id' => 'exists:media_category,id'
+            'media_category_id' => 'exists:media_category,id',
         ];
 
         $validator = Validator::make(Input::only(array_keys($rules)), $rules);
@@ -191,7 +187,7 @@ class MediaController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -203,7 +199,5 @@ class MediaController extends ApiController
         $media->delete();
 
         return response()->return();
-
     }
-
 }

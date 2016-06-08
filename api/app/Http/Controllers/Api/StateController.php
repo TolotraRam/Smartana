@@ -1,17 +1,16 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Input;
-use Validator;
-use Response;
-
-use App\Models\State;
-use App\Transformers\StateTransformer;
+namespace App\Http\Controllers\Api;
 
 use App\Exceptions\ResourceException;
+use App\Models\State;
+use App\Transformers\StateTransformer;
+use Input;
+use Response;
+use Validator;
 
 class StateController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -24,19 +23,18 @@ class StateController extends ApiController
      */
     public function index()
     {
-
         $validator = Validator::make(Input::all(), [
             'page'             => 'integer',
             'limit'            => 'integer|min:1|max:10000',
             'search'           => 'max:10000',
             'country_ids'      => 'array|integerInArray',
-            'c_id'       => 'integer'
+            'c_id'             => 'integer',
         ]);
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
 
-        $state = new State;
+        $state = new State();
         //Filter
         if (Input::has('country_ids')) {
             $state = $state->whereHas('country', function ($q) {
@@ -49,17 +47,17 @@ class StateController extends ApiController
             });
         }
         if (Input::has('search')) {
-            $state = $state->where('name', 'LIKE', '%' . Input::get('search') . '%');
+            $state = $state->where('name', 'LIKE', '%'.Input::get('search').'%');
         }
         $state = $state->simplePaginate(Input::get('limit', 50));
 
-        return response()->paginator($state, new StateTransformer);
+        return response()->paginator($state, new StateTransformer());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -69,7 +67,7 @@ class StateController extends ApiController
 
         $this->checkExist($state);
 
-        return response()->item($state, new StateTransformer);
+        return response()->item($state, new StateTransformer());
     }
 
     /**
@@ -80,8 +78,8 @@ class StateController extends ApiController
     public function store()
     {
         $rules = [
-            'code'  => 'string|min:1|max:3',
-            'name' => 'string|min:1|max:30',
+            'code'       => 'string|min:1|max:3',
+            'name'       => 'string|min:1|max:30',
             'enabled'    => 'boolean',
         ];
 
@@ -91,7 +89,7 @@ class StateController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
-        $state = new State;
+        $state = new State();
         $state->name = Input::get('name');
         $state->code = Input::get('code');
         $state->enabled = Input::get('enabled');
@@ -99,21 +97,20 @@ class StateController extends ApiController
         $state->save();
 
         return $this->show($state->id);
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
     public function update($id)
     {
         $rules = [
-            'code'  => 'string|min:1|max:3',
-            'name' => 'string|min:1|max:30',
+            'code'       => 'string|min:1|max:3',
+            'name'       => 'string|min:1|max:30',
             'enabled'    => 'boolean',
         ];
 
@@ -141,7 +138,7 @@ class StateController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -153,7 +150,5 @@ class StateController extends ApiController
         $state->delete();
 
         return response()->return();
-
     }
-
 }

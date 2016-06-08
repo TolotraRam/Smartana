@@ -26,5 +26,4 @@ class RestrictToChangeOwnerRoleException extends HttpException
     {
         parent::__construct(400, 'You cannot change owner role.', $previous, [], 10002);
     }
-
 }

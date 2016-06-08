@@ -1,17 +1,16 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Input;
-use Validator;
-use Response;
-
-use App\Models\Country;
-use App\Transformers\CountryTransformer;
+namespace App\Http\Controllers\Api;
 
 use App\Exceptions\ResourceException;
+use App\Models\Country;
+use App\Transformers\CountryTransformer;
+use Input;
+use Response;
+use Validator;
 
 class CountryController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -24,7 +23,6 @@ class CountryController extends ApiController
      */
     public function index()
     {
-
         $validator = Validator::make(Input::all(), [
             'page'             => 'integer',
             'limit'            => 'integer|min:1|max:10000',
@@ -34,22 +32,22 @@ class CountryController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
-        $country = new Country;
+        $country = new Country();
 
         //Filter
         if (Input::has('search')) {
-            $country = $country->where('name', 'LIKE', '%' . Input::get('search') . '%');
+            $country = $country->where('name', 'LIKE', '%'.Input::get('search').'%');
         }
 
         $country = $country->simplePaginate(Input::get('limit', 50));
 
-        return response()->paginator($country, new CountryTransformer);
+        return response()->paginator($country, new CountryTransformer());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -59,7 +57,7 @@ class CountryController extends ApiController
 
         $this->checkExist($country);
 
-        return response()->item($country, new CountryTransformer);
+        return response()->item($country, new CountryTransformer());
     }
 
     /**
@@ -70,8 +68,8 @@ class CountryController extends ApiController
     public function store()
     {
         $rules = [
-            'code'  => 'string|min:1|max:3',
-            'name' => 'string|min:1|max:30',
+            'code'       => 'string|min:1|max:3',
+            'name'       => 'string|min:1|max:30',
             'enabled'    => 'boolean',
         ];
 
@@ -81,7 +79,7 @@ class CountryController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
-        $country = new Country;
+        $country = new Country();
         $country->name = Input::get('name');
         $country->code = Input::get('code');
         $country->enabled = Input::get('enabled');
@@ -89,21 +87,20 @@ class CountryController extends ApiController
         $country->save();
 
         return $this->show($country->id);
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
     public function update($id)
     {
         $rules = [
-            'code'  => 'string|min:1|max:3',
-            'name' => 'string|min:1|max:30',
+            'code'       => 'string|min:1|max:3',
+            'name'       => 'string|min:1|max:30',
             'enabled'    => 'boolean',
         ];
 
@@ -131,7 +128,7 @@ class CountryController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -143,7 +140,5 @@ class CountryController extends ApiController
         $country->delete();
 
         return response()->return();
-
     }
-
 }

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateCitiesTable extends Migration
 {
@@ -19,7 +19,7 @@ class CreateCitiesTable extends Migration
             $table->boolean('enabled');
             $table->integer('state_id')->unsigned();
         });
-        Schema::table('cities', function(Blueprint $table) {
+        Schema::table('cities', function (Blueprint $table) {
             $table->foreign('state_id')->references('id')->on('states')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
@@ -33,7 +33,7 @@ class CreateCitiesTable extends Migration
      */
     public function down()
     {
-        Schema::table('cities', function(Blueprint $table) {
+        Schema::table('cities', function (Blueprint $table) {
             $table->dropForeign('cities_state_id_foreign');
         });
         Schema::drop('cities');

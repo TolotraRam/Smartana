@@ -1,4 +1,6 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 use URL;
 
@@ -17,8 +19,8 @@ class VenueCategory extends BaseModel
 
     public function getUrlAttribute()
     {
-        if(isset($this->attributes['image']) && $this->attributes['image'] && !is_null($this->attributes['image'])) {
-            return URL::to('api/media/category/venue/' . $this->attributes['image']);
+        if (isset($this->attributes['image']) && $this->attributes['image'] && !is_null($this->attributes['image'])) {
+            return URL::to('api/media/category/venue/'.$this->attributes['image']);
         }
     }
 
@@ -26,5 +28,4 @@ class VenueCategory extends BaseModel
     {
         return $this->belongsToMany('App\Models\Venue');
     }
-
 }

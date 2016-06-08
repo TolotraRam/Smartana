@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateUserTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -25,9 +24,7 @@ class CreateUserTable extends Migration
             $table->dateTime('last_login')->nullable();
             $table->timestamps();
         });
-        
     }
-
 
     /**
      * Reverse the migrations.
@@ -38,5 +35,4 @@ class CreateUserTable extends Migration
     {
         Schema::drop('user');
     }
-
 }

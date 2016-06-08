@@ -1,14 +1,13 @@
-<?php namespace App\Http\Middleware;
+<?php
 
-use GrahamCampbell\Throttle\Http\Middleware\ThrottleMiddleware as BaseVerifier;
+namespace App\Http\Middleware;
 
 use Closure;
+use GrahamCampbell\Throttle\Http\Middleware\ThrottleMiddleware as BaseVerifier;
 use Response;
 
 class ThrottleMiddleware extends BaseVerifier
 {
-
-
     /**
      * Handle an incoming request.
      *
@@ -33,8 +32,9 @@ class ThrottleMiddleware extends BaseVerifier
     /**
      * Add the RateLimit to the response cookies.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Http\Response $response
+     * @param \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Response $response
+     *
      * @return \Illuminate\Http\Response
      */
     protected function addRateLimitToResponse($request, $response, $limit)
@@ -48,12 +48,13 @@ class ThrottleMiddleware extends BaseVerifier
     }
 
     /**
-     * Fire event and return the response
+     * Fire event and return the response.
      *
-     * @param  string  $event
-     * @param  string  $error
-     * @param  integer $status
-     * @param  array   $payload
+     * @param string $event
+     * @param string $error
+     * @param int    $status
+     * @param array  $payload
+     *
      * @return mixed
      */
     protected function respond($event, $error, $status, $payload = [])
@@ -64,5 +65,4 @@ class ThrottleMiddleware extends BaseVerifier
             'message'     => $error,
         ], $status);
     }
-
 }

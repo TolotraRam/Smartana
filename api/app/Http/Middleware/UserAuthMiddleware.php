@@ -1,14 +1,14 @@
-<?php namespace App\Http\Middleware;
+<?php
 
-use Closure;
-use Response;
+namespace App\Http\Middleware;
+
+use App\Models\User;
 use Event;
-use Auth;
-use Tymon\JWTAuth\JWTAuth;
+use Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use App\Models\User;
+use Tymon\JWTAuth\JWTAuth;
 use UserAuth;
 
 class UserAuthMiddleware
@@ -19,7 +19,7 @@ class UserAuthMiddleware
     private $jwt;
 
     /**
-     * Create a new BaseMiddleware instance
+     * Create a new BaseMiddleware instance.
      *
      * @param \Laravel\Lumen\Http\ResponseFactory $response
      * @param \Illuminate\Events\Dispatcher       $events
@@ -33,8 +33,8 @@ class UserAuthMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
      *
      * @return mixed
      */
@@ -56,7 +56,7 @@ class UserAuthMiddleware
                     UserAuth::loginUsingId($user->id);
                 }
             } else {
-                throw new TokenInvalidException;
+                throw new TokenInvalidException();
             }
         } catch (TokenExpiredException $e) {
             return $this->respond('tymon.jwt.expired', 'token_expired', $e->getStatusCode(), [$e]);
@@ -70,12 +70,12 @@ class UserAuthMiddleware
     }
 
     /**
-     * Fire event and return the response
+     * Fire event and return the response.
      *
-     * @param  string  $event
-     * @param  string  $error
-     * @param  integer $status
-     * @param  array   $payload
+     * @param string $event
+     * @param string $error
+     * @param int    $status
+     * @param array  $payload
      *
      * @return mixed
      */

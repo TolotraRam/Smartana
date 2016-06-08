@@ -1,20 +1,19 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Input;
-use Validator;
-use DB;
-use Storage;
-use File;
-
-use App\Models\VenueCategory;
-use App\Transformers\VenueCategoryTransformer;
+namespace App\Http\Controllers\Api;
 
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ResourceException;
+use App\Models\VenueCategory;
+use App\Transformers\VenueCategoryTransformer;
+use DB;
+use File;
+use Input;
+use Storage;
+use Validator;
 
 class VenueCategoryController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -33,17 +32,17 @@ class VenueCategoryController extends ApiController
             'page'           => 'integer',
             'limit'          => 'integer|min:1|max:250',
             'name'           => 'max:250',
-            'search'         => 'string'
+            'search'         => 'string',
         ]);
 
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
 
-        $categories = new VenueCategory;
+        $categories = new VenueCategory();
         //Filter
         if (Input::has('search')) {
-            $categories = $categories->where('name', 'LIKE', '%' . Input::get('search') . '%');
+            $categories = $categories->where('name', 'LIKE', '%'.Input::get('search').'%');
         }
 
         if (Input::has('ids')) {
@@ -51,20 +50,18 @@ class VenueCategoryController extends ApiController
         }
 
         if (Input::has('name')) {
-            $categories = $categories->where('name', 'like', Input::get('name') . '%');
+            $categories = $categories->where('name', 'like', Input::get('name').'%');
         }
 
         $categories = $categories->simplePaginate(Input::get('limit', 50));
 
-        return response()->paginator($categories, new VenueCategoryTransformer);
-
+        return response()->paginator($categories, new VenueCategoryTransformer());
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -73,31 +70,30 @@ class VenueCategoryController extends ApiController
         $category = VenueCategory::find($id);
         $this->checkExist($category);
 
-        return response()->item($category, new VenueCategoryTransformer);
-
+        return response()->item($category, new VenueCategoryTransformer());
     }
 
     /**
-     * Get venue category image
+     * Get venue category image.
      *
-     * @param  string $type
-     * @param  string $filename
+     * @param string $type
+     * @param string $filename
      *
      * @return Response
      */
     public function get($type, $filename)
     {
-
         $category = VenueCategory::where('image', '=', $filename)->first();
         if ($category->image && !is_null($category->image)) {
-            $file = Storage::get('uploads/category/'. $type .'/' . $category->image);
+            $file = Storage::get('uploads/category/'.$type.'/'.$category->image);
             if ($file) {
                 $extension = explode('.', $category->image);
-                return Response($file, 200)->header('Content-Type', 'image/' . $extension[1]);
+
+                return Response($file, 200)->header('Content-Type', 'image/'.$extension[1]);
             }
         }
 
-        throw new NotFoundException;
+        throw new NotFoundException();
     }
 
     /**
@@ -110,9 +106,9 @@ class VenueCategoryController extends ApiController
         $input = json_decode(Input::get('data'), true);
 
         $rules = [
-            'name' => 'required|max:255',
-            'enabled' => 'boolean',
-            'is_featured' => 'boolean'
+            'name'        => 'required|max:255',
+            'enabled'     => 'boolean',
+            'is_featured' => 'boolean',
         ];
 
         $validator = Validator::make($input, $rules);
@@ -123,29 +119,28 @@ class VenueCategoryController extends ApiController
 
         DB::beginTransaction();
         try {
-            $category = new VenueCategory;
+            $category = new VenueCategory();
 
-            if(isset($input['name']) && $input['name'] !=="") {
+            if (isset($input['name']) && $input['name'] !== '') {
                 $category->name = $input['name'];
             }
-            if(isset($input['description']) && $input['description'] !=="") {
+            if (isset($input['description']) && $input['description'] !== '') {
                 $category->description = $input['description'];
             }
-            if(isset($input['is_featured']) && $input['is_featured'] !=="") {
+            if (isset($input['is_featured']) && $input['is_featured'] !== '') {
                 $category->is_featured = $input['is_featured'];
             }
-            if(isset($input['enabled']) && $input['enabled'] !=="") {
+            if (isset($input['enabled']) && $input['enabled'] !== '') {
                 $category->enabled = $input['enabled'];
             }
-            
-            if(!is_null(Input::file('attachment')) && Input::file('attachment')) {
-                
+
+            if (!is_null(Input::file('attachment')) && Input::file('attachment')) {
                 $file = Input::file('attachment');
                 $extension = $file->getClientOriginalExtension();
-                $key = strtolower(md5(uniqid($category->name))) . '.' . $extension;
+                $key = strtolower(md5(uniqid($category->name))).'.'.$extension;
                 $category->image = $key;
 
-                Storage::put('uploads/category/venue/' . $key, File::get($file));
+                Storage::put('uploads/category/venue/'.$key, File::get($file));
             }
             $category->save();
             DB::commit();
@@ -162,7 +157,7 @@ class VenueCategoryController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -170,9 +165,9 @@ class VenueCategoryController extends ApiController
     {
         $input = json_decode(Input::get('data'), true);
         $rules = [
-            'name' => 'max:255',
-            'enabled' => 'boolean',
-            'is_featured' => 'boolean'
+            'name'        => 'max:255',
+            'enabled'     => 'boolean',
+            'is_featured' => 'boolean',
         ];
 
         $validator = Validator::make($input, $rules);
@@ -183,33 +178,33 @@ class VenueCategoryController extends ApiController
 
         DB::beginTransaction();
         try {
-            $category = new VenueCategory;
+            $category = new VenueCategory();
             $category = VenueCategory::find($id);
 
             $this->checkExist($category);
 
-            if(isset($input['name']) && $input['name'] !=="") {
+            if (isset($input['name']) && $input['name'] !== '') {
                 $category->name = $input['name'];
             }
-            if(isset($input['description']) && $input['description'] !=="") {
+            if (isset($input['description']) && $input['description'] !== '') {
                 $category->description = $input['description'];
             }
-            if(isset($input['is_featured']) && $input['is_featured'] !=="") {
+            if (isset($input['is_featured']) && $input['is_featured'] !== '') {
                 $category->is_featured = $input['is_featured'];
             }
-            if(isset($input['enabled']) && $input['enabled'] !=="") {
+            if (isset($input['enabled']) && $input['enabled'] !== '') {
                 $category->enabled = $input['enabled'];
             }
-            if(!is_null(Input::file('attachment')) && Input::file('attachment')) {
-                if(isset($category->image) && $category->image !== "") {
-                    $file = Storage::delete('uploads/category/venue/' . $category->image);
+            if (!is_null(Input::file('attachment')) && Input::file('attachment')) {
+                if (isset($category->image) && $category->image !== '') {
+                    $file = Storage::delete('uploads/category/venue/'.$category->image);
                 }
                 $file = Input::file('attachment');
                 $extension = $file->getClientOriginalExtension();
-                $key = strtolower(md5(uniqid($category->name))) . '.' . $extension;
+                $key = strtolower(md5(uniqid($category->name))).'.'.$extension;
                 $category->image = $key;
 
-                Storage::put('uploads/category/venue/' . $key, File::get($file));
+                Storage::put('uploads/category/venue/'.$key, File::get($file));
             }
 
             $category->save();
@@ -221,13 +216,12 @@ class VenueCategoryController extends ApiController
             DB::rollback();
             throw new ResourceException($e);
         }
-        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -240,7 +234,5 @@ class VenueCategoryController extends ApiController
         $category->delete();
 
         return response()->return();
-
     }
-
 }

@@ -1,10 +1,14 @@
-<?php namespace App\Http\Controllers\Api\Backend;
+<?php
 
-use Input, Request, Validator, App, UserAuth, Route;
+namespace App\Http\Controllers\Api\Backend;
+
+use App;
+use Input;
+use Request;
+use UserAuth;
 
 class UserController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -37,6 +41,5 @@ class UserController extends ApiController
         Request::merge($input);
 
         return App::make('App\Http\Controllers\Api\UserController')->update(UserAuth::user()->id);
-
     }
 }

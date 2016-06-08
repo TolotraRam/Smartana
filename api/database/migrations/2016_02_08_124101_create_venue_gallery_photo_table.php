@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateVenueGalleryPhotoTable extends Migration
 {
@@ -22,7 +22,7 @@ class CreateVenueGalleryPhotoTable extends Migration
             $table->integer('venue_gallery_id')->nullable()->unsigned();
             $table->timestamps();
         });
-        Schema::table('venue_gallery_photo', function(Blueprint $table) {
+        Schema::table('venue_gallery_photo', function (Blueprint $table) {
             $table->foreign('venue_gallery_id')->references('id')->on('venue_gallery')
                 ->onDelete('set null')
                 ->onUpdate('set null');

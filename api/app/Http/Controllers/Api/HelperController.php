@@ -1,12 +1,9 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Input;
-use Validator;
-use Cache;
+namespace App\Http\Controllers\Api;
 
-use App\Helpers\HtmlHelper;
 use App\Helpers\StrHelper;
-use Illuminate\Support\Str;
+use Input;
 
 class HelperController extends ApiController
 {
@@ -16,7 +13,7 @@ class HelperController extends ApiController
     }
 
     /**
-     * Gen slug by string
+     * Gen slug by string.
      *
      * @return Response
      */
@@ -29,6 +26,4 @@ class HelperController extends ApiController
 
         return response()->return(['slug' => $slug]);
     }
-
-
 }

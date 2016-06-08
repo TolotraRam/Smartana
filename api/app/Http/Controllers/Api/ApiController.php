@@ -1,7 +1,9 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Illuminate\Routing\Controller as BaseController;
+namespace App\Http\Controllers\Api;
+
 use App\Exceptions\NotFoundException;
+use Illuminate\Routing\Controller as BaseController;
 use Input;
 
 class ApiController extends BaseController
@@ -11,24 +13,24 @@ class ApiController extends BaseController
     }
 
     /**
-     * check model exist
+     * check model exist.
      *
-     * @param  Model $obj
+     * @param Model $obj
      *
      * @return void
      */
     public function checkExist($obj)
     {
         if (is_null($obj)) {
-            throw new NotFoundException;
+            throw new NotFoundException();
         }
     }
 
     /**
-     * fill nullable field from input
+     * fill nullable field from input.
      *
-     * @param  Model $obj
-     * @param  array $fields
+     * @param Model $obj
+     * @param array $fields
      *
      * @return void
      */
@@ -41,14 +43,13 @@ class ApiController extends BaseController
                 $obj->{$field} = Input::get($field);
             }
         }
-
     }
 
     /**
-     * fill nullable field from json
+     * fill nullable field from json.
      *
-     * @param  Model $obj
-     * @param  array $fields
+     * @param Model $obj
+     * @param array $fields
      *
      * @return void
      */
@@ -58,20 +59,19 @@ class ApiController extends BaseController
         foreach ($fields as $key => $field) {
             if (!isset($input[$field])) {
                 $obj->{$field} = null;
-            } elseif($input[$field] =='') {
+            } elseif ($input[$field] == '') {
                 $obj->{$field} = null;
             } else {
                 $obj->{$field} = $input[$field];
             }
         }
-
     }
 
     /**
-     * fill field from input
+     * fill field from input.
      *
-     * @param  Model $obj
-     * @param  array $fields
+     * @param Model $obj
+     * @param array $fields
      *
      * @return void
      */
@@ -82,13 +82,13 @@ class ApiController extends BaseController
                 $obj->{$field} = Input::get($field);
             }
         }
-
     }
+
     /**
-     * fill field from json
+     * fill field from json.
      *
-     * @param  Model $obj
-     * @param  array $fields
+     * @param Model $obj
+     * @param array $fields
      *
      * @return void
      */
@@ -100,6 +100,5 @@ class ApiController extends BaseController
                 $obj->{$field} = $input[$field];
             }
         }
-
     }
 }

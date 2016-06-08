@@ -2,11 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-
-use Illuminate\Auth\Guard;
 use Illuminate\Auth\EloquentUserProvider;
+use Illuminate\Auth\Guard;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\ServiceProvider;
 
 class MultiAuthServiceProvider extends ServiceProvider
 {

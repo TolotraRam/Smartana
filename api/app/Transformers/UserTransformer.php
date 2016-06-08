@@ -1,23 +1,25 @@
-<?php namespace App\Transformers;
+<?php
 
-use League\Fractal\TransformerAbstract;
+namespace App\Transformers;
+
 use App\Models\User;
+use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
     protected $defaultIncludes = [
         'city',
-        'roles'
+        'roles',
     ];
 
     public function transform(User $item)
     {
         return [
-            'id'                => (int)$item->id,
+            'id'                => (int) $item->id,
             'email'             => $item->email,
             'lastname'          => $item->lastname,
             'firstname'         => $item->firstname,
-            'active'            => (boolean)$item->active,
+            'active'            => (bool) $item->active,
             'avatar'            => $item->avatar,
             'avatar_url'        => $item->url,
             'facebook'          => $item->facebook,
@@ -37,15 +39,13 @@ class UserTransformer extends TransformerAbstract
     {
         $roles = $item->roles;
 
-        return $this->collection($roles, new RoleTransformer, null);
+        return $this->collection($roles, new RoleTransformer(), null);
     }
 
     public function includeCity(User $item)
     {
         $city = $item->city;
-        
-        return $this->item($city, new CityTransformer, null);
+
+        return $this->item($city, new CityTransformer(), null);
     }
 }
-
-

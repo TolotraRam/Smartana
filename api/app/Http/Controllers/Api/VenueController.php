@@ -1,20 +1,19 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Input;
-use Validator;
-use DB;
-use File;
-use Storage;
-
-use App\Models\Venue;
-use App\Transformers\VenueTransformer;
+namespace App\Http\Controllers\Api;
 
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ResourceException;
+use App\Models\Venue;
+use App\Transformers\VenueTransformer;
+use DB;
+use File;
+use Input;
+use Storage;
+use Validator;
 
 class VenueController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -37,7 +36,7 @@ class VenueController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
-        $venues = new Venue;
+        $venues = new Venue();
         $venues = $venues->with([
             'categories' => function ($query) {
                 $query->select(['venue_category_id']);
@@ -46,7 +45,7 @@ class VenueController extends ApiController
 
         //Filter
         if (Input::has('search')) {
-            $venues = $venues->where('name', 'LIKE', '%' . Input::get('search') . '%');
+            $venues = $venues->where('name', 'LIKE', '%'.Input::get('search').'%');
         }
 
         if (Input::has('ids')) {
@@ -61,13 +60,13 @@ class VenueController extends ApiController
 
         $venues = $venues->simplePaginate(Input::get('limit', 50));
 
-        return response()->paginator($venues, new VenueTransformer);
+        return response()->paginator($venues, new VenueTransformer());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -83,30 +82,30 @@ class VenueController extends ApiController
             },
         ]);
 
-        return response()->item($venue, new VenueTransformer);
+        return response()->item($venue, new VenueTransformer());
     }
 
     /**
-     * Get venue image
+     * Get venue image.
      *
-     * @param  string $type
-     * @param  string $filename
+     * @param string $type
+     * @param string $filename
      *
      * @return Response
      */
     public function get($type, $filename)
     {
-
         $venue = Venue::where('image', '=', $filename)->first();
         if ($venue->image && !is_null($venue->image)) {
-            $file = Storage::get('uploads/'. $type .'/' . $venue->image);
+            $file = Storage::get('uploads/'.$type.'/'.$venue->image);
             if ($file) {
                 $extension = explode('.', $venue->image);
-                return Response($file, 200)->header('Content-Type', 'image/' . $extension[1]);
+
+                return Response($file, 200)->header('Content-Type', 'image/'.$extension[1]);
             }
         }
 
-        throw new NotFoundException;
+        throw new NotFoundException();
     }
 
     /**
@@ -116,7 +115,6 @@ class VenueController extends ApiController
      */
     public function store()
     {
-
         $input = json_decode(Input::get('data'), true);
 
         $rules = [
@@ -133,7 +131,7 @@ class VenueController extends ApiController
             'google'        => 'string|min:1|max:255',
             'categories'    => 'array|integerInArray|existsInArray:venue_category,id',
             'city_id'       => 'integer',
-            'user_id'       => 'integer'
+            'user_id'       => 'integer',
         ];
 
         $validator = Validator::make($input, $rules);
@@ -144,54 +142,53 @@ class VenueController extends ApiController
 
         DB::beginTransaction();
         try {
-            $venue = new venue;
+            $venue = new venue();
 
-            if(isset($input['name']) && $input['name'] !=="") {
+            if (isset($input['name']) && $input['name'] !== '') {
                 $venue->name = $input['name'];
             }
-            if(isset($input['phone']) && $input['phone'] !=="") {
+            if (isset($input['phone']) && $input['phone'] !== '') {
                 $venue->phone = $input['phone'];
             }
-            if(isset($input['address']) && $input['address'] !=="") {
+            if (isset($input['address']) && $input['address'] !== '') {
                 $venue->address = $input['address'];
             }
-            if(isset($input['postal_code']) && $input['postal_code'] !=="") {
+            if (isset($input['postal_code']) && $input['postal_code'] !== '') {
                 $venue->postal_code = $input['postal_code'];
             }
-            if(isset($input['summary']) && $input['summary'] !=="") {
+            if (isset($input['summary']) && $input['summary'] !== '') {
                 $venue->summary = $input['summary'];
             }
-            if(isset($input['description']) && $input['description'] !=="") {
+            if (isset($input['description']) && $input['description'] !== '') {
                 $venue->description = $input['description'];
             }
-            if(isset($input['facebook']) && $input['facebook'] !=="") {
+            if (isset($input['facebook']) && $input['facebook'] !== '') {
                 $venue->facebook = $input['facebook'];
             }
-            if(isset($input['twitter']) && $input['twitter'] !=="") {
+            if (isset($input['twitter']) && $input['twitter'] !== '') {
                 $venue->twitter = $input['twitter'];
             }
-            if(isset($input['google']) && $input['google'] !=="") {
+            if (isset($input['google']) && $input['google'] !== '') {
                 $venue->google = $input['google'];
             }
-            if(isset($input['is_verified']) && $input['is_verified'] !=="") {
+            if (isset($input['is_verified']) && $input['is_verified'] !== '') {
                 $venue->is_verified = $input['is_verified'];
             }
-            if(isset($input['enabled']) && $input['enabled'] !=="") {
+            if (isset($input['enabled']) && $input['enabled'] !== '') {
                 $venue->enabled = $input['enabled'];
             }
-            if(isset($input['location']) && $input['location'] !=="") {
+            if (isset($input['location']) && $input['location'] !== '') {
                 $venue->location = $input['location'];
             }
             $venue->place_id = strtolower(md5(uniqid()));
 
-            if(!is_null(Input::file('attachment')) && Input::file('attachment')) {
-                
+            if (!is_null(Input::file('attachment')) && Input::file('attachment')) {
                 $file = Input::file('attachment');
                 $extension = $file->getClientOriginalExtension();
-                $key = strtolower(md5(uniqid($venue->place_id))) . '.' . $extension;
+                $key = strtolower(md5(uniqid($venue->place_id))).'.'.$extension;
                 $venue->image = $key;
 
-                Storage::put('uploads/venue/' . $key, File::get($file));
+                Storage::put('uploads/venue/'.$key, File::get($file));
             }
 
             $venue->save();
@@ -200,18 +197,16 @@ class VenueController extends ApiController
             DB::commit();
 
             return $this->show($venue->id);
-
         } catch (\Exception $e) {
             DB::rollback();
             throw new ResourceException($e);
         }
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -233,7 +228,7 @@ class VenueController extends ApiController
             'google'        => 'string|min:1|max:255',
             'categories'    => 'array|integerInArray|existsInArray:venue_category,id',
             'city_id'       => 'integer',
-            'user_id'       => 'integer'
+            'user_id'       => 'integer',
         ];
 
         $validator = Validator::make($input, $rules);
@@ -244,56 +239,55 @@ class VenueController extends ApiController
 
         DB::beginTransaction();
         try {
-            $venue = new venue;
+            $venue = new venue();
             $venue = Venue::find($id);
 
             $this->checkExist($venue);
-            if(isset($input['name']) && $input['name'] !=="") {
+            if (isset($input['name']) && $input['name'] !== '') {
                 $venue->name = $input['name'];
             }
-            if(isset($input['phone']) && $input['phone'] !=="") {
+            if (isset($input['phone']) && $input['phone'] !== '') {
                 $venue->phone = $input['phone'];
             }
-            if(isset($input['address']) && $input['address'] !=="") {
+            if (isset($input['address']) && $input['address'] !== '') {
                 $venue->address = $input['address'];
             }
-            if(isset($input['postal_code']) && $input['postal_code'] !=="") {
+            if (isset($input['postal_code']) && $input['postal_code'] !== '') {
                 $venue->postal_code = $input['postal_code'];
             }
-            if(isset($input['summary']) && $input['summary'] !=="") {
+            if (isset($input['summary']) && $input['summary'] !== '') {
                 $venue->summary = $input['summary'];
             }
-            if(isset($input['description']) && $input['description'] !=="") {
+            if (isset($input['description']) && $input['description'] !== '') {
                 $venue->description = $input['description'];
             }
-            if(isset($input['facebook']) && $input['facebook'] !=="") {
+            if (isset($input['facebook']) && $input['facebook'] !== '') {
                 $venue->facebook = $input['facebook'];
             }
-            if(isset($input['twitter']) && $input['twitter'] !=="") {
+            if (isset($input['twitter']) && $input['twitter'] !== '') {
                 $venue->twitter = $input['twitter'];
             }
-            if(isset($input['google']) && $input['google'] !=="") {
+            if (isset($input['google']) && $input['google'] !== '') {
                 $venue->google = $input['google'];
             }
-            if(isset($input['is_verified']) && $input['is_verified'] !=="") {
+            if (isset($input['is_verified']) && $input['is_verified'] !== '') {
                 $venue->is_verified = $input['is_verified'];
             }
-            if(isset($input['enabled']) && $input['enabled'] !=="") {
+            if (isset($input['enabled']) && $input['enabled'] !== '') {
                 $venue->enabled = $input['enabled'];
             }
-            if(isset($input['location']) && $input['location'] !=="") {
+            if (isset($input['location']) && $input['location'] !== '') {
                 $venue->location = $input['location'];
             }
             $venue->place_id = strtolower(md5(uniqid()));
 
-            if(!is_null(Input::file('attachment')) && Input::file('attachment')) {
-                
+            if (!is_null(Input::file('attachment')) && Input::file('attachment')) {
                 $file = Input::file('attachment');
                 $extension = $file->getClientOriginalExtension();
-                $key = strtolower(md5(uniqid($venue->place_id))) . '.' . $extension;
+                $key = strtolower(md5(uniqid($venue->place_id))).'.'.$extension;
                 $venue->image = $key;
 
-                Storage::put('uploads/venue/' . $key, File::get($file));
+                Storage::put('uploads/venue/'.$key, File::get($file));
             }
 
             $venue->save();
@@ -302,7 +296,6 @@ class VenueController extends ApiController
             DB::commit();
 
             return $this->show($venue->id);
-
         } catch (\Exception $e) {
             DB::rollback();
             throw new ResourceException($e);
@@ -312,14 +305,11 @@ class VenueController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
     public function destroy($id)
     {
-        
-
     }
-
 }

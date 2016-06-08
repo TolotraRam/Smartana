@@ -1,20 +1,14 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Input;
-use Cache;
-use Response;
-use Validator;
-use Config;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Permission;
 use App\Transformers\PermissionTransformer;
-
-use App\Exceptions\NotFoundException;
-use App\Exceptions\ResourceException;
+use Input;
+use Response;
 
 class PermissionController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -27,20 +21,17 @@ class PermissionController extends ApiController
      */
     public function index()
     {
-
-        $permissions = new Permission;
+        $permissions = new Permission();
 
         $permissions = $permissions->simplePaginate(Input::get('limit', 50));
 
-        return response()->paginator($permissions, new PermissionTransformer);
-
+        return response()->paginator($permissions, new PermissionTransformer());
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -49,8 +40,7 @@ class PermissionController extends ApiController
         $permission = Permission::find($id);
         $this->checkExist($permission);
 
-        return response()->item($permission, new PermissionTransformer);
-
+        return response()->item($permission, new PermissionTransformer());
     }
 
     /**
@@ -60,31 +50,27 @@ class PermissionController extends ApiController
      */
     public function store()
     {
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
     public function update($id)
     {
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
     public function destroy($id)
     {
-
     }
-
 }

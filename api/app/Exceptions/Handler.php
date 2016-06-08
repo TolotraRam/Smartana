@@ -3,8 +3,8 @@
 namespace App\Exceptions;
 
 use Exception;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -22,7 +22,8 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception $e
+     * @param \Exception $e
+     *
      * @return void
      */
     public function report(Exception $e)
@@ -33,17 +34,17 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Exception               $e
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception               $e
+     *
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
     {
-
         $response = [
             'status'  => false,
             'code'    => $e->getCode(),
-            'message' => $e->getMessage()
+            'message' => $e->getMessage(),
         ];
 
         // If the app is in debug mode
@@ -64,6 +65,5 @@ class Handler extends ExceptionHandler
 
         // Return a JSON response with the response array and status code
         return response()->json(['result' => $response], $status);
-
     }
 }

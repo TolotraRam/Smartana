@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-
 use App\Fractal\Paginator\IlluminateSimplePaginatorAdapter;
 use App\Fractal\Serializers\CustomArraySerializer;
+use Illuminate\Support\ServiceProvider;
 
 class FractalServiceProvider extends ServiceProvider
 {
@@ -18,7 +17,7 @@ class FractalServiceProvider extends ServiceProvider
     {
         $request = $this->app->make('request');
         $fractal = $this->app->make('League\Fractal\Manager');
-        $fractal = $fractal->setSerializer(new CustomArraySerializer);
+        $fractal = $fractal->setSerializer(new CustomArraySerializer());
 
         if ($request->has('include')) {
             $fractal->parseIncludes($request->get('include'));
@@ -27,7 +26,6 @@ class FractalServiceProvider extends ServiceProvider
         $result = ['status' => true];
 
         response()->macro('return', function ($array = [], array $headers = []) use ($result) {
-
             $result = array_merge($result, $array);
 
             return response()->json(['result' => $result],
@@ -59,7 +57,6 @@ class FractalServiceProvider extends ServiceProvider
         });
 
         response()->macro('paginator', function ($collection, \League\Fractal\TransformerAbstract $transformer, $status = 200, array $headers = []) use ($fractal, $result) {
-
             $resource = new \League\Fractal\Resource\Collection($collection, $transformer, null);
             $resource->setPaginator(new IlluminateSimplePaginatorAdapter($collection));
 

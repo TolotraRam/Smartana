@@ -1,23 +1,16 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Input;
-use Validator;
-use Cache;
-use DB;
+namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Str;
-
-use App\Models\Post;
+use App\Exceptions\ResourceException;
 use App\Models\PostCategory;
 use App\Transformers\PostCategoryTransformer;
-use App\Helpers\HtmlHelper;
-
-use App\Exceptions\NotFoundException;
-use App\Exceptions\ResourceException;
+use DB;
+use Input;
+use Validator;
 
 class PostCategoryController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -38,16 +31,16 @@ class PostCategoryController extends ApiController
             'search'    => 'max:255',
             'slug'      => 'alpha_dash',
             'name'      => 'max:255',
-            'active'    => 'boolean'
+            'active'    => 'boolean',
         ]);
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
-        $categories = new PostCategory;
+        $categories = new PostCategory();
 
         //Filter
         if (Input::has('search')) {
-            $categories = $categories->where('name', 'LIKE', '%' . Input::get('search') . '%');
+            $categories = $categories->where('name', 'LIKE', '%'.Input::get('search').'%');
         }
 
         if (Input::has('ids')) {
@@ -55,7 +48,7 @@ class PostCategoryController extends ApiController
         }
 
         if (Input::has('name')) {
-            $categories = $categories->where('name', 'like', Input::get('name') . '%');
+            $categories = $categories->where('name', 'like', Input::get('name').'%');
         }
         if (Input::has('active')) {
             $categories = $categories->where('active', '=', Input::get('active') ? 1 : 0);
@@ -70,15 +63,13 @@ class PostCategoryController extends ApiController
 
         $categories = $categories->orderBy('lft', 'asc')->where('parent_id', '!=', 'null')->get();
 
-        return response()->collection($categories, new PostCategoryTransformer);
-
+        return response()->collection($categories, new PostCategoryTransformer());
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -88,8 +79,7 @@ class PostCategoryController extends ApiController
 
         $this->checkExist($category);
 
-        return response()->item($category, new PostCategoryTransformer);
-
+        return response()->item($category, new PostCategoryTransformer());
     }
 
     /**
@@ -119,7 +109,7 @@ class PostCategoryController extends ApiController
 
         DB::beginTransaction();
         try {
-            $category = new PostCategory;
+            $category = new PostCategory();
 
             $this->fillFieldFromInput($category, ['active', 'slug']);
             $this->fillNullableFieldFromInput($category, ['description', 'name', 'meta_description', 'meta_title']);
@@ -140,13 +130,12 @@ class PostCategoryController extends ApiController
             DB::rollback();
             throw $e;
         }
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -177,7 +166,6 @@ class PostCategoryController extends ApiController
 
         DB::beginTransaction();
         try {
-
             $this->fillFieldFromInput($category, ['active', 'slug']);
             $this->fillNullableFieldFromInput($category, ['description', 'name', 'meta_description', 'meta_title']);
 
@@ -195,14 +183,12 @@ class PostCategoryController extends ApiController
             DB::rollback();
             throw $e;
         }
-
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -221,9 +207,9 @@ class PostCategoryController extends ApiController
     }
 
     /**
-     * move resources
+     * move resources.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -260,10 +246,10 @@ class PostCategoryController extends ApiController
         if (is_null($dest) && is_null($next) && !is_null($prev)) {
             //move to parent and last
             $category->moveToRightOf($prev);
-        } else if (is_null($dest) && !is_null($next)) {
+        } elseif (is_null($dest) && !is_null($next)) {
             //move to parent
             $category->moveToLeftOf($next);
-        } else if (!is_null($dest) && is_null($next)) {
+        } elseif (!is_null($dest) && is_null($next)) {
             $category->makeLastChildOf($dest);
         } else {
             //move to parent
@@ -271,8 +257,5 @@ class PostCategoryController extends ApiController
         }
 
         return response()->return();
-
-
     }
-
 }

@@ -1,21 +1,18 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Input;
-use Cache;
-use Response;
-use Validator;
-use Config;
-
-use App\Models\Role;
-use App\Transformers\RoleTransformer;
+namespace App\Http\Controllers\Api;
 
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ResourceException;
 use App\Exceptions\RestrictToChangeOwnerRoleException;
+use App\Models\Role;
+use App\Transformers\RoleTransformer;
+use Input;
+use Response;
+use Validator;
 
 class RoleController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -36,41 +33,37 @@ class RoleController extends ApiController
             'updated_at_min' => 'date_format:"Y-m-d H:i:s"',
             'updated_at_max' => 'date_format:"Y-m-d H:i:s"',
             'limit'          => 'integer|min:1|max:250',
-            'search'         => 'string'
+            'search'         => 'string',
         ]);
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
 
-        $roles = new Role;
+        $roles = new Role();
         //Filter
         if (Input::has('search')) {
-            $roles = $roles->where('display_name', 'LIKE', '%' . Input::get('search') . '%');
+            $roles = $roles->where('display_name', 'LIKE', '%'.Input::get('search').'%');
         }
         $roles = $roles->simplePaginate(Input::get('limit', 50));
 
-        return response()->paginator($roles, new RoleTransformer);
-
+        return response()->paginator($roles, new RoleTransformer());
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
     public function show($id)
     {
-
         $role = Role::find($id);
         if (is_null($role)) {
-            throw new NotFoundException;
+            throw new NotFoundException();
         }
 
-        return response()->item($role, new RoleTransformer);
-
+        return response()->item($role, new RoleTransformer());
     }
 
     /**
@@ -92,7 +85,7 @@ class RoleController extends ApiController
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
-        $role = new Role;
+        $role = new Role();
         $this->fillFieldFromInput($role, ['name']);
         $this->fillNullableFieldFromInput($role, ['description', 'display_name']);
 
@@ -106,15 +99,14 @@ class RoleController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
     public function update($id)
     {
-
         $rules = [
-            'name'         => 'alpha_dash|min:1|max:255|unique:role,id,' . $id,
+            'name'         => 'alpha_dash|min:1|max:255|unique:role,id,'.$id,
             'display_name' => 'string|max:255',
             'description'  => 'string',
             'permissions'  => 'array|integerInArray|existsInArray:permission,id',
@@ -142,7 +134,7 @@ class RoleController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -170,8 +162,7 @@ class RoleController extends ApiController
     {
         $this->checkExist($role);
         if ($role->name === 'owner') {
-            throw new RestrictToChangeOwnerRoleException;
+            throw new RestrictToChangeOwnerRoleException();
         }
     }
-
 }

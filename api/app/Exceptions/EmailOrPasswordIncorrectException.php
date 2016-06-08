@@ -26,5 +26,4 @@ class EmailOrPasswordIncorrectException extends HttpException
     {
         parent::__construct(401, 'Email/Password is incorrect', $previous, [], 10001);
     }
-
 }

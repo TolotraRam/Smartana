@@ -1,14 +1,10 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
-
 use App\Models\PostCategory;
-use App\Models\PostCategoryLanguage;
+use Illuminate\Database\Seeder;
 
 class PostCategoryTableSeeder extends Seeder
 {
-
     public function run()
     {
         $postCategory = PostCategory::create([
@@ -18,8 +14,7 @@ class PostCategoryTableSeeder extends Seeder
             'depth'     => 0,
             'active'    => 1,
             'slug'      => 'root',
-            'name'      => 'Root'
+            'name'      => 'Root',
         ]);
     }
-
 }

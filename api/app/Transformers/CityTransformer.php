@@ -1,7 +1,9 @@
-<?php namespace App\Transformers;
+<?php
 
-use League\Fractal\TransformerAbstract;
+namespace App\Transformers;
+
 use App\Models\City;
+use League\Fractal\TransformerAbstract;
 
 class CityTransformer extends TransformerAbstract
 {
@@ -12,21 +14,17 @@ class CityTransformer extends TransformerAbstract
     public function transform(City $item)
     {
         return [
-            'id'         => (int)$item->id,
+            'id'         => (int) $item->id,
             'name'       => $item->name,
-            'enabled'    => (boolean)$item->enabled,
+            'enabled'    => (bool) $item->enabled,
         ];
-
     }
+
     public function includeState(City $item)
     {
         $state = $item->state;
         if ($state->count() > 0) {
-            return $this->item($state, new StateTransformer);
+            return $this->item($state, new StateTransformer());
         }
     }
-
 }
-
-
-

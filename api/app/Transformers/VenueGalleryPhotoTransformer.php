@@ -1,19 +1,20 @@
-<?php namespace App\Transformers;
+<?php
 
-use League\Fractal\TransformerAbstract;
+namespace App\Transformers;
+
 use App\Models\VenueGalleryPhoto;
+use League\Fractal\TransformerAbstract;
 
-class VenueGalleryPhoto extends TransformerAbstract
+class VenueGalleryPhotoTransformer extends TransformerAbstract
 {
-	
-	public function transform(VenueGalleryPhoto $item)
+    public function transform(VenueGalleryPhoto $item)
     {
         return [
-            'id'                => (int)$item->id,
-            'venue_gallery_id' => (int)$item->venue_gallery_id,
+            'id'                => (int) $item->id,
+            'venue_gallery_id'  => (int) $item->venue_gallery_id,
             'path'              => $item->path,
             'url'               => $item->url,
-            'filesize'          => (int)$item->filesize,
+            'filesize'          => (int) $item->filesize,
             'name'              => $item->name,
             'key'               => $item->key,
             'mime'              => $item->mime,

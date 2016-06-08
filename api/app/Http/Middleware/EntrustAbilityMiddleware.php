@@ -1,7 +1,9 @@
-<?php namespace App\Http\Middleware;
+<?php
 
-use UserAuth;
+namespace App\Http\Middleware;
+
 use App\Exceptions\UnauthorizedException;
+use UserAuth;
 
 class EntrustAbilityMiddleware
 {
@@ -13,11 +15,11 @@ class EntrustAbilityMiddleware
      * @param                          $roles
      * @param                          $permissions
      * @param bool                     $validateAll
+     *
      * @return mixed
      */
     public function handle($request, \Closure $next, $roles, $permissions, $validateAll = false)
     {
-
         if (!UserAuth::user()->ability(explode('|', $roles), explode('|', $permissions), ['validate_all' => $validateAll])) {
             throw new UnauthorizedException('You do not have permission to access.');
         }

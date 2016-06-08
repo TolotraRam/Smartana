@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateMediaTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -25,10 +24,8 @@ class CreateMediaTable extends Migration
             $table->timestamps();
 
             $table->foreign('media_category_id')->references('id')->on('media_category')->onDelete('restrict');
-
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -39,5 +36,4 @@ class CreateMediaTable extends Migration
     {
         Schema::drop('media');
     }
-
 }

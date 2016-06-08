@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateVenueVenueCategoryTable extends Migration
 {
@@ -23,7 +23,7 @@ class CreateVenueVenueCategoryTable extends Migration
             $table->foreign('venue_category_id')->references('id')->on('venue_category')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            
+
             $table->primary(['venue_id', 'venue_category_id']);
         });
     }

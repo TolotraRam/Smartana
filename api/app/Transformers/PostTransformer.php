@@ -1,7 +1,9 @@
-<?php namespace App\Transformers;
+<?php
 
-use League\Fractal\TransformerAbstract;
+namespace App\Transformers;
+
 use App\Models\Post;
+use League\Fractal\TransformerAbstract;
 
 class PostTransformer extends TransformerAbstract
 {
@@ -12,7 +14,7 @@ class PostTransformer extends TransformerAbstract
     public function transform(Post $item)
     {
         return [
-            'id'           => (int)$item->id,
+            'id'           => (int) $item->id,
             'slug'         => $item->slug,
             'title'        => $item->title,
             'content'      => $item->content,
@@ -25,9 +27,5 @@ class PostTransformer extends TransformerAbstract
             'created_at'   => $item->created_at,
             'updated_at'   => $item->updated_at,
         ];
-
     }
-
 }
-
-

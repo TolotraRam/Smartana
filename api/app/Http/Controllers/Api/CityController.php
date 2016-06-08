@@ -1,17 +1,16 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use Input;
-use Validator;
-use Response;
-
-use App\Models\City;
-use App\Transformers\CityTransformer;
+namespace App\Http\Controllers\Api;
 
 use App\Exceptions\ResourceException;
+use App\Models\City;
+use App\Transformers\CityTransformer;
+use Input;
+use Response;
+use Validator;
 
 class CityController extends ApiController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -24,19 +23,18 @@ class CityController extends ApiController
      */
     public function index()
     {
-
         $validator = Validator::make(Input::all(), [
             'page'             => 'integer',
             'limit'            => 'integer|min:1|max:10000',
             'search'           => 'max:10000',
             'state_ids'        => 'array|integerInArray',
-            's_id'             => 'integer'
+            's_id'             => 'integer',
         ]);
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
 
-        $city = new City;
+        $city = new City();
 
         if (Input::has('state_ids')) {
             $city = $city->whereHas('state', function ($q) {
@@ -49,18 +47,18 @@ class CityController extends ApiController
             });
         }
         if (Input::has('search')) {
-            $city = $city->where('name', 'LIKE', '%' . Input::get('search') . '%');
+            $city = $city->where('name', 'LIKE', '%'.Input::get('search').'%');
         }
 
         $city = $city->simplePaginate(Input::get('limit', 50));
 
-        return response()->paginator($city, new CityTransformer);
+        return response()->paginator($city, new CityTransformer());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -70,7 +68,7 @@ class CityController extends ApiController
 
         $this->checkExist($city);
 
-        return response()->item($city, new CityTransformer);
+        return response()->item($city, new CityTransformer());
     }
 
     /**
@@ -81,8 +79,8 @@ class CityController extends ApiController
     public function store()
     {
         $rules = [
-            'code'  => 'string|min:1|max:3',
-            'name' => 'string|min:1|max:30',
+            'code'       => 'string|min:1|max:3',
+            'name'       => 'string|min:1|max:30',
             'enabled'    => 'boolean',
         ];
 
@@ -92,7 +90,7 @@ class CityController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
-        $city = new City;
+        $city = new City();
         $city->name = Input::get('name');
         $city->code = Input::get('code');
         $city->enabled = Input::get('enabled');
@@ -100,21 +98,20 @@ class CityController extends ApiController
         $city->save();
 
         return $this->show($city->id);
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
     public function update($id)
     {
         $rules = [
-            'code'  => 'string|min:1|max:3',
-            'name' => 'string|min:1|max:30',
+            'code'       => 'string|min:1|max:3',
+            'name'       => 'string|min:1|max:30',
             'enabled'    => 'boolean',
         ];
 
@@ -142,7 +139,7 @@ class CityController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -154,7 +151,5 @@ class CityController extends ApiController
         $city->delete();
 
         return response()->return();
-
     }
-
 }
