@@ -26,7 +26,7 @@ class FractalServiceProvider extends ServiceProvider
 
         $result = ['status' => true];
 
-        response()->macro('return', function ($array = [], array $headers = []) use ($result) {
+        response()->macro('return', function($array = [], array $headers = []) use ($result) {
 
             $result = array_merge($result, $array);
 
@@ -36,7 +36,7 @@ class FractalServiceProvider extends ServiceProvider
             );
         });
 
-        response()->macro('item', function ($item, \League\Fractal\TransformerAbstract $transformer, $status = 200, array $headers = []) use ($fractal, $result) {
+        response()->macro('item', function($item, \League\Fractal\TransformerAbstract $transformer, $status = 200, array $headers = []) use ($fractal, $result) {
             $resource = new \League\Fractal\Resource\Item($item, $transformer, null);
 
             $result['result'] = $fractal->createData($resource)->toArray();
@@ -47,7 +47,7 @@ class FractalServiceProvider extends ServiceProvider
             );
         });
 
-        response()->macro('collection', function ($collection, \League\Fractal\TransformerAbstract $transformer, $status = 200, array $headers = []) use ($fractal, $result) {
+        response()->macro('collection', function($collection, \League\Fractal\TransformerAbstract $transformer, $status = 200, array $headers = []) use ($fractal, $result) {
             $resource = new \League\Fractal\Resource\Collection($collection, $transformer, null);
 
             $result['result'] = $fractal->createData($resource)->toArray();
@@ -58,7 +58,7 @@ class FractalServiceProvider extends ServiceProvider
             );
         });
 
-        response()->macro('paginator', function ($collection, \League\Fractal\TransformerAbstract $transformer, $status = 200, array $headers = []) use ($fractal, $result) {
+        response()->macro('paginator', function($collection, \League\Fractal\TransformerAbstract $transformer, $status = 200, array $headers = []) use ($fractal, $result) {
 
             $resource = new \League\Fractal\Resource\Collection($collection, $transformer, null);
             $resource->setPaginator(new IlluminateSimplePaginatorAdapter($collection));

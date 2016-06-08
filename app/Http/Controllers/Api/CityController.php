@@ -37,17 +37,17 @@ class CityController extends ApiController
         $city = new City();
 
         if (Input::has('state_ids')) {
-            $city = $city->whereHas('state', function ($q) {
+            $city = $city->whereHas('state', function($q) {
                 $q->whereIn('id', Input::get('state_ids'));
             });
         }
         if (Input::has('state_id')) {
-            $city = $city->whereHas('state', function ($q) {
+            $city = $city->whereHas('state', function($q) {
                 $q->where('id', '=', Input::get('state_id'));
             });
         }
         if (Input::has('search')) {
-            $city = $city->where('name', 'LIKE', '%'.Input::get('search').'%');
+            $city = $city->where('name', 'LIKE', '%' . Input::get('search') . '%');
         }
 
         $city = $city->simplePaginate(Input::get('limit', 50));

@@ -36,7 +36,7 @@ class CountryController extends ApiController
 
         //Filter
         if (Input::has('search')) {
-            $country = $country->where('name', 'LIKE', '%'.Input::get('search').'%');
+            $country = $country->where('name', 'LIKE', '%' . Input::get('search') . '%');
         }
 
         $country = $country->simplePaginate(Input::get('limit', 50));

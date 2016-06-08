@@ -10,12 +10,12 @@ class MediaTransformer extends TransformerAbstract
     public function transform(Media $item)
     {
         return [
-            'id'                => (int) $item->id,
-            'media_category_id' => (int) $item->media_category_id,
+            'id'                => (int)$item->id,
+            'media_category_id' => (int)$item->media_category_id,
             'path'              => $item->path,
             'url'               => $item->url,
-            'filesize'          => (int) $item->filesize,
-            'order'             => (int) $item->order,
+            'filesize'          => (int)$item->filesize,
+            'order'             => (int)$item->order,
             'name'              => $item->name,
             'key'               => $item->key,
             'mime'              => $item->mime,

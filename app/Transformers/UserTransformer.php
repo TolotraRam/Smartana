@@ -15,11 +15,11 @@ class UserTransformer extends TransformerAbstract
     public function transform(User $item)
     {
         return [
-            'id'                => (int) $item->id,
+            'id'                => (int)$item->id,
             'email'             => $item->email,
             'lastname'          => $item->lastname,
             'firstname'         => $item->firstname,
-            'active'            => (bool) $item->active,
+            'active'            => (bool)$item->active,
             'avatar'            => $item->avatar,
             'avatar_url'        => $item->url,
             'facebook'          => $item->facebook,

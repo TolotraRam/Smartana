@@ -42,7 +42,7 @@ class RoleController extends ApiController
         $roles = new Role();
         //Filter
         if (Input::has('search')) {
-            $roles = $roles->where('display_name', 'LIKE', '%'.Input::get('search').'%');
+            $roles = $roles->where('display_name', 'LIKE', '%' . Input::get('search') . '%');
         }
         $roles = $roles->simplePaginate(Input::get('limit', 50));
 
@@ -106,7 +106,7 @@ class RoleController extends ApiController
     public function update($id)
     {
         $rules = [
-            'name'         => 'alpha_dash|min:1|max:255|unique:role,id,'.$id,
+            'name'         => 'alpha_dash|min:1|max:255|unique:role,id,' . $id,
             'display_name' => 'string|max:255',
             'description'  => 'string',
             'permissions'  => 'array|integerInArray|existsInArray:permission,id',
@@ -161,7 +161,7 @@ class RoleController extends ApiController
     public function checkPoint($role)
     {
         $this->checkExist($role);
-        if ($role->name === 'owner') {
+        if ($role->name==='owner') {
             throw new RestrictToChangeOwnerRoleException();
         }
     }

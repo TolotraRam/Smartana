@@ -21,9 +21,7 @@ class UserAuthMiddleware
     /**
      * Create a new BaseMiddleware instance.
      *
-     * @param \Laravel\Lumen\Http\ResponseFactory $response
-     * @param \Illuminate\Events\Dispatcher       $events
-     * @param \Tymon\JWTAuth\Facades\JWT          $jwt
+     * @param JWTAuth          $jwt
      */
     public function __construct(JWTAuth $jwt)
     {
@@ -48,7 +46,7 @@ class UserAuthMiddleware
         try {
             $payload = $this->jwt->decode($token);
 
-            if ($payload['aud'] == 'user') {
+            if ($payload['aud']=='user') {
                 $user = User::find($payload['sub']);
                 if (is_null($user)) {
                     return $this->respond('tymon.jwt.user_not_found', 'user_not_found', 404);
@@ -75,7 +73,7 @@ class UserAuthMiddleware
      * @param string $event
      * @param string $error
      * @param int    $status
-     * @param array  $payload
+     * @param JWTException[]  $payload
      *
      * @return mixed
      */

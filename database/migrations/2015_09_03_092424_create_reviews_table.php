@@ -12,7 +12,7 @@ class CreateReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('reviews', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('score');
@@ -22,7 +22,7 @@ class CreateReviewsTable extends Migration
             $table->timestamp('published_at');
             $table->timestamps();
         });
-        Schema::table('reviews', function (Blueprint $table) {
+        Schema::table('reviews', function(Blueprint $table) {
             $table->foreign('venue_id')->references('id')->on('venues')
                 ->onDelete('set null')
                 ->onUpdate('set null');
@@ -40,7 +40,7 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::table('reviews', function (Blueprint $table) {
+        Schema::table('reviews', function(Blueprint $table) {
             $table->dropForeign('reviews_venue_id_foreign');
         });
         Schema::drop('reviews');

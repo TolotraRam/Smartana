@@ -50,7 +50,7 @@ class MediaController extends ApiController
             $media = $media->whereIn('media_category_id', Input::get('category_ids'));
         }
         if (Input::has('search')) {
-            $media = $media->where('name', 'LIKE', '%'.Input::get('search').'%');
+            $media = $media->where('name', 'LIKE', '%' . Input::get('search') . '%');
         }
         if (Input::has('created_at_min')) {
             $media = $media->where('created_at', '>=', Input::get('created_at_min'));
@@ -90,7 +90,7 @@ class MediaController extends ApiController
     {
         $media = Media::where('key', '=', $filename)->first();
         if (!is_null($media)) {
-            $file = Storage::get('uploads/'.$type.'/'.$yearAndMonth.'/'.$day.'/'.$media->key);
+            $file = Storage::get('uploads/' . $type . '/' . $yearAndMonth . '/' . $day . '/' . $media->key);
             if ($file) {
                 return Response($file, 200)->header('Content-Type', $media->mime);
             }
@@ -102,7 +102,7 @@ class MediaController extends ApiController
     private function generateDateFolder()
     {
         $date = date('Y-m-d');
-        $dateFolder = date('Y', strtotime($date)).date('m', strtotime($date)).'/'.date('d', strtotime($date)).'/';
+        $dateFolder = date('Y', strtotime($date)) . date('m', strtotime($date)) . '/' . date('d', strtotime($date)) . '/';
 
         return $dateFolder;
     }
@@ -137,11 +137,11 @@ class MediaController extends ApiController
             $extension = $file->getClientOriginalExtension();
             $media->filesize = $file->getSize();
             $media->mime = $file->getClientMimeType();
-            $media->key = strtolower(md5(uniqid($media->id.rand()))).'.'.$extension;
+            $media->key = strtolower(md5(uniqid($media->id . rand()))) . '.' . $extension;
             $media->path = $this->generateDateFolder();
 
             //upload file
-            Storage::put('uploads/m/'.$media->path.$media->key, File::get($file));
+            Storage::put('uploads/m/' . $media->path . $media->key, File::get($file));
             $media->save();
             DB::commit();
 

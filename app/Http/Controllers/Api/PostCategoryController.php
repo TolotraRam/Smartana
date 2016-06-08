@@ -40,7 +40,7 @@ class PostCategoryController extends ApiController
 
         //Filter
         if (Input::has('search')) {
-            $categories = $categories->where('name', 'LIKE', '%'.Input::get('search').'%');
+            $categories = $categories->where('name', 'LIKE', '%' . Input::get('search') . '%');
         }
 
         if (Input::has('ids')) {
@@ -48,7 +48,7 @@ class PostCategoryController extends ApiController
         }
 
         if (Input::has('name')) {
-            $categories = $categories->where('name', 'like', Input::get('name').'%');
+            $categories = $categories->where('name', 'like', Input::get('name') . '%');
         }
         if (Input::has('active')) {
             $categories = $categories->where('active', '=', Input::get('active') ? 1 : 0);
@@ -171,7 +171,7 @@ class PostCategoryController extends ApiController
 
             $category->save();
 
-            if (Input::has('parent_id') && Input::get('parent_id') != $category->parent_id) {
+            if (Input::has('parent_id') && Input::get('parent_id')!=$category->parent_id) {
                 $parentCategory = PostCategory::find(Input::get('parent_id'));
                 $category->makeChildOf($parentCategory);
             }

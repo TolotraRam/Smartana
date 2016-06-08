@@ -4,8 +4,8 @@ header('Access-Control-Allow-Origin: http://localhost:3000');
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Max-Age: 0');
 
-Route::group(['prefix' => 'api'], function () {
-    Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'api'], function() {
+    Route::group(['prefix' => 'admin'], function() {
         Route::post('slug', 'Api\HelperController@slug');
 
 
@@ -15,7 +15,7 @@ Route::group(['prefix' => 'api'], function () {
         Route::post('auth/logout', ['uses' => 'Api\Backend\AuthController@postLogout', 'as' => 'auth.logout']);
         Route::post('auth/refresh-token', ['uses' => 'Api\Backend\AuthController@postRefreshToken', 'as' => 'auth.refresh']);
 
-        Route::group(['middleware' => ['auth.user']], function () {
+        Route::group(['middleware' => ['auth.user']], function() {
             Route::get('me', 'Api\Backend\UserController@index');
 
             //Country =================================
@@ -118,7 +118,7 @@ Route::group(['prefix' => 'api'], function () {
         });
     });
 
-    Route::group(['middleware' => ['before' => 'csrf']], function () {
+    Route::group(['middleware' => ['before' => 'csrf']], function() {
         // Get media
         Route::get('/media/{type}/{yearAndMonth}/{day}/{filename}', 'Api\MediaController@get');
         // Get avatar
@@ -130,22 +130,22 @@ Route::group(['prefix' => 'api'], function () {
 
         Route::get('setting/{name}', 'Api\SettingController@findByName');
 
-        Route::group(['middleware' => 'App\Http\Middleware\ThrottleMiddleware:600,5', 'prefix' => ''], function () {
+        Route::group(['middleware' => 'App\Http\Middleware\ThrottleMiddleware:600,5', 'prefix' => ''], function() {
         });
     });
 });
 
 
-Route::group(['prefix' => 'backend'], function () {
-    Route::any('{path?}', function () {
+Route::group(['prefix' => 'backend'], function() {
+    Route::any('{path?}', function() {
         View::addExtension('html', 'php');
-        View::addNamespace('backendTheme', public_path().'/assets-backend');
+        View::addNamespace('backendTheme', public_path() . '/assets-backend');
 
         return view::make('backendTheme::index');
     })->where('path', '.+');
 });
 
-Route::any('{path?}', function () {
+Route::any('{path?}', function() {
     View::addExtension('html', 'php');
     View::addNamespace('frontendTheme', public_path());
 
