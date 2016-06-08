@@ -1,15 +1,16 @@
-<?php namespace App\Transformers;
+<?php
 
-use League\Fractal\TransformerAbstract;
+namespace App\Transformers;
+
 use App\Models\Permission;
+use League\Fractal\TransformerAbstract;
 
 class PermissionTransformer extends TransformerAbstract
 {
-
     public function transform(Permission $item)
     {
         return [
-            'id'           => (int)$item->id,
+            'id'           => (int) $item->id,
             'name'         => $item->name,
             'display_name' => $item->display_name,
             'description'  => $item->description,
@@ -18,5 +19,3 @@ class PermissionTransformer extends TransformerAbstract
         ];
     }
 }
-
-

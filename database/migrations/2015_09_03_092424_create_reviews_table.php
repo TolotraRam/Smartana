@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateReviewsTable extends Migration
 {
@@ -22,11 +22,11 @@ class CreateReviewsTable extends Migration
             $table->timestamp('published_at');
             $table->timestamps();
         });
-        Schema::table('reviews', function(Blueprint $table) {
+        Schema::table('reviews', function (Blueprint $table) {
             $table->foreign('venue_id')->references('id')->on('venues')
                 ->onDelete('set null')
                 ->onUpdate('set null');
-                
+
             $table->foreign('user_id')->references('id')->on('user')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
@@ -40,7 +40,7 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::table('reviews', function(Blueprint $table) {
+        Schema::table('reviews', function (Blueprint $table) {
             $table->dropForeign('reviews_venue_id_foreign');
         });
         Schema::drop('reviews');

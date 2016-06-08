@@ -4,29 +4,26 @@ use Illuminate\Database\Seeder;
 
 class CountryTableSeeder extends Seeder
 {
-
-    public $countries = array(
-        array(1, 'MG', 'Madagascar'),
-    );
+    public $countries = [
+        [1, 'MG', 'Madagascar'],
+    ];
 
   /**
    * Run the database seeds.
    *
    * @return void
    */
-  public function run() {
+  public function run()
+  {
+      $country = [];
 
-    $country = [];
-    
-    foreach ($this->countries as $index) {
-      $country[] = [
+      foreach ($this->countries as $index) {
+          $country[] = [
         'name' => $index[2],
         'code' => $index[1],
-        'enabled' => false
+        'enabled' => false,
       ];
-    }
-    DB::table('countries')->insert($country);
+      }
+      DB::table('countries')->insert($country);
   }
-
 }
-

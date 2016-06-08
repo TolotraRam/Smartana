@@ -5,9 +5,7 @@ header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Max-Age: 0');
 
 Route::group(['prefix' => 'api'], function () {
-
     Route::group(['prefix' => 'admin'], function () {
-
         Route::post('slug', 'Api\HelperController@slug');
 
 
@@ -69,7 +67,7 @@ Route::group(['prefix' => 'api'], function () {
             Route::post('posts', ['uses' => 'Api\PostController@store', 'as' => 'posts.store', 'middleware' => 'permission:posts.store']);
             Route::put('posts/{id}', ['uses' => 'Api\PostController@update', 'as' => 'posts.update', 'middleware' => 'permission:posts.update']);
             Route::delete('posts/{id}', ['uses' => 'Api\PostController@destroy', 'as' => 'posts.destroy', 'middleware' => 'permission:posts.destroy']);
-            
+
             //Venue Categories =================================
             Route::get('venues/categories', ['uses' => 'Api\VenueCategoryController@index', 'as' => 'venues.categories.index', 'middleware' => 'permission:venues.categories.index']);
             Route::get('venues/categories/{id}', ['uses' => 'Api\VenueCategoryController@show', 'as' => 'venues.categories.show', 'middleware' => 'permission:venues.categories.index']);
@@ -117,7 +115,6 @@ Route::group(['prefix' => 'api'], function () {
 
             //Upload =================================
             Route::put('upload/{id}', ['uses' => 'Api\AvatarController@update', 'as' => 'avatar.update']);
-
         });
     });
 
@@ -142,11 +139,10 @@ Route::group(['prefix' => 'api'], function () {
 Route::group(['prefix' => 'backend'], function () {
     Route::any('{path?}', function () {
         View::addExtension('html', 'php');
-        View::addNamespace('backendTheme', public_path() . '/assets-backend');
+        View::addNamespace('backendTheme', public_path().'/assets-backend');
 
         return view::make('backendTheme::index');
-
-    })->where("path", ".+");
+    })->where('path', '.+');
 });
 
 Route::any('{path?}', function () {
@@ -154,4 +150,4 @@ Route::any('{path?}', function () {
     View::addNamespace('frontendTheme', public_path());
 
     return view::make('frontendTheme::index');
-})->where("path", ".+");
+})->where('path', '.+');

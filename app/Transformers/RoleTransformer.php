@@ -1,7 +1,9 @@
-<?php namespace App\Transformers;
+<?php
 
-use League\Fractal\TransformerAbstract;
+namespace App\Transformers;
+
 use App\Models\Role;
+use League\Fractal\TransformerAbstract;
 
 class RoleTransformer extends TransformerAbstract
 {
@@ -11,9 +13,8 @@ class RoleTransformer extends TransformerAbstract
 
     public function transform(Role $item)
     {
-        
         return [
-            'id'           => (int)$item->id,
+            'id'           => (int) $item->id,
             'name'         => $item->name,
             'display_name' => $item->display_name,
             'description'  => $item->description,
@@ -26,9 +27,6 @@ class RoleTransformer extends TransformerAbstract
     {
         $permissions = $item->perms;
 
-        return $this->collection($permissions, new PermissionTransformer, null);
+        return $this->collection($permissions, new PermissionTransformer(), null);
     }
-
 }
-
-

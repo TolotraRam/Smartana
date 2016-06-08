@@ -1,4 +1,6 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 class MediaCategory extends BaseModel
 {
@@ -20,5 +22,4 @@ class MediaCategory extends BaseModel
             }
         });
     }
-
 }

@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreatePostPostCategoryTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -22,10 +21,8 @@ class CreatePostPostCategoryTable extends Migration
 
             $table->foreign('post_id')->references('id')->on('post')->onDelete('cascade');
             $table->foreign('post_category_id')->references('id')->on('post_category')->onDelete('cascade');
-
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -36,5 +33,4 @@ class CreatePostPostCategoryTable extends Migration
     {
         Schema::drop('post_post_category');
     }
-
 }

@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreatePostCategoryTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -30,10 +29,8 @@ class CreatePostCategoryTable extends Migration
 
 
             $table->timestamps();
-
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -44,5 +41,4 @@ class CreatePostCategoryTable extends Migration
     {
         Schema::drop('post_category');
     }
-
 }

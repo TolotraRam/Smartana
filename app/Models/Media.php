@@ -1,6 +1,9 @@
-<?php namespace App\Models;
+<?php
 
-use URL, Storage;
+namespace App\Models;
+
+use Storage;
+use URL;
 
 class Media extends BaseModel
 {
@@ -12,15 +15,14 @@ class Media extends BaseModel
 
     public function getUrlAttribute()
     {
-        return URL::to('api/media/m/' . $this->attributes['path'] . $this->attributes['key']);
+        return URL::to('api/media/m/'.$this->attributes['path'].$this->attributes['key']);
     }
 
     protected static function boot()
     {
         parent::boot();
         static::deleting(function ($image) {
-            Storage::delete('uploads/m/' . $image->path . $image->key);
+            Storage::delete('uploads/m/'.$image->path.$image->key);
         });
     }
-
 }

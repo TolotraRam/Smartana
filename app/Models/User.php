@@ -1,11 +1,13 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
+
 use Hash;
-use URL;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-
+use URL;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract
@@ -23,18 +25,18 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function getUrlAttribute()
     {
-        if($this->attributes['avatar'] && !is_null($this->attributes['avatar'])) {
-            return URL::to('api/media/avatar/' . $this->attributes['avatar']);
+        if ($this->attributes['avatar'] && !is_null($this->attributes['avatar'])) {
+            return URL::to('api/media/avatar/'.$this->attributes['avatar']);
         }
     }
 
-    public function setPasswordAttribute($pass){
+    public function setPasswordAttribute($pass)
+    {
         $this->attributes['password'] = Hash::make($pass);
     }
 
-    public function city() 
+    public function city()
     {
         return $this->belongsTo('App\Models\City');
     }
-
 }

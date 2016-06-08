@@ -1,14 +1,12 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
+namespace App\Http\Controllers\Api;
 
-use Input;
-use Validator;
-
+use App\Exceptions\ResourceException;
 use App\Models\Post;
 use App\Transformers\PostTransformer;
-
-use App\Exceptions\NotFoundException;
-use App\Exceptions\ResourceException;
+use Input;
+use Validator;
 
 class PostController extends ApiController
 {
@@ -40,7 +38,7 @@ class PostController extends ApiController
             throw new ResourceException($validator->errors()->first());
         }
 
-        $posts = new Post;
+        $posts = new Post();
         $posts = $posts->with([
             'tagged',
             'categories' => function ($query) {
@@ -50,7 +48,7 @@ class PostController extends ApiController
 
         //Filter
         if (Input::has('search')) {
-            $posts = $posts->where('title', 'LIKE', '%' . Input::get('search') . '%');
+            $posts = $posts->where('title', 'LIKE', '%'.Input::get('search').'%');
         }
 
         if (Input::has('ids')) {
@@ -84,14 +82,13 @@ class PostController extends ApiController
 
         $posts = $posts->simplePaginate(Input::get('limit', 50));
 
-        return response()->paginator($posts, new PostTransformer);
-
+        return response()->paginator($posts, new PostTransformer());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -108,8 +105,7 @@ class PostController extends ApiController
             },
         ]);
 
-        return response()->item($post, new PostTransformer);
-
+        return response()->item($post, new PostTransformer());
     }
 
     /**
@@ -135,7 +131,7 @@ class PostController extends ApiController
         if ($validator->fails()) {
             throw new ResourceException($validator->errors()->first());
         }
-        $post = new Post;
+        $post = new Post();
 
         $this->fillFieldFromInput($post, ['slug', 'status', 'visibility', 'published_at']);
         $this->fillNullableFieldFromInput($post, ['title', 'content']);
@@ -153,7 +149,7 @@ class PostController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -194,7 +190,7 @@ class PostController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -206,8 +202,5 @@ class PostController extends ApiController
         $post->delete();
 
         return response()->return();
-
     }
-
-
 }

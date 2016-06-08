@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Country extends BaseModel
 {
-  protected $table = 'countries';
+    protected $table = 'countries';
 
-  protected $fillable = ['code', 'name', 'enabled'];
+    protected $fillable = ['code', 'name', 'enabled'];
 
-  public $timestamps = false;
+    public $timestamps = false;
 
-  public function states() {
-    return $this->hasMany('App\Models\State');
-  }
+    public function states()
+    {
+        return $this->hasMany('App\Models\State');
+    }
 }

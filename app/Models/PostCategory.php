@@ -1,4 +1,6 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 class PostCategory extends \Baum\Node
 {
@@ -16,5 +18,4 @@ class PostCategory extends \Baum\Node
     {
         return $this->hasMany('App\Models\Post', 'post_post_category');
     }
-
 }

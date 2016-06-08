@@ -1,7 +1,10 @@
-<?php namespace App\Fractal\Paginator;
+<?php
+
+namespace App\Fractal\Paginator;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use League\Fractal\Pagination\PaginatorInterface;
+
 /**
  * A paginator adapter for illuminate/pagination.
  *
