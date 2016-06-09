@@ -1,8 +1,10 @@
 <?php
-
-header('Access-Control-Allow-Origin: http://localhost:3000');
-header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Max-Age: 0');
+if (App::environment('local'))
+{
+    header('Access-Control-Allow-Origin: http://localhost:3000');
+    header('Access-Control-Allow-Credentials: true');
+    header('Access-Control-Max-Age: 0');
+}
 
 Route::group(['prefix' => 'api'], function () {
     Route::group(['prefix' => 'admin'], function () {
