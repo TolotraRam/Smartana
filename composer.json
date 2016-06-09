@@ -6,7 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
+        "laravel/framework": "5.2.*",
         "zizaco/entrust": "~1.4.1",
         "tymon/jwt-auth": "0.5.*",
         "gazsp/baum": "~1.1",
