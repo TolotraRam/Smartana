@@ -53,7 +53,6 @@ return [
         ],
 
         'mysql' => [
-            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
             'database'  => env('DB_DATABASE', 'forge'),
@@ -63,6 +62,7 @@ return [
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
             'strict'    => false,
+            'engine'    => null,
         ],
 
         'pgsql' => [
